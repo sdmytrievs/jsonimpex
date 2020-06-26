@@ -1,0 +1,42 @@
+# options
+message(STATUS "Building jsonimpex14 examples: ${BuildExamples}")
+
+include_directories(${CMAKE_SOURCE_DIR})
+
+set(Examples
+        time_parser )
+
+foreach (exampleName ${Examples})
+
+    add_executable(${exampleName} ${exampleName}.cpp)
+    if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
+          target_link_libraries(${exampleName}
+            PUBLIC stdc++fs
+            PUBLIC jsonimpex14-static
+            PUBLIC jsonio14-static
+            PUBLIC jsonarango-static
+            PRIVATE velocypack
+            PRIVATE libcurl
+            PRIVATE thrift
+            PRIVATE lua5.3
+            PRIVATE yaml-cpp
+            PRIVATE pugixml
+            PUBLIC pthread )
+    else()
+          target_link_libraries( ${exampleName}
+            PUBLIC stdc++fs
+            PUBLIC jsonimpex14
+            PUBLIC jsonio14
+            PUBLIC jsonarango
+            PUBLIC velocypack
+            PUBLIC curl
+            PRIVATE thrift
+            PRIVATE lua5.3
+            PRIVATE yaml-cpp
+            PRIVATE pugixml
+            PUBLIC pthread )
+    endif()
+
+endforeach()
+
+

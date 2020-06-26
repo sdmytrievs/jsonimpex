@@ -1,0 +1,49 @@
+message(STATUS "Building test suite: ${BuildTests}")
+
+include(CTest)
+enable_testing()
+find_package(Threads)
+add_subdirectory(googletest REQUIRED)
+
+# -------------------------------------
+# Build test program
+# -------------------------------------
+
+add_executable(test_main  main.cpp )
+
+if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
+      target_link_libraries( test_main
+            PUBLIC gtest
+            PUBLIC stdc++fs
+            PUBLIC jsonimpex14-static
+            PUBLIC jsonio14-static
+            PUBLIC jsonarango-static
+            PRIVATE velocypack
+            PRIVATE libcurl
+            PRIVATE thrift
+            PRIVATE lua5.3
+            PRIVATE yaml-cpp
+            PRIVATE pugixml
+            PUBLIC pthread )
+else()
+      target_link_libraries( test_main
+           PUBLIC gtest
+           PUBLIC stdc++fs
+           PUBLIC jsonimpex14
+           PUBLIC jsonio14
+           PUBLIC jsonarango
+           PUBLIC velocypack
+           PUBLIC curl
+           PRIVATE thrift
+           PRIVATE lua5.3
+           PRIVATE yaml-cpp
+           PRIVATE pugixml
+           PUBLIC pthread )
+endif()
+
+target_include_directories(test_main PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/../src
+)
+
+add_test(NAME test_main COMMAND ./tests/test_main)
+
