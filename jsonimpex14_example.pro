@@ -37,7 +37,6 @@ win32 {
 # Define the directory where jsonimpex14 source code is located
 JSONIMPEX14_DIR =  $$PWD/src
 JSONIMPEX14_HEADERS_DIR =  $$PWD/include
-TESTS_DIR =  $$PWD/tests
 
 DEPENDPATH   += $$JSONIMPEX14_DIR
 DEPENDPATH   += $$JSONIMPEX14_HEADERS_DIR
@@ -57,7 +56,7 @@ macx-clang:LIBS += -llua
 
 OBJECTS_DIR   = obj
 
-include($$JSONIO14_DIR/jsonimpex14.pri)
+include($$JSONIMPEX14_DIR/jsonimpex14.pri)
 
 SOURCES += \
        main.cpp
