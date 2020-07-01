@@ -1,12 +1,14 @@
 
 HEADERS += \
     $$JSONIMPEX14_DIR/lua-run.h \
-    $$PWD/../include/jsonimpex14/yamldump.h
+    $$JSONIMPEX14_HEADERS_DIR/xmldump.h \
+    $$JSONIMPEX14_HEADERS_DIR/yamldump.h
 
 
 SOURCES += \
     $$JSONIMPEX14_DIR/lua-run.cpp \
-    $$PWD/yamldump.cpp
+    $$JSONIMPEX14_DIR/xmldump.cpp \
+    $$JSONIMPEX14_DIR/yamldump.cpp
 
 
 
