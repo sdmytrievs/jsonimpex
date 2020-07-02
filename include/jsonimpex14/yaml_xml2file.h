@@ -57,7 +57,7 @@ protected:
 };
 
 
-/// Class for read/write json arrays files
+/// Class for read/write json/yaml/xml arrays files.
 class JsonYamlXMLArrayFile : public JsonArrayFile
 {
 

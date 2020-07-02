@@ -28,14 +28,18 @@ win32 {
 # Define the directory where jsonimpex14 source code is located
 JSONIMPEX14_DIR =  $$PWD/src
 JSONIMPEX14_HEADERS_DIR =  $$PWD/include
+THRIFT_DIR    = $$PWD/thrift
+THRIFT_HEADERS_DIR =  $$THRIFT_DIR/gen-cpp
 TESTS_DIR =  $$PWD/tests
 
 DEPENDPATH   += $$JSONIMPEX14_DIR
 DEPENDPATH   += $$JSONIMPEX14_HEADERS_DIR
+DEPENDPATH   += $$THRIFT_HEADERS_DIR
 DEPENDPATH   += $$TESTS_DIR
 
 INCLUDEPATH   += $$JSONIMPEX14_DIR
 INCLUDEPATH   += $$JSONIMPEX14_HEADERS_DIR
+INCLUDEPATH   += $$THRIFT_HEADERS_DIR
 INCLUDEPATH   += $$TESTS_DIR
 
 LIBS +=  -lstdc++fs
@@ -47,6 +51,7 @@ macx-clang:LIBS += -llua
 OBJECTS_DIR   = obj
 
 include($$TESTS_DIR/gtest_dependency.pri)
+include($$THRIFT_DIR/thrift.pri)
 include($$JSONIMPEX14_DIR/jsonimpex14.pri)
 
 HEADERS += \
