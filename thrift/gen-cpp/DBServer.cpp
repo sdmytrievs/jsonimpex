@@ -3267,13 +3267,13 @@ bool DBServerProcessor::dispatchCall(::apache::thrift::protocol::TProtocol* ipro
 
 void DBServerProcessor::process_ping(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
-  void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  void* ctx = nullptr;
+  if (this->eventHandler_.get() != nullptr) {
     ctx = this->eventHandler_->getContext("DBServer.ping", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "DBServer.ping");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preRead(ctx, "DBServer.ping");
   }
 
@@ -3282,7 +3282,7 @@ void DBServerProcessor::process_ping(int32_t seqid, ::apache::thrift::protocol::
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postRead(ctx, "DBServer.ping", bytes);
   }
 
@@ -3291,7 +3291,7 @@ void DBServerProcessor::process_ping(int32_t seqid, ::apache::thrift::protocol::
     result.success = iface_->ping();
     result.__isset.success = true;
   } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+    if (this->eventHandler_.get() != nullptr) {
       this->eventHandler_->handlerError(ctx, "DBServer.ping");
     }
 
@@ -3304,7 +3304,7 @@ void DBServerProcessor::process_ping(int32_t seqid, ::apache::thrift::protocol::
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preWrite(ctx, "DBServer.ping");
   }
 
@@ -3314,20 +3314,20 @@ void DBServerProcessor::process_ping(int32_t seqid, ::apache::thrift::protocol::
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postWrite(ctx, "DBServer.ping", bytes);
   }
 }
 
 void DBServerProcessor::process_stop(int32_t, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol*, void* callContext)
 {
-  void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  void* ctx = nullptr;
+  if (this->eventHandler_.get() != nullptr) {
     ctx = this->eventHandler_->getContext("DBServer.stop", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "DBServer.stop");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preRead(ctx, "DBServer.stop");
   }
 
@@ -3336,20 +3336,20 @@ void DBServerProcessor::process_stop(int32_t, ::apache::thrift::protocol::TProto
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postRead(ctx, "DBServer.stop", bytes);
   }
 
   try {
     iface_->stop();
   } catch (const std::exception&) {
-    if (this->eventHandler_.get() != NULL) {
+    if (this->eventHandler_.get() != nullptr) {
       this->eventHandler_->handlerError(ctx, "DBServer.stop");
     }
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->asyncComplete(ctx, "DBServer.stop");
   }
 
@@ -3358,13 +3358,13 @@ void DBServerProcessor::process_stop(int32_t, ::apache::thrift::protocol::TProto
 
 void DBServerProcessor::process_addCollection(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
-  void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  void* ctx = nullptr;
+  if (this->eventHandler_.get() != nullptr) {
     ctx = this->eventHandler_->getContext("DBServer.addCollection", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "DBServer.addCollection");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preRead(ctx, "DBServer.addCollection");
   }
 
@@ -3373,7 +3373,7 @@ void DBServerProcessor::process_addCollection(int32_t seqid, ::apache::thrift::p
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postRead(ctx, "DBServer.addCollection", bytes);
   }
 
@@ -3382,7 +3382,7 @@ void DBServerProcessor::process_addCollection(int32_t seqid, ::apache::thrift::p
     result.success = iface_->addCollection(args.colName, args.ctype);
     result.__isset.success = true;
   } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+    if (this->eventHandler_.get() != nullptr) {
       this->eventHandler_->handlerError(ctx, "DBServer.addCollection");
     }
 
@@ -3395,7 +3395,7 @@ void DBServerProcessor::process_addCollection(int32_t seqid, ::apache::thrift::p
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preWrite(ctx, "DBServer.addCollection");
   }
 
@@ -3405,20 +3405,20 @@ void DBServerProcessor::process_addCollection(int32_t seqid, ::apache::thrift::p
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postWrite(ctx, "DBServer.addCollection", bytes);
   }
 }
 
 void DBServerProcessor::process_dropCollection(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
-  void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  void* ctx = nullptr;
+  if (this->eventHandler_.get() != nullptr) {
     ctx = this->eventHandler_->getContext("DBServer.dropCollection", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "DBServer.dropCollection");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preRead(ctx, "DBServer.dropCollection");
   }
 
@@ -3427,7 +3427,7 @@ void DBServerProcessor::process_dropCollection(int32_t seqid, ::apache::thrift::
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postRead(ctx, "DBServer.dropCollection", bytes);
   }
 
@@ -3436,7 +3436,7 @@ void DBServerProcessor::process_dropCollection(int32_t seqid, ::apache::thrift::
     result.success = iface_->dropCollection(args.colName);
     result.__isset.success = true;
   } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+    if (this->eventHandler_.get() != nullptr) {
       this->eventHandler_->handlerError(ctx, "DBServer.dropCollection");
     }
 
@@ -3449,7 +3449,7 @@ void DBServerProcessor::process_dropCollection(int32_t seqid, ::apache::thrift::
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preWrite(ctx, "DBServer.dropCollection");
   }
 
@@ -3459,20 +3459,20 @@ void DBServerProcessor::process_dropCollection(int32_t seqid, ::apache::thrift::
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postWrite(ctx, "DBServer.dropCollection", bytes);
   }
 }
 
 void DBServerProcessor::process_listCollections(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
-  void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  void* ctx = nullptr;
+  if (this->eventHandler_.get() != nullptr) {
     ctx = this->eventHandler_->getContext("DBServer.listCollections", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "DBServer.listCollections");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preRead(ctx, "DBServer.listCollections");
   }
 
@@ -3481,7 +3481,7 @@ void DBServerProcessor::process_listCollections(int32_t seqid, ::apache::thrift:
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postRead(ctx, "DBServer.listCollections", bytes);
   }
 
@@ -3490,7 +3490,7 @@ void DBServerProcessor::process_listCollections(int32_t seqid, ::apache::thrift:
     iface_->listCollections(result.success, args.ctype);
     result.__isset.success = true;
   } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+    if (this->eventHandler_.get() != nullptr) {
       this->eventHandler_->handlerError(ctx, "DBServer.listCollections");
     }
 
@@ -3503,7 +3503,7 @@ void DBServerProcessor::process_listCollections(int32_t seqid, ::apache::thrift:
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preWrite(ctx, "DBServer.listCollections");
   }
 
@@ -3513,20 +3513,20 @@ void DBServerProcessor::process_listCollections(int32_t seqid, ::apache::thrift:
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postWrite(ctx, "DBServer.listCollections", bytes);
   }
 }
 
 void DBServerProcessor::process_CreateRecord(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
-  void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  void* ctx = nullptr;
+  if (this->eventHandler_.get() != nullptr) {
     ctx = this->eventHandler_->getContext("DBServer.CreateRecord", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "DBServer.CreateRecord");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preRead(ctx, "DBServer.CreateRecord");
   }
 
@@ -3535,7 +3535,7 @@ void DBServerProcessor::process_CreateRecord(int32_t seqid, ::apache::thrift::pr
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postRead(ctx, "DBServer.CreateRecord", bytes);
   }
 
@@ -3544,7 +3544,7 @@ void DBServerProcessor::process_CreateRecord(int32_t seqid, ::apache::thrift::pr
     iface_->CreateRecord(result.success, args.colName, args.value);
     result.__isset.success = true;
   } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+    if (this->eventHandler_.get() != nullptr) {
       this->eventHandler_->handlerError(ctx, "DBServer.CreateRecord");
     }
 
@@ -3557,7 +3557,7 @@ void DBServerProcessor::process_CreateRecord(int32_t seqid, ::apache::thrift::pr
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preWrite(ctx, "DBServer.CreateRecord");
   }
 
@@ -3567,20 +3567,20 @@ void DBServerProcessor::process_CreateRecord(int32_t seqid, ::apache::thrift::pr
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postWrite(ctx, "DBServer.CreateRecord", bytes);
   }
 }
 
 void DBServerProcessor::process_ReadRecord(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
-  void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  void* ctx = nullptr;
+  if (this->eventHandler_.get() != nullptr) {
     ctx = this->eventHandler_->getContext("DBServer.ReadRecord", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "DBServer.ReadRecord");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preRead(ctx, "DBServer.ReadRecord");
   }
 
@@ -3589,7 +3589,7 @@ void DBServerProcessor::process_ReadRecord(int32_t seqid, ::apache::thrift::prot
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postRead(ctx, "DBServer.ReadRecord", bytes);
   }
 
@@ -3598,7 +3598,7 @@ void DBServerProcessor::process_ReadRecord(int32_t seqid, ::apache::thrift::prot
     iface_->ReadRecord(result.success, args.colName, args.key);
     result.__isset.success = true;
   } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+    if (this->eventHandler_.get() != nullptr) {
       this->eventHandler_->handlerError(ctx, "DBServer.ReadRecord");
     }
 
@@ -3611,7 +3611,7 @@ void DBServerProcessor::process_ReadRecord(int32_t seqid, ::apache::thrift::prot
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preWrite(ctx, "DBServer.ReadRecord");
   }
 
@@ -3621,20 +3621,20 @@ void DBServerProcessor::process_ReadRecord(int32_t seqid, ::apache::thrift::prot
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postWrite(ctx, "DBServer.ReadRecord", bytes);
   }
 }
 
 void DBServerProcessor::process_UpdateRecord(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
-  void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  void* ctx = nullptr;
+  if (this->eventHandler_.get() != nullptr) {
     ctx = this->eventHandler_->getContext("DBServer.UpdateRecord", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "DBServer.UpdateRecord");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preRead(ctx, "DBServer.UpdateRecord");
   }
 
@@ -3643,7 +3643,7 @@ void DBServerProcessor::process_UpdateRecord(int32_t seqid, ::apache::thrift::pr
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postRead(ctx, "DBServer.UpdateRecord", bytes);
   }
 
@@ -3652,7 +3652,7 @@ void DBServerProcessor::process_UpdateRecord(int32_t seqid, ::apache::thrift::pr
     result.success = iface_->UpdateRecord(args.colName, args.key, args.value);
     result.__isset.success = true;
   } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+    if (this->eventHandler_.get() != nullptr) {
       this->eventHandler_->handlerError(ctx, "DBServer.UpdateRecord");
     }
 
@@ -3665,7 +3665,7 @@ void DBServerProcessor::process_UpdateRecord(int32_t seqid, ::apache::thrift::pr
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preWrite(ctx, "DBServer.UpdateRecord");
   }
 
@@ -3675,20 +3675,20 @@ void DBServerProcessor::process_UpdateRecord(int32_t seqid, ::apache::thrift::pr
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postWrite(ctx, "DBServer.UpdateRecord", bytes);
   }
 }
 
 void DBServerProcessor::process_DeleteRecord(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
-  void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  void* ctx = nullptr;
+  if (this->eventHandler_.get() != nullptr) {
     ctx = this->eventHandler_->getContext("DBServer.DeleteRecord", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "DBServer.DeleteRecord");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preRead(ctx, "DBServer.DeleteRecord");
   }
 
@@ -3697,7 +3697,7 @@ void DBServerProcessor::process_DeleteRecord(int32_t seqid, ::apache::thrift::pr
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postRead(ctx, "DBServer.DeleteRecord", bytes);
   }
 
@@ -3706,7 +3706,7 @@ void DBServerProcessor::process_DeleteRecord(int32_t seqid, ::apache::thrift::pr
     result.success = iface_->DeleteRecord(args.colName, args.key);
     result.__isset.success = true;
   } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+    if (this->eventHandler_.get() != nullptr) {
       this->eventHandler_->handlerError(ctx, "DBServer.DeleteRecord");
     }
 
@@ -3719,7 +3719,7 @@ void DBServerProcessor::process_DeleteRecord(int32_t seqid, ::apache::thrift::pr
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preWrite(ctx, "DBServer.DeleteRecord");
   }
 
@@ -3729,20 +3729,20 @@ void DBServerProcessor::process_DeleteRecord(int32_t seqid, ::apache::thrift::pr
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postWrite(ctx, "DBServer.DeleteRecord", bytes);
   }
 }
 
 void DBServerProcessor::process_SearchRecords(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
-  void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  void* ctx = nullptr;
+  if (this->eventHandler_.get() != nullptr) {
     ctx = this->eventHandler_->getContext("DBServer.SearchRecords", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "DBServer.SearchRecords");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preRead(ctx, "DBServer.SearchRecords");
   }
 
@@ -3751,7 +3751,7 @@ void DBServerProcessor::process_SearchRecords(int32_t seqid, ::apache::thrift::p
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postRead(ctx, "DBServer.SearchRecords", bytes);
   }
 
@@ -3760,7 +3760,7 @@ void DBServerProcessor::process_SearchRecords(int32_t seqid, ::apache::thrift::p
     iface_->SearchRecords(result.success, args.colName, args.fields, args.recordQuery);
     result.__isset.success = true;
   } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+    if (this->eventHandler_.get() != nullptr) {
       this->eventHandler_->handlerError(ctx, "DBServer.SearchRecords");
     }
 
@@ -3773,7 +3773,7 @@ void DBServerProcessor::process_SearchRecords(int32_t seqid, ::apache::thrift::p
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preWrite(ctx, "DBServer.SearchRecords");
   }
 
@@ -3783,20 +3783,20 @@ void DBServerProcessor::process_SearchRecords(int32_t seqid, ::apache::thrift::p
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postWrite(ctx, "DBServer.SearchRecords", bytes);
   }
 }
 
 void DBServerProcessor::process_DeleteEdges(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
-  void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  void* ctx = nullptr;
+  if (this->eventHandler_.get() != nullptr) {
     ctx = this->eventHandler_->getContext("DBServer.DeleteEdges", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "DBServer.DeleteEdges");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preRead(ctx, "DBServer.DeleteEdges");
   }
 
@@ -3805,7 +3805,7 @@ void DBServerProcessor::process_DeleteEdges(int32_t seqid, ::apache::thrift::pro
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postRead(ctx, "DBServer.DeleteEdges", bytes);
   }
 
@@ -3814,7 +3814,7 @@ void DBServerProcessor::process_DeleteEdges(int32_t seqid, ::apache::thrift::pro
     result.success = iface_->DeleteEdges(args.colName, args.vertexkey);
     result.__isset.success = true;
   } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+    if (this->eventHandler_.get() != nullptr) {
       this->eventHandler_->handlerError(ctx, "DBServer.DeleteEdges");
     }
 
@@ -3827,7 +3827,7 @@ void DBServerProcessor::process_DeleteEdges(int32_t seqid, ::apache::thrift::pro
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preWrite(ctx, "DBServer.DeleteEdges");
   }
 
@@ -3837,20 +3837,20 @@ void DBServerProcessor::process_DeleteEdges(int32_t seqid, ::apache::thrift::pro
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postWrite(ctx, "DBServer.DeleteEdges", bytes);
   }
 }
 
 void DBServerProcessor::process_CollectValues(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
-  void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  void* ctx = nullptr;
+  if (this->eventHandler_.get() != nullptr) {
     ctx = this->eventHandler_->getContext("DBServer.CollectValues", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "DBServer.CollectValues");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preRead(ctx, "DBServer.CollectValues");
   }
 
@@ -3859,7 +3859,7 @@ void DBServerProcessor::process_CollectValues(int32_t seqid, ::apache::thrift::p
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postRead(ctx, "DBServer.CollectValues", bytes);
   }
 
@@ -3868,7 +3868,7 @@ void DBServerProcessor::process_CollectValues(int32_t seqid, ::apache::thrift::p
     iface_->CollectValues(result.success, args.colName, args.fpath);
     result.__isset.success = true;
   } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+    if (this->eventHandler_.get() != nullptr) {
       this->eventHandler_->handlerError(ctx, "DBServer.CollectValues");
     }
 
@@ -3881,7 +3881,7 @@ void DBServerProcessor::process_CollectValues(int32_t seqid, ::apache::thrift::p
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preWrite(ctx, "DBServer.CollectValues");
   }
 
@@ -3891,20 +3891,20 @@ void DBServerProcessor::process_CollectValues(int32_t seqid, ::apache::thrift::p
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postWrite(ctx, "DBServer.CollectValues", bytes);
   }
 }
 
 void DBServerProcessor::process_GenerateId(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
-  void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  void* ctx = nullptr;
+  if (this->eventHandler_.get() != nullptr) {
     ctx = this->eventHandler_->getContext("DBServer.GenerateId", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "DBServer.GenerateId");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preRead(ctx, "DBServer.GenerateId");
   }
 
@@ -3913,7 +3913,7 @@ void DBServerProcessor::process_GenerateId(int32_t seqid, ::apache::thrift::prot
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postRead(ctx, "DBServer.GenerateId", bytes);
   }
 
@@ -3922,7 +3922,7 @@ void DBServerProcessor::process_GenerateId(int32_t seqid, ::apache::thrift::prot
     iface_->GenerateId(result.success, args.colName, args._keytemplate);
     result.__isset.success = true;
   } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+    if (this->eventHandler_.get() != nullptr) {
       this->eventHandler_->handlerError(ctx, "DBServer.GenerateId");
     }
 
@@ -3935,7 +3935,7 @@ void DBServerProcessor::process_GenerateId(int32_t seqid, ::apache::thrift::prot
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->preWrite(ctx, "DBServer.GenerateId");
   }
 
@@ -3945,7 +3945,7 @@ void DBServerProcessor::process_GenerateId(int32_t seqid, ::apache::thrift::prot
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != nullptr) {
     this->eventHandler_->postWrite(ctx, "DBServer.GenerateId", bytes);
   }
 }

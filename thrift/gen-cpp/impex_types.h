@@ -21,9 +21,18 @@
 
 namespace impex {
 
+/**
+ * Classes of direction types
+ */
 struct DirectionType {
   enum type {
+    /**
+     * import
+     */
     IMPORT = 0,
+    /**
+     * export
+     */
     EXPORT = 1
   };
 };
@@ -69,6 +78,9 @@ typedef struct _FormatValue__isset {
   bool increment :1;
 } _FormatValue__isset;
 
+/**
+ * Definition of the data value format in imported/exported file
+ */
 class FormatValue : public virtual ::apache::thrift::TBase {
  public:
 
@@ -78,8 +90,17 @@ class FormatValue : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~FormatValue() noexcept;
+  /**
+   * Format scanf/printf (to string first): "%s" | "in" | "out" | "endl" | "txel" | "txkw"; "in" | "out" | "endl" for stream input
+   */
   std::string format;
+  /**
+   * Factor != 0, default 1; Each num.value is multiplied (import) or divided (export) by factor
+   */
   double factor;
+  /**
+   * Increment, default 0; added to each numerical value (import) or subtracted from (export)
+   */
   double increment;
 
   _FormatValue__isset __isset;
@@ -127,6 +148,9 @@ typedef struct _FormatKeyword__isset {
   bool delim_end :1;
 } _FormatKeyword__isset;
 
+/**
+ * Format to read/print keywords in key-value pair file
+ */
 class FormatKeyword : public virtual ::apache::thrift::TBase {
  public:
 
@@ -136,8 +160,17 @@ class FormatKeyword : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~FormatKeyword() noexcept;
+  /**
+   * scanf/printf format for keyword
+   */
   std::string format;
+  /**
+   * delimiter for keyword begin e.g. "\"" | "<" | ""
+   */
   std::string delim_begin;
+  /**
+   * delimiter for keyword end e.g. "\"" | ">" | ""
+   */
   std::string delim_end;
 
   _FormatKeyword__isset __isset;
@@ -184,6 +217,9 @@ typedef struct _DataType__isset {
   bool organization :1;
 } _DataType__isset;
 
+/**
+ * Type of object from the imported or exported file (for use in keyword lookup list or map)
+ */
 class DataType : public virtual ::apache::thrift::TBase {
  public:
 
@@ -193,7 +229,13 @@ class DataType : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~DataType() noexcept;
+  /**
+   * Basis type "string" | "float" | "double" | "i16" | "i32" | "bool" | ...
+   */
   std::string datatype;
+  /**
+   * Organization: "" | "list" | "set" | "map" | "group" | "embedded" | ...
+   */
   std::string organization;
 
   _DataType__isset __isset;
@@ -234,6 +276,9 @@ typedef struct _DataObject__isset {
   bool convert :1;
 } _DataObject__isset;
 
+/**
+ * Thrift key of data object "8" or "3.8" or "2.3.8" or "" to ignore (import); any string not starting from a digit as comment (export)
+ */
 class DataObject : public virtual ::apache::thrift::TBase {
  public:
 
@@ -243,9 +288,21 @@ class DataObject : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~DataObject() noexcept;
+  /**
+   * Either Thrift key or name of the data field in recursive form (s e.g. "4.3.1" or name1.name2 )
+   */
   std::string field;
+  /**
+   * Set to true if the corresponding value in file has to be ignored (default: false)
+   */
   bool ignore;
+  /**
+   * Default "" or contains lua script for operation on data values in block
+   */
   std::string script;
+  /**
+   * Default empty or contains pair(s) read_value : saved_value e.g. "e": "4" (usually for setting enum values)
+   */
   std::map<std::string, std::string>  convert;
 
   _DataObject__isset __isset;
@@ -305,6 +362,9 @@ typedef struct _Separators__isset {
   bool bod :1;
 } _Separators__isset;
 
+/**
+ * Definition of value, line, row, block, comment, end-of-data separators
+ */
 class Separators : public virtual ::apache::thrift::TBase {
  public:
 
@@ -314,14 +374,41 @@ class Separators : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~Separators() noexcept;
+  /**
+   * Value separator (for arrays) " " | "," | "\t" | "integer" (=fixed field width)
+   */
   std::string v_sep;
+  /**
+   * Line separator "\n" ...
+   */
   std::string l_sep;
+  /**
+   * Row separator (table), "\n" ...
+   */
   std::string r_sep;
+  /**
+   * Head comment separator  e.g. "#" or '%'
+   */
   std::string c_head;
+  /**
+   * End comment separator e.g. "\n"
+   */
   std::string c_end;
+  /**
+   * string indicating end of data (as list of blocks) in file or "" as default ']' (end of file)
+   */
   std::string eod;
+  /**
+   * encoding ("" for standard system encoding)
+   */
   std::string encoding;
+  /**
+   * Delimiter for strings - default "\""
+   */
   std::string str_delim;
+  /**
+   * string indicating begin of data (as list of blocks) in file or "" as default '['
+   */
   std::string bod;
 
   _Separators__isset __isset;
@@ -403,6 +490,9 @@ typedef struct _FormatBlock__isset {
   bool script :1;
 } _FormatBlock__isset;
 
+/**
+ * Text block format in file corresponding to one database document (record)
+ */
 class FormatBlock : public virtual ::apache::thrift::TBase {
  public:
 
@@ -412,9 +502,21 @@ class FormatBlock : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~FormatBlock() noexcept;
+  /**
+   * Default Key, Value pairs to DOM (import)  or to output (export)
+   */
   std::map<std::string, std::string>  defaults;
+  /**
+   * Lookup map of keyword-value pair format
+   */
   std::map<std::string, DataType>  pairs;
+  /**
+   * >=1 keywd, DataObject pairs connecting the block of data in file with DOM.
+   */
   std::map<std::string, DataObject>  matches;
+  /**
+   * Default "" or contains lua script for operation on data values in full DOM
+   */
   std::string script;
 
   _FormatBlock__isset __isset;
@@ -468,6 +570,9 @@ typedef struct _FormatTextFile__isset {
   bool direction :1;
 } _FormatTextFile__isset;
 
+/**
+ * Definition of text data file format
+ */
 class FormatTextFile : public virtual ::apache::thrift::TBase {
  public:
 
@@ -477,15 +582,47 @@ class FormatTextFile : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~FormatTextFile() noexcept;
+  /**
+   * Format definition for one or more blocks for data records - default 1 block
+   */
   FormatBlock block;
+  /**
+   * Will be format lines list
+   */
   std::vector<std::string>  lines;
+  /**
+   * Label of data type (vertex type), e.g. "datasource", "element" ...
+   */
   std::string label;
+  /**
+   * Definition of value, line, row, block, comment, end-of-data separators
+   */
   Separators separs;
+  /**
+   * Export: the whole comment text; Import: the comment begin markup string (to skip until endl)
+   */
   std::string comment;
+  /**
+   * File name or "console" for export
+   */
   std::string file_name;
+  /**
+   * number of data block in file >=1, 0 if unknown
+   */
   int32_t Nblocks;
+  /**
+   * number of text lines in file (>=1), 0 if unknown
+   */
   int32_t Nlines;
+  /**
+   * total number of characters in file, 0 if unknown
+   */
   int32_t Nchars;
+  /**
+   * direction
+   * 
+   * @see DirectionType
+   */
   DirectionType::type direction;
 
   _FormatTextFile__isset __isset;
@@ -571,6 +708,11 @@ typedef struct _FormatKeyValue__isset {
   bool key_order :1;
 } _FormatKeyValue__isset;
 
+/**
+ * Definition of key-value import/export format
+ * We use Regular Expression in case of import and Print Format in case of export.
+ * Use names "head0", ..., "headN", "end0", ..., "endN" to import/export data from/to head and end part
+ */
 class FormatKeyValue : public virtual ::apache::thrift::TBase {
  public:
 
@@ -580,15 +722,46 @@ class FormatKeyValue : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~FormatKeyValue() noexcept;
+  /**
+   * Head of Block:  "\\s*([^\\s]+)\\s*;\\s*(([\\w\\t \\+\\-\\(\\):\\.]+)\\s*=\\s*([^;]+))" (import)
+   * or  "\n%head0\n\t%head1\n" (export)
+   */
   std::string head_regexp;
+  /**
+   * End of Block: "([^\n]+)" (import)  or  "%end0\n" (export)
+   */
   std::string end_regexp;
+  /**
+   * Keyword:  "\\s*;\\s*\\-{0,1}([a-zA-Z]\\w*)\\s*" (import)  or  "\t-%key\t" (export)
+   */
   std::string key_regexp;
+  /**
+   * Data Value(s):  "\\s*([^#\\n;]*)" (import)  or  "%value" (export)
+   */
   std::string value_regexp;
+  /**
+   * Key-Value pair end delimiter (used if empty value_regexp or export mode )
+   */
   std::string value_next;
+  /**
+   * Regular Expression to iterate over matches  (used to convert value to string list or if export mode )
+   */
   std::string value_token_regexp;
+  /**
+   * Regular Expression for skip comments
+   */
   std::string comment_regexp;
+  /**
+   * number of data items per block (0 if not set)
+   */
   int32_t Ndata;
+  /**
+   * Data String Value(s): only for export  "\'%value\'"
+   */
   std::string strvalue_exp;
+  /**
+   * Keyword order list:  only for export
+   */
   std::vector<std::string>  key_order;
 
   _FormatKeyValue__isset __isset;
@@ -671,6 +844,9 @@ typedef struct _FormatKeyValueFile__isset {
   bool direction :1;
 } _FormatKeyValueFile__isset;
 
+/**
+ * Definition of text file with key-value pair data
+ */
 class FormatKeyValueFile : public virtual ::apache::thrift::TBase {
  public:
 
@@ -680,15 +856,47 @@ class FormatKeyValueFile : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~FormatKeyValueFile() noexcept;
+  /**
+   * Format for one or more blocks for data records
+   */
   FormatBlock block;
+  /**
+   * Definition of key-value block in file
+   */
   FormatKeyValue format;
+  /**
+   * Rendering syntax for the foreign key-value file "GEMS3K" | "BIB" | "RIS" | ...
+   */
   std::string renderer;
+  /**
+   * Label of data type (vertex type), e.g. "datasource", "element" ...
+   */
   std::string label;
+  /**
+   * Definition of value, line, row, block, comment, end-of-data separators
+   */
   Separators separators;
+  /**
+   * Export: the whole comment text; Import: the comment begin markup string (to skip until endl)
+   */
   std::string comment;
+  /**
+   * File name or "console" for export
+   */
   std::string fname;
+  /**
+   * number of data blocks (records) >=1, 0 if unknown
+   */
   int32_t Nblocks;
+  /**
+   * total number of text lines in the file, 0 if unknown
+   */
   int32_t Nlines;
+  /**
+   * direction
+   * 
+   * @see DirectionType
+   */
   DirectionType::type direction;
 
   _FormatKeyValueFile__isset __isset;
@@ -778,6 +986,12 @@ typedef struct _FormatTable__isset {
   bool value_regexp :1;
 } _FormatTable__isset;
 
+/**
+ * Definition of of the table input format
+ * if defined  colsizes, split by sizes
+ * if defined  value_regexp, split used regexpr
+ * otherwise split by  columns delimiter
+ */
 class FormatTable : public virtual ::apache::thrift::TBase {
  public:
 
@@ -787,18 +1001,57 @@ class FormatTable : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~FormatTable() noexcept;
+  /**
+   * Number of header columns
+   */
   int32_t Nhcols;
+  /**
+   * Number of header rows (start porting from row )
+   */
   int32_t Nhrows;
+  /**
+   * Names of header columns
+   */
   std::vector<std::string>  headers;
+  /**
+   * Row delimiter
+   */
   std::string rowend;
+  /**
+   * Number of lines in one block (could be more than one)
+   */
   int32_t rows_one_block;
+  /**
+   * Regular expression:  next block head in case the number of lines in one block is not fixed
+   */
   std::string row_header_regexp;
+  /**
+   * Columns delimiters
+   */
   std::string colends;
+  /**
+   * Quoted field as text
+   */
   bool usequotes;
+  /**
+   * Can be more than one delimiter between columns
+   */
   bool usemore;
+  /**
+   * Regular Expression for skip comments
+   */
   std::string comment_regexp;
+  /**
+   * Row size in case of using fixed colsizes
+   */
   int32_t row_size;
+  /**
+   * Fixed size of columns for importing ( apply to all if one item )
+   */
   std::vector<int32_t>  colsizes;
+  /**
+   * Regular Expression for column value(s) ( apply to all if one item )
+   */
   std::vector<std::string>  value_regexp;
 
   _FormatTable__isset __isset;
@@ -893,6 +1146,9 @@ typedef struct _FormatTableFile__isset {
   bool direction :1;
 } _FormatTableFile__isset;
 
+/**
+ * Definition of table text file format
+ */
 class FormatTableFile : public virtual ::apache::thrift::TBase {
  public:
 
@@ -902,15 +1158,47 @@ class FormatTableFile : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~FormatTableFile() noexcept;
+  /**
+   * Format for one or more blocks for data records
+   */
   FormatBlock block;
+  /**
+   * Definition of key-value block in file
+   */
   FormatTable format;
+  /**
+   * Rendering syntax for the foreign key-value file "GEMS3K" | "BIB" | "RIS" | ...
+   */
   std::string renderer;
+  /**
+   * Label of data type (vertex type), e.g. "datasource", "element" ...
+   */
   std::string label;
+  /**
+   * Definition of value, line, row, block, comment, end-of-data separators
+   */
   Separators separators;
+  /**
+   * Export: the whole comment text; Import: the comment begin markup string (to skip until endl)
+   */
   std::string comment;
+  /**
+   * File name or "console" for export
+   */
   std::string fname;
+  /**
+   * number of data blocks (records) >=1, 0 if unknown
+   */
   int32_t Nblocks;
+  /**
+   * total number of text lines in the file, 0 if unknown
+   */
   int32_t Nlines;
+  /**
+   * direction
+   * 
+   * @see DirectionType
+   */
   DirectionType::type direction;
 
   _FormatTableFile__isset __isset;
@@ -992,6 +1280,9 @@ typedef struct _FormatStructDataFile__isset {
   bool direction :1;
 } _FormatStructDataFile__isset;
 
+/**
+ * Definition of foreign structured data JSON/YAML/XML text file
+ */
 class FormatStructDataFile : public virtual ::apache::thrift::TBase {
  public:
 
@@ -1001,13 +1292,39 @@ class FormatStructDataFile : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~FormatStructDataFile() noexcept;
+  /**
+   * Format for one or more blocks for data records
+   */
   FormatBlock block;
+  /**
+   * Rendering syntax for the foreign file "JSON" | "YAML" | "XML" | ...
+   */
   std::string renderer;
+  /**
+   * Label of data type (vertex type), e.g. "datasource", "element" ...
+   */
   std::string label;
+  /**
+   * Definition of value, line, row, block, comment, end-of-data separators
+   */
   std::string comment;
+  /**
+   * File name or "console" for export
+   */
   std::string fname;
+  /**
+   * number of data blocks (records) >=1, 0 if unknown
+   */
   int32_t Nblocks;
+  /**
+   * total number of text lines in the file, 0 if unknown
+   */
   int32_t Nlines;
+  /**
+   * direction
+   * 
+   * @see DirectionType
+   */
   DirectionType::type direction;
 
   _FormatStructDataFile__isset __isset;
@@ -1080,6 +1397,9 @@ typedef struct _FormatImportExportFile__isset {
   bool ff_stdata :1;
 } _FormatImportExportFile__isset;
 
+/**
+ * Generalized import-export data file format
+ */
 class FormatImportExportFile : public virtual ::apache::thrift::TBase {
  public:
 
@@ -1089,9 +1409,21 @@ class FormatImportExportFile : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~FormatImportExportFile() noexcept;
+  /**
+   * Definition of text data file format
+   */
   FormatTextFile ff_text;
+  /**
+   * Definition of data table file format
+   */
   FormatTableFile ff_table;
+  /**
+   * Definition of file format with key-value pair data
+   */
   FormatKeyValueFile ff_keyvalue;
+  /**
+   * Definition of foreign structured data JSON/YAML/XML file format
+   */
   FormatStructDataFile ff_stdata;
 
   _FormatImportExportFile__isset __isset;
@@ -1149,6 +1481,9 @@ typedef struct _ImpexFormat__isset {
   bool extension :1;
 } _ImpexFormat__isset;
 
+/**
+ * description of import/export format record
+ */
 class ImpexFormat : public virtual ::apache::thrift::TBase {
  public:
 
@@ -1158,16 +1493,51 @@ class ImpexFormat : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~ImpexFormat() noexcept;
+  /**
+   * Handle (id) of this record or 0 if unknown
+   */
   std::string _id;
+  /**
+   * ID of this record within the impex collection (part of _id)
+   */
   std::string _key;
+  /**
+   * Code of revision (changed by the system at every update)
+   */
   std::string _rev;
+  /**
+   * short description/keywd (used as key field)
+   */
   std::string name;
+  /**
+   * impex schema
+   */
   std::string impexschema;
+  /**
+   * record schema
+   */
   std::string schema;
+  /**
+   * description of record
+   */
   std::string comment;
+  /**
+   * direction
+   * 
+   * @see DirectionType
+   */
   DirectionType::type direction;
+  /**
+   * format structure
+   */
   std::string impex;
+  /**
+   * Id/description of foreign file format
+   */
   std::string format;
+  /**
+   * file extension
+   */
   std::string extension;
 
   _ImpexFormat__isset __isset;

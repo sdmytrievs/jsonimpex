@@ -14,26 +14,74 @@
 namespace query {
 
 int _kQueryStyleValues[] = {
+  /**
+   * Undefined query
+   */
   QueryStyle::QUndef,
+  /**
+   * Fields template query
+   */
   QueryStyle::QTemplate,
+  /**
+   * Select all records
+   */
   QueryStyle::QAll,
+  /**
+   * Select outgoing edges
+   */
   QueryStyle::QEdgesFrom,
+  /**
+   * Select incoming edges
+   */
   QueryStyle::QEdgesTo,
+  /**
+   * Select edges by query
+   */
   QueryStyle::QEdgesAll,
+  /**
+   * AQL-style query
+   */
   QueryStyle::QAQL,
+  /**
+   * EJDB-style query
+   */
   QueryStyle::QEJDB
 };
 const char* _kQueryStyleNames[] = {
+  /**
+   * Undefined query
+   */
   "QUndef",
+  /**
+   * Fields template query
+   */
   "QTemplate",
+  /**
+   * Select all records
+   */
   "QAll",
+  /**
+   * Select outgoing edges
+   */
   "QEdgesFrom",
+  /**
+   * Select incoming edges
+   */
   "QEdgesTo",
+  /**
+   * Select edges by query
+   */
   "QEdgesAll",
+  /**
+   * AQL-style query
+   */
   "QAQL",
+  /**
+   * EJDB-style query
+   */
   "QEJDB"
 };
-const std::map<int, const char*> _QueryStyle_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(8, _kQueryStyleValues, _kQueryStyleNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+const std::map<int, const char*> _QueryStyle_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(8, _kQueryStyleValues, _kQueryStyleNames), ::apache::thrift::TEnumIterator(-1, nullptr, nullptr));
 
 std::ostream& operator<<(std::ostream& out, const QueryStyle::type& val) {
   std::map<int, const char*>::const_iterator it = _QueryStyle_VALUES_TO_NAMES.find(val);

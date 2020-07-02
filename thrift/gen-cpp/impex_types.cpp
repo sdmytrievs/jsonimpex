@@ -14,14 +14,26 @@
 namespace impex {
 
 int _kDirectionTypeValues[] = {
+  /**
+   * import
+   */
   DirectionType::IMPORT,
+  /**
+   * export
+   */
   DirectionType::EXPORT
 };
 const char* _kDirectionTypeNames[] = {
+  /**
+   * import
+   */
   "IMPORT",
+  /**
+   * export
+   */
   "EXPORT"
 };
-const std::map<int, const char*> _DirectionType_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(2, _kDirectionTypeValues, _kDirectionTypeNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+const std::map<int, const char*> _DirectionType_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(2, _kDirectionTypeValues, _kDirectionTypeNames), ::apache::thrift::TEnumIterator(-1, nullptr, nullptr));
 
 std::ostream& operator<<(std::ostream& out, const DirectionType::type& val) {
   std::map<int, const char*>::const_iterator it = _DirectionType_VALUES_TO_NAMES.find(val);

@@ -25,7 +25,7 @@ const char* _kCollectionTypeNames[] = {
   "CEdge",
   "CAll"
 };
-const std::map<int, const char*> _CollectionType_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(4, _kCollectionTypeValues, _kCollectionTypeNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+const std::map<int, const char*> _CollectionType_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(4, _kCollectionTypeValues, _kCollectionTypeNames), ::apache::thrift::TEnumIterator(-1, nullptr, nullptr));
 
 std::ostream& operator<<(std::ostream& out, const CollectionType::type& val) {
   std::map<int, const char*>::const_iterator it = _CollectionType_VALUES_TO_NAMES.find(val);
@@ -62,7 +62,7 @@ const char* _kResponseCodeNames[] = {
   "RecordNotFound",
   "RecordExists"
 };
-const std::map<int, const char*> _ResponseCode_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(6, _kResponseCodeValues, _kResponseCodeNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+const std::map<int, const char*> _ResponseCode_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(6, _kResponseCodeValues, _kResponseCodeNames), ::apache::thrift::TEnumIterator(-1, nullptr, nullptr));
 
 std::ostream& operator<<(std::ostream& out, const ResponseCode::type& val) {
   std::map<int, const char*>::const_iterator it = _ResponseCode_VALUES_TO_NAMES.find(val);

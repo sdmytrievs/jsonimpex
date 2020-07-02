@@ -19,6 +19,13 @@ namespace dbserver {
   #pragma warning (disable : 4250 ) //inheriting methods via dominance 
 #endif
 
+/**
+ * Note about collection name:
+ * Thrift string type translates to std::string in C++ and String in
+ * Java. Thrift does not validate whether the string is in utf8 in C++,
+ * but it does in Java. If you are using this class in C++, you need to
+ * make sure the map name is in utf8. Otherwise requests will fail.
+ */
 class DBServerIf {
  public:
   virtual ~DBServerIf() {}
@@ -330,6 +337,10 @@ class DBServer_ping_result {
   }
 
   virtual ~DBServer_ping_result() noexcept;
+  /**
+   * 
+   * @see ResponseCode
+   */
   ResponseCode::type success;
 
   _DBServer_ping_result__isset __isset;
@@ -363,6 +374,10 @@ class DBServer_ping_presult {
 
 
   virtual ~DBServer_ping_presult() noexcept;
+  /**
+   * 
+   * @see ResponseCode
+   */
   ResponseCode::type* success;
 
   _DBServer_ping_presult__isset __isset;
@@ -424,6 +439,10 @@ class DBServer_addCollection_args {
 
   virtual ~DBServer_addCollection_args() noexcept;
   std::string colName;
+  /**
+   * 
+   * @see CollectionType
+   */
   CollectionType::type ctype;
 
   _DBServer_addCollection_args__isset __isset;
@@ -458,6 +477,10 @@ class DBServer_addCollection_pargs {
 
   virtual ~DBServer_addCollection_pargs() noexcept;
   const std::string* colName;
+  /**
+   * 
+   * @see CollectionType
+   */
   const CollectionType::type* ctype;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -478,6 +501,10 @@ class DBServer_addCollection_result {
   }
 
   virtual ~DBServer_addCollection_result() noexcept;
+  /**
+   * 
+   * @see ResponseCode
+   */
   ResponseCode::type success;
 
   _DBServer_addCollection_result__isset __isset;
@@ -511,6 +538,10 @@ class DBServer_addCollection_presult {
 
 
   virtual ~DBServer_addCollection_presult() noexcept;
+  /**
+   * 
+   * @see ResponseCode
+   */
   ResponseCode::type* success;
 
   _DBServer_addCollection_presult__isset __isset;
@@ -582,6 +613,10 @@ class DBServer_dropCollection_result {
   }
 
   virtual ~DBServer_dropCollection_result() noexcept;
+  /**
+   * 
+   * @see ResponseCode
+   */
   ResponseCode::type success;
 
   _DBServer_dropCollection_result__isset __isset;
@@ -615,6 +650,10 @@ class DBServer_dropCollection_presult {
 
 
   virtual ~DBServer_dropCollection_presult() noexcept;
+  /**
+   * 
+   * @see ResponseCode
+   */
   ResponseCode::type* success;
 
   _DBServer_dropCollection_presult__isset __isset;
@@ -637,6 +676,10 @@ class DBServer_listCollections_args {
   }
 
   virtual ~DBServer_listCollections_args() noexcept;
+  /**
+   * 
+   * @see CollectionType
+   */
   CollectionType::type ctype;
 
   _DBServer_listCollections_args__isset __isset;
@@ -666,6 +709,10 @@ class DBServer_listCollections_pargs {
 
 
   virtual ~DBServer_listCollections_pargs() noexcept;
+  /**
+   * 
+   * @see CollectionType
+   */
   const CollectionType::type* ctype;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -1026,6 +1073,10 @@ class DBServer_UpdateRecord_result {
   }
 
   virtual ~DBServer_UpdateRecord_result() noexcept;
+  /**
+   * 
+   * @see ResponseCode
+   */
   ResponseCode::type success;
 
   _DBServer_UpdateRecord_result__isset __isset;
@@ -1059,6 +1110,10 @@ class DBServer_UpdateRecord_presult {
 
 
   virtual ~DBServer_UpdateRecord_presult() noexcept;
+  /**
+   * 
+   * @see ResponseCode
+   */
   ResponseCode::type* success;
 
   _DBServer_UpdateRecord_presult__isset __isset;
@@ -1137,6 +1192,10 @@ class DBServer_DeleteRecord_result {
   }
 
   virtual ~DBServer_DeleteRecord_result() noexcept;
+  /**
+   * 
+   * @see ResponseCode
+   */
   ResponseCode::type success;
 
   _DBServer_DeleteRecord_result__isset __isset;
@@ -1170,6 +1229,10 @@ class DBServer_DeleteRecord_presult {
 
 
   virtual ~DBServer_DeleteRecord_presult() noexcept;
+  /**
+   * 
+   * @see ResponseCode
+   */
   ResponseCode::type* success;
 
   _DBServer_DeleteRecord_presult__isset __isset;
@@ -1366,6 +1429,10 @@ class DBServer_DeleteEdges_result {
   }
 
   virtual ~DBServer_DeleteEdges_result() noexcept;
+  /**
+   * 
+   * @see ResponseCode
+   */
   ResponseCode::type success;
 
   _DBServer_DeleteEdges_result__isset __isset;
@@ -1399,6 +1466,10 @@ class DBServer_DeleteEdges_presult {
 
 
   virtual ~DBServer_DeleteEdges_presult() noexcept;
+  /**
+   * 
+   * @see ResponseCode
+   */
   ResponseCode::type* success;
 
   _DBServer_DeleteEdges_presult__isset __isset;
@@ -1654,41 +1725,196 @@ class DBServerClient : virtual public DBServerIf {
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
+  /**
+   * Pings DBServer.
+   * 
+   * @return Success - if ping was successful.
+   *         Error -   if ping failed.
+   */
   ResponseCode::type ping();
   void send_ping();
   ResponseCode::type recv_ping();
+  /**
+   * Stop DBServer.
+   * 
+   */
   void stop();
   void send_stop();
+  /**
+   * Add a new collection of records.
+   * 
+   * A record is a string key / json string value pair.
+   * A key uniquely identifies a record in a collection.
+   * 
+   * @param  colName collection name
+   * @param  ctype   collection type  (Vertex or Edge)
+   * @return Success - on success.
+   *         NameExists - collection already exists.
+   *         Error - on any other errors.
+   * 
+   * @param colName
+   * @param ctype
+   */
   ResponseCode::type addCollection(const std::string& colName, const CollectionType::type ctype);
   void send_addCollection(const std::string& colName, const CollectionType::type ctype);
   ResponseCode::type recv_addCollection();
+  /**
+   * Drops a collection of records.
+   * 
+   * @param colName collection name
+   * @return Ok - on success.
+   *         NameNotFound - map doesn't exist.
+   *         Error - on any other errors.
+   * 
+   * @param colName
+   */
   ResponseCode::type dropCollection(const std::string& colName);
   void send_dropCollection(const std::string& colName);
   ResponseCode::type recv_dropCollection();
+  /**
+   * List the collections.
+   * 
+   * @param  ctype   collection type  (Vertex or Edge or All )
+   * @returns StringListResponse
+   *              responseCode Success  or
+   *                           Error - on error.
+   *              values - list of collection names.
+   * 
+   * @param ctype
+   */
   void listCollections(StringListResponse& _return, const CollectionType::type ctype);
   void send_listCollections(const CollectionType::type ctype);
   void recv_listCollections(StringListResponse& _return);
+  /**
+   * Add new record into the collection
+   * 
+   * @param colName       collection name
+   * @param value         record value to save
+   * @returns
+   *          responseCode - Success
+   *                         NameNotFound collection doesn't exist.
+   *                         RecordExists
+   *                         Error
+   *              value -   oid of the record.
+   * 
+   * @param colName
+   * @param value
+   */
   void CreateRecord(KeyResponse& _return, const std::string& colName, const std::string& value);
   void send_CreateRecord(const std::string& colName, const std::string& value);
   void recv_CreateRecord(KeyResponse& _return);
+  /**
+   * Retrive one record from the collection
+   * 
+   * @param colName       collection name
+   * @param key           records key to retrive.
+   * @returns BinaryResponse
+   *              responseCode - Success
+   *                             NameNotFound collection doesn't exist.
+   *                             RecordNotFound record doesn't exist.
+   *                             Error on any other errors.
+   *              value - value of the record.
+   * 
+   * @param colName
+   * @param key
+   */
   void ReadRecord(ValueResponse& _return, const std::string& colName, const std::string& key);
   void send_ReadRecord(const std::string& colName, const std::string& key);
   void recv_ReadRecord(ValueResponse& _return);
+  /**
+   * Update record in the collection
+   * 
+   * @param colName       collection name
+   * @param key           records key to update.
+   * @param value         record value to update
+   * @returns Success
+   *          NameNotFound collection doesn't exist.
+   *          RecordNotFound
+   *          Error
+   * 
+   * @param colName
+   * @param key
+   * @param value
+   */
   ResponseCode::type UpdateRecord(const std::string& colName, const std::string& key, const std::string& value);
   void send_UpdateRecord(const std::string& colName, const std::string& key, const std::string& value);
   ResponseCode::type recv_UpdateRecord();
+  /**
+   * Removes record from the collection
+   * 
+   * @param colName       collection name
+   * @param key           records key to delete.
+   * @returns Success
+   *          NameNotFound collection doesn't exist.
+   *          RecordNotFound
+   *          Error
+   * 
+   * @param colName
+   * @param key
+   */
   ResponseCode::type DeleteRecord(const std::string& colName, const std::string& key);
   void send_DeleteRecord(const std::string& colName, const std::string& key);
   ResponseCode::type recv_DeleteRecord();
+  /**
+   * Returns list of records in a collection.
+   * 
+   * @param colName       collection name
+   * @param fields - list of fileds selection
+   * @param recordQuery   json query string for collection
+   * @return RecordListResponse
+   *             responseCode - Success
+   *                          - NameNotFound collection doesn't exist.
+   *                          - Error on any other errors
+   *             records - list of records.
+   * 
+   * @param colName
+   * @param fields
+   * @param recordQuery
+   */
   void SearchRecords(DBRecordListResponse& _return, const std::string& colName, const std::set<std::string> & fields, const  ::query::ConditionData& recordQuery);
   void send_SearchRecords(const std::string& colName, const std::set<std::string> & fields, const  ::query::ConditionData& recordQuery);
   void recv_SearchRecords(DBRecordListResponse& _return);
+  /**
+   * Delete edges connected to vertex record
+   * 
+   * @param colName       vertex collection name
+   * @param vertexkey     vertex key
+   * @returns Success
+   *          NameNotFound collection doesn't exist.
+   *          Error
+   * 
+   * @param colName
+   * @param vertexkey
+   */
   ResponseCode::type DeleteEdges(const std::string& colName, const std::string& vertexkey);
   void send_DeleteEdges(const std::string& colName, const std::string& vertexkey);
   ResponseCode::type recv_DeleteEdges();
+  /**
+   * Provides 'distinct' operation over collection
+   * 
+   * @param colName       collection name
+   * @param fpath         Field path to collect distinct values from.
+   * @return StringListResponse
+   *             responseCode - Success
+   *                          - NameNotFound collection doesn't exist.
+   *                          - Error on any other errors
+   *             names - list of distinct values filed fpath.
+   * 
+   * @param colName
+   * @param fpath
+   */
   void CollectValues(StringListResponse& _return, const std::string& colName, const std::string& fpath);
   void send_CollectValues(const std::string& colName, const std::string& fpath);
   void recv_CollectValues(StringListResponse& _return);
+  /**
+   *  Generate new unique oid or other key string
+   * 
+   * @param colName       collection name
+   * @returns new key string
+   * 
+   * @param colName
+   * @param _keytemplate
+   */
   void GenerateId(std::string& _return, const std::string& colName, const std::string& _keytemplate);
   void send_GenerateId(const std::string& colName, const std::string& _keytemplate);
   void recv_GenerateId(std::string& _return);
@@ -1764,6 +1990,12 @@ class DBServerMultiface : virtual public DBServerIf {
     ifaces_.push_back(iface);
   }
  public:
+  /**
+   * Pings DBServer.
+   * 
+   * @return Success - if ping was successful.
+   *         Error -   if ping failed.
+   */
   ResponseCode::type ping() {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -1773,6 +2005,10 @@ class DBServerMultiface : virtual public DBServerIf {
     return ifaces_[i]->ping();
   }
 
+  /**
+   * Stop DBServer.
+   * 
+   */
   void stop() {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -1782,6 +2018,21 @@ class DBServerMultiface : virtual public DBServerIf {
     ifaces_[i]->stop();
   }
 
+  /**
+   * Add a new collection of records.
+   * 
+   * A record is a string key / json string value pair.
+   * A key uniquely identifies a record in a collection.
+   * 
+   * @param  colName collection name
+   * @param  ctype   collection type  (Vertex or Edge)
+   * @return Success - on success.
+   *         NameExists - collection already exists.
+   *         Error - on any other errors.
+   * 
+   * @param colName
+   * @param ctype
+   */
   ResponseCode::type addCollection(const std::string& colName, const CollectionType::type ctype) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -1791,6 +2042,16 @@ class DBServerMultiface : virtual public DBServerIf {
     return ifaces_[i]->addCollection(colName, ctype);
   }
 
+  /**
+   * Drops a collection of records.
+   * 
+   * @param colName collection name
+   * @return Ok - on success.
+   *         NameNotFound - map doesn't exist.
+   *         Error - on any other errors.
+   * 
+   * @param colName
+   */
   ResponseCode::type dropCollection(const std::string& colName) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -1800,6 +2061,17 @@ class DBServerMultiface : virtual public DBServerIf {
     return ifaces_[i]->dropCollection(colName);
   }
 
+  /**
+   * List the collections.
+   * 
+   * @param  ctype   collection type  (Vertex or Edge or All )
+   * @returns StringListResponse
+   *              responseCode Success  or
+   *                           Error - on error.
+   *              values - list of collection names.
+   * 
+   * @param ctype
+   */
   void listCollections(StringListResponse& _return, const CollectionType::type ctype) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -1810,6 +2082,21 @@ class DBServerMultiface : virtual public DBServerIf {
     return;
   }
 
+  /**
+   * Add new record into the collection
+   * 
+   * @param colName       collection name
+   * @param value         record value to save
+   * @returns
+   *          responseCode - Success
+   *                         NameNotFound collection doesn't exist.
+   *                         RecordExists
+   *                         Error
+   *              value -   oid of the record.
+   * 
+   * @param colName
+   * @param value
+   */
   void CreateRecord(KeyResponse& _return, const std::string& colName, const std::string& value) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -1820,6 +2107,21 @@ class DBServerMultiface : virtual public DBServerIf {
     return;
   }
 
+  /**
+   * Retrive one record from the collection
+   * 
+   * @param colName       collection name
+   * @param key           records key to retrive.
+   * @returns BinaryResponse
+   *              responseCode - Success
+   *                             NameNotFound collection doesn't exist.
+   *                             RecordNotFound record doesn't exist.
+   *                             Error on any other errors.
+   *              value - value of the record.
+   * 
+   * @param colName
+   * @param key
+   */
   void ReadRecord(ValueResponse& _return, const std::string& colName, const std::string& key) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -1830,6 +2132,21 @@ class DBServerMultiface : virtual public DBServerIf {
     return;
   }
 
+  /**
+   * Update record in the collection
+   * 
+   * @param colName       collection name
+   * @param key           records key to update.
+   * @param value         record value to update
+   * @returns Success
+   *          NameNotFound collection doesn't exist.
+   *          RecordNotFound
+   *          Error
+   * 
+   * @param colName
+   * @param key
+   * @param value
+   */
   ResponseCode::type UpdateRecord(const std::string& colName, const std::string& key, const std::string& value) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -1839,6 +2156,19 @@ class DBServerMultiface : virtual public DBServerIf {
     return ifaces_[i]->UpdateRecord(colName, key, value);
   }
 
+  /**
+   * Removes record from the collection
+   * 
+   * @param colName       collection name
+   * @param key           records key to delete.
+   * @returns Success
+   *          NameNotFound collection doesn't exist.
+   *          RecordNotFound
+   *          Error
+   * 
+   * @param colName
+   * @param key
+   */
   ResponseCode::type DeleteRecord(const std::string& colName, const std::string& key) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -1848,6 +2178,22 @@ class DBServerMultiface : virtual public DBServerIf {
     return ifaces_[i]->DeleteRecord(colName, key);
   }
 
+  /**
+   * Returns list of records in a collection.
+   * 
+   * @param colName       collection name
+   * @param fields - list of fileds selection
+   * @param recordQuery   json query string for collection
+   * @return RecordListResponse
+   *             responseCode - Success
+   *                          - NameNotFound collection doesn't exist.
+   *                          - Error on any other errors
+   *             records - list of records.
+   * 
+   * @param colName
+   * @param fields
+   * @param recordQuery
+   */
   void SearchRecords(DBRecordListResponse& _return, const std::string& colName, const std::set<std::string> & fields, const  ::query::ConditionData& recordQuery) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -1858,6 +2204,18 @@ class DBServerMultiface : virtual public DBServerIf {
     return;
   }
 
+  /**
+   * Delete edges connected to vertex record
+   * 
+   * @param colName       vertex collection name
+   * @param vertexkey     vertex key
+   * @returns Success
+   *          NameNotFound collection doesn't exist.
+   *          Error
+   * 
+   * @param colName
+   * @param vertexkey
+   */
   ResponseCode::type DeleteEdges(const std::string& colName, const std::string& vertexkey) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -1867,6 +2225,20 @@ class DBServerMultiface : virtual public DBServerIf {
     return ifaces_[i]->DeleteEdges(colName, vertexkey);
   }
 
+  /**
+   * Provides 'distinct' operation over collection
+   * 
+   * @param colName       collection name
+   * @param fpath         Field path to collect distinct values from.
+   * @return StringListResponse
+   *             responseCode - Success
+   *                          - NameNotFound collection doesn't exist.
+   *                          - Error on any other errors
+   *             names - list of distinct values filed fpath.
+   * 
+   * @param colName
+   * @param fpath
+   */
   void CollectValues(StringListResponse& _return, const std::string& colName, const std::string& fpath) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -1877,6 +2249,15 @@ class DBServerMultiface : virtual public DBServerIf {
     return;
   }
 
+  /**
+   *  Generate new unique oid or other key string
+   * 
+   * @param colName       collection name
+   * @returns new key string
+   * 
+   * @param colName
+   * @param _keytemplate
+   */
   void GenerateId(std::string& _return, const std::string& colName, const std::string& _keytemplate) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -1919,41 +2300,196 @@ class DBServerConcurrentClient : virtual public DBServerIf {
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
+  /**
+   * Pings DBServer.
+   * 
+   * @return Success - if ping was successful.
+   *         Error -   if ping failed.
+   */
   ResponseCode::type ping();
   int32_t send_ping();
   ResponseCode::type recv_ping(const int32_t seqid);
+  /**
+   * Stop DBServer.
+   * 
+   */
   void stop();
   void send_stop();
+  /**
+   * Add a new collection of records.
+   * 
+   * A record is a string key / json string value pair.
+   * A key uniquely identifies a record in a collection.
+   * 
+   * @param  colName collection name
+   * @param  ctype   collection type  (Vertex or Edge)
+   * @return Success - on success.
+   *         NameExists - collection already exists.
+   *         Error - on any other errors.
+   * 
+   * @param colName
+   * @param ctype
+   */
   ResponseCode::type addCollection(const std::string& colName, const CollectionType::type ctype);
   int32_t send_addCollection(const std::string& colName, const CollectionType::type ctype);
   ResponseCode::type recv_addCollection(const int32_t seqid);
+  /**
+   * Drops a collection of records.
+   * 
+   * @param colName collection name
+   * @return Ok - on success.
+   *         NameNotFound - map doesn't exist.
+   *         Error - on any other errors.
+   * 
+   * @param colName
+   */
   ResponseCode::type dropCollection(const std::string& colName);
   int32_t send_dropCollection(const std::string& colName);
   ResponseCode::type recv_dropCollection(const int32_t seqid);
+  /**
+   * List the collections.
+   * 
+   * @param  ctype   collection type  (Vertex or Edge or All )
+   * @returns StringListResponse
+   *              responseCode Success  or
+   *                           Error - on error.
+   *              values - list of collection names.
+   * 
+   * @param ctype
+   */
   void listCollections(StringListResponse& _return, const CollectionType::type ctype);
   int32_t send_listCollections(const CollectionType::type ctype);
   void recv_listCollections(StringListResponse& _return, const int32_t seqid);
+  /**
+   * Add new record into the collection
+   * 
+   * @param colName       collection name
+   * @param value         record value to save
+   * @returns
+   *          responseCode - Success
+   *                         NameNotFound collection doesn't exist.
+   *                         RecordExists
+   *                         Error
+   *              value -   oid of the record.
+   * 
+   * @param colName
+   * @param value
+   */
   void CreateRecord(KeyResponse& _return, const std::string& colName, const std::string& value);
   int32_t send_CreateRecord(const std::string& colName, const std::string& value);
   void recv_CreateRecord(KeyResponse& _return, const int32_t seqid);
+  /**
+   * Retrive one record from the collection
+   * 
+   * @param colName       collection name
+   * @param key           records key to retrive.
+   * @returns BinaryResponse
+   *              responseCode - Success
+   *                             NameNotFound collection doesn't exist.
+   *                             RecordNotFound record doesn't exist.
+   *                             Error on any other errors.
+   *              value - value of the record.
+   * 
+   * @param colName
+   * @param key
+   */
   void ReadRecord(ValueResponse& _return, const std::string& colName, const std::string& key);
   int32_t send_ReadRecord(const std::string& colName, const std::string& key);
   void recv_ReadRecord(ValueResponse& _return, const int32_t seqid);
+  /**
+   * Update record in the collection
+   * 
+   * @param colName       collection name
+   * @param key           records key to update.
+   * @param value         record value to update
+   * @returns Success
+   *          NameNotFound collection doesn't exist.
+   *          RecordNotFound
+   *          Error
+   * 
+   * @param colName
+   * @param key
+   * @param value
+   */
   ResponseCode::type UpdateRecord(const std::string& colName, const std::string& key, const std::string& value);
   int32_t send_UpdateRecord(const std::string& colName, const std::string& key, const std::string& value);
   ResponseCode::type recv_UpdateRecord(const int32_t seqid);
+  /**
+   * Removes record from the collection
+   * 
+   * @param colName       collection name
+   * @param key           records key to delete.
+   * @returns Success
+   *          NameNotFound collection doesn't exist.
+   *          RecordNotFound
+   *          Error
+   * 
+   * @param colName
+   * @param key
+   */
   ResponseCode::type DeleteRecord(const std::string& colName, const std::string& key);
   int32_t send_DeleteRecord(const std::string& colName, const std::string& key);
   ResponseCode::type recv_DeleteRecord(const int32_t seqid);
+  /**
+   * Returns list of records in a collection.
+   * 
+   * @param colName       collection name
+   * @param fields - list of fileds selection
+   * @param recordQuery   json query string for collection
+   * @return RecordListResponse
+   *             responseCode - Success
+   *                          - NameNotFound collection doesn't exist.
+   *                          - Error on any other errors
+   *             records - list of records.
+   * 
+   * @param colName
+   * @param fields
+   * @param recordQuery
+   */
   void SearchRecords(DBRecordListResponse& _return, const std::string& colName, const std::set<std::string> & fields, const  ::query::ConditionData& recordQuery);
   int32_t send_SearchRecords(const std::string& colName, const std::set<std::string> & fields, const  ::query::ConditionData& recordQuery);
   void recv_SearchRecords(DBRecordListResponse& _return, const int32_t seqid);
+  /**
+   * Delete edges connected to vertex record
+   * 
+   * @param colName       vertex collection name
+   * @param vertexkey     vertex key
+   * @returns Success
+   *          NameNotFound collection doesn't exist.
+   *          Error
+   * 
+   * @param colName
+   * @param vertexkey
+   */
   ResponseCode::type DeleteEdges(const std::string& colName, const std::string& vertexkey);
   int32_t send_DeleteEdges(const std::string& colName, const std::string& vertexkey);
   ResponseCode::type recv_DeleteEdges(const int32_t seqid);
+  /**
+   * Provides 'distinct' operation over collection
+   * 
+   * @param colName       collection name
+   * @param fpath         Field path to collect distinct values from.
+   * @return StringListResponse
+   *             responseCode - Success
+   *                          - NameNotFound collection doesn't exist.
+   *                          - Error on any other errors
+   *             names - list of distinct values filed fpath.
+   * 
+   * @param colName
+   * @param fpath
+   */
   void CollectValues(StringListResponse& _return, const std::string& colName, const std::string& fpath);
   int32_t send_CollectValues(const std::string& colName, const std::string& fpath);
   void recv_CollectValues(StringListResponse& _return, const int32_t seqid);
+  /**
+   *  Generate new unique oid or other key string
+   * 
+   * @param colName       collection name
+   * @returns new key string
+   * 
+   * @param colName
+   * @param _keytemplate
+   */
   void GenerateId(std::string& _return, const std::string& colName, const std::string& _keytemplate);
   int32_t send_GenerateId(const std::string& colName, const std::string& _keytemplate);
   void recv_GenerateId(std::string& _return, const int32_t seqid);

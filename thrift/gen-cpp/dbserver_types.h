@@ -65,6 +65,10 @@ class KeyResponse;
 class StringListResponse;
 
 
+/**
+ * Struct for data record
+ * A record is a string key / json string value pair.
+ */
 class DBRecord : public virtual ::apache::thrift::TBase {
  public:
 
@@ -111,6 +115,10 @@ typedef struct _DBRecordListResponse__isset {
   bool errormsg :1;
 } _DBRecordListResponse__isset;
 
+/**
+ * Structure with query response
+ * list of pair key - value record or brief information from query
+ */
 class DBRecordListResponse : public virtual ::apache::thrift::TBase {
  public:
 
@@ -120,6 +128,10 @@ class DBRecordListResponse : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~DBRecordListResponse() noexcept;
+  /**
+   * 
+   * @see ResponseCode
+   */
   ResponseCode::type responseCode;
   std::vector<DBRecord>  records;
   std::string errormsg;
@@ -164,6 +176,9 @@ typedef struct _ValueResponse__isset {
   bool errormsg :1;
 } _ValueResponse__isset;
 
+/**
+ * Struct value (json string) response
+ */
 class ValueResponse : public virtual ::apache::thrift::TBase {
  public:
 
@@ -173,6 +188,10 @@ class ValueResponse : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~ValueResponse() noexcept;
+  /**
+   * 
+   * @see ResponseCode
+   */
   ResponseCode::type responseCode;
   std::string value;
   std::string errormsg;
@@ -217,6 +236,9 @@ typedef struct _KeyResponse__isset {
   bool errormsg :1;
 } _KeyResponse__isset;
 
+/**
+ * Struct key response
+ */
 class KeyResponse : public virtual ::apache::thrift::TBase {
  public:
 
@@ -226,6 +248,10 @@ class KeyResponse : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~KeyResponse() noexcept;
+  /**
+   * 
+   * @see ResponseCode
+   */
   ResponseCode::type responseCode;
   std::string key;
   std::string errormsg;
@@ -270,6 +296,9 @@ typedef struct _StringListResponse__isset {
   bool errormsg :1;
 } _StringListResponse__isset;
 
+/**
+ * Struct keys list response
+ */
 class StringListResponse : public virtual ::apache::thrift::TBase {
  public:
 
@@ -279,6 +308,10 @@ class StringListResponse : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~StringListResponse() noexcept;
+  /**
+   * 
+   * @see ResponseCode
+   */
   ResponseCode::type responseCode;
   std::vector<std::string>  names;
   std::string errormsg;

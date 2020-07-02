@@ -31,8 +31,8 @@ endif()
 
 
 # Define which types of libraries to build
-option(BUILD_SHARED_LIBS "Build shared libraries." ON)
-option(BUILD_STATIC_LIBS "Build static libraries." ON)
+option( BUILD_IMPEX_SHARED_LIBS "Build shared libraries." ON)
+option( BUILD_IMPEX_STATIC_LIBS "Build static libraries." ON)
 option(BuildExamples "Build EXAMPLES" OFF)
 option(BuildTests "Build test suite" ON)
 

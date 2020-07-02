@@ -21,15 +21,42 @@
 
 namespace query {
 
+/**
+ * Classes of query style
+ */
 struct QueryStyle {
   enum type {
+    /**
+     * Undefined query
+     */
     QUndef = -1,
+    /**
+     * Fields template query
+     */
     QTemplate = 0,
+    /**
+     * Select all records
+     */
     QAll = 1,
+    /**
+     * Select outgoing edges
+     */
     QEdgesFrom = 2,
+    /**
+     * Select incoming edges
+     */
     QEdgesTo = 3,
+    /**
+     * Select edges by query
+     */
     QEdgesAll = 5,
+    /**
+     * AQL-style query
+     */
     QAQL = 6,
+    /**
+     * EJDB-style query
+     */
     QEJDB = 7
   };
 };
@@ -51,6 +78,9 @@ typedef struct _ConditionData__isset {
   bool fields :1;
 } _ConditionData__isset;
 
+/**
+ * Struct for query condition
+ */
 class ConditionData : public virtual ::apache::thrift::TBase {
  public:
 
@@ -60,9 +90,23 @@ class ConditionData : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~ConditionData() noexcept;
+  /**
+   * query style
+   * 
+   * @see QueryStyle
+   */
   QueryStyle::type style;
+  /**
+   * query string
+   */
   std::string find;
+  /**
+   * bind values string
+   */
   std::string bind;
+  /**
+   * return fields map
+   */
   std::map<std::string, std::string>  fields;
 
   _ConditionData__isset __isset;
@@ -110,6 +154,9 @@ typedef struct _Query__isset {
   bool filter_generator :1;
 } _Query__isset;
 
+/**
+ * description of query record
+ */
 class Query : public virtual ::apache::thrift::TBase {
  public:
 
@@ -119,14 +166,41 @@ class Query : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~Query() noexcept;
+  /**
+   * id of this query record or 0 if unknown
+   */
   std::string _id;
+  /**
+   * ID of this record within the impex collection (part of _id)
+   */
   std::string _key;
+  /**
+   * Code of revision (changed by the system at every update)
+   */
   std::string _rev;
+  /**
+   * short name of query (used as key field)
+   */
   std::string name;
+  /**
+   * description of query
+   */
   std::string comment;
+  /**
+   * query filter condtition
+   */
   ConditionData condition;
+  /**
+   * list of fields to collect
+   */
   std::vector<std::string>  collect;
+  /**
+   * query for schema
+   */
   std::string qschema;
+  /**
+   * query generator state
+   */
   std::string filter_generator;
 
   _Query__isset __isset;

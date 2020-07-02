@@ -135,7 +135,7 @@ test -f /usr/local/lib/libthrift.a || {
                 git clone http://github.com/apache/thrift && \
                 cd thrift && \
                 ./bootstrap.sh && \
-                ./configure --without-lua --without-qt5 && \
+                ./configure  CXXFLAGS='-fPIC' --without-lua --without-qt5 && \
                 make -j $threads && \
                 sudo make install
 
