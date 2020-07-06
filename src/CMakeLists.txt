@@ -79,20 +79,20 @@ if( BUILD_IMPEX_STATIC_LIBS )
     install(TARGETS JSONIMPEX14_STATIC DESTINATION lib)
 endif()
 
-add_custom_command( OUTPUT  gen-cpp/impex_constants.h  gen-cpp/impex_types.h gen-cpp/impex_constants.cpp  gen-cpp/impex_types.cpp
+add_custom_command( OUTPUT  gen-cpp/impex_types.h gen-cpp/impex_types.cpp
                     PRE_BUILD
                     COMMAND echo touching impex
                     COMMAND thrift -r -v --gen cpp ${CMAKE_SOURCE_DIR}/thrift/impex.thrift
                   )
 
-add_custom_command( OUTPUT  gen-cpp/query_constants.h  gen-cpp/query_types.h gen-cpp/query_constants.cpp  gen-cpp/query_types.cpp
+add_custom_command( OUTPUT  gen-cpp/query_types.h gen-cpp/query_types.cpp
                     PRE_BUILD
                     COMMAND echo touching query
                     COMMAND thrift -r -v --gen cpp ${CMAKE_SOURCE_DIR}/thrift/query.thrift
                   )
 
-add_custom_command( OUTPUT  gen-cpp/dbserver_constants.h  gen-cpp/dbserver_types.h gen-cpp/DBServer.h
-                            gen-cpp/dbserver_constants.cpp gen-cpp/dbserver_types.cpp gen-cpp/DBServer.cpp
+add_custom_command( OUTPUT  gen-cpp/dbserver_types.h gen-cpp/DBServer.h
+                            gen-cpp/dbserver_types.cpp gen-cpp/DBServer.cpp
                     PRE_BUILD
                     COMMAND echo touching dbserver
                     COMMAND thrift -r -v --gen cpp ${CMAKE_SOURCE_DIR}/thrift/dbserver.thrift
