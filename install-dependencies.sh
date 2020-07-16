@@ -1,5 +1,5 @@
 #!/bin/bash
-# Installing dependencies needed to build jsonimpex14
+# Installing dependencies needed to build jsonimpex17
 
 if [ "$(uname)" == "Darwin" ]; then
 
@@ -19,7 +19,7 @@ fi
 # Uncomment what is necessary to reinstall by force
 #sudo rm -f /usr/local/lib/libvelocypack.*
 #sudo rm -f /usr/local/lib/libjsonarango.*
-#sudo rm -f /usr/local/lib/libjsonio14.*
+#sudo rm -f /usr/local/lib/libjsonio17.*
 #sudo rm -f /usr/local/lib/libpugixml.*
 #sudo rm -f /usr/local/lib/libyaml-cpp.*
 #sudo rm -f /usr/local/lib/libthrift.a
@@ -67,14 +67,14 @@ test -f /usr/local/lib/libjsonarango.a || {
                  rm -rf ~/code
 }
 
-# JSONIO14 database client
-# if no JSONIO installed in /usr/local/lib/libjsonio14.a (/usr/local/include/jsonio14)
-test -f /usr/local/lib/libjsonio14.a || {
+# JSONIO17 database client
+# if no JSONIO installed in /usr/local/lib/libjsonio17.a (/usr/local/include/jsonio17)
+test -f /usr/local/lib/libjsonio17.a || {
 
         # Building jsonio library
         mkdir -p ~/code && \
                 cd ~/code && \
-                git clone https://bitbucket.org/gems4/jsonio14.git -b $BRANCH_JSON && \
+                git clone https://bitbucket.org/gems4/jsonio17.git -b $BRANCH_JSON && \
                 cd jsonio && \
                 mkdir -p build && \
                 cd build && \

@@ -1,9 +1,9 @@
 #include <cstring>
 #include <iostream>
 
-#include "jsonio14/dbquerybase.h"
-#include "jsonio14/io_settings.h"
-#include "jsonimpex14/dbdriver_thrift.h"
+#include "jsonio17/dbquerybase.h"
+#include "jsonio17/io_settings.h"
+#include "jsonimpex17/dbdriver_thrift.h"
 
 #include <thrift/transport/TSocket.h>
 #include <thrift/transport/TBufferTransports.h>
@@ -18,7 +18,7 @@ using namespace apache::thrift::protocol;
 using namespace  dbserver;
 
 
-namespace jsonio14 {
+namespace jsonio17 {
 
 
 /// Definition private of graph database chain used Thrift server
@@ -617,4 +617,4 @@ void ThriftClient::reset_db_connection( const std::string &theHost, int thePort 
 }
 
 
-} // namespace jsonio14
+} // namespace jsonio17

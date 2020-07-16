@@ -1,4 +1,4 @@
-name: jsonimpex14
+name: jsonimpex17
 
 dependencies:
   - gxx_linux-64=7.3.0  # [linux]
@@ -11,7 +11,7 @@ dependencies:
   - nlohmann_json
   - velocypack
   - jsonarango
-  - jsonio14
+  - jsonio17
   - thrift
   - lua5.3
   - yaml-cpp

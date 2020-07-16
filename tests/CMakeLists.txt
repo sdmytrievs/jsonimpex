@@ -15,8 +15,8 @@ if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
       target_link_libraries( test_main
             PUBLIC gtest
             PUBLIC stdc++fs
-            PUBLIC jsonimpex14-static
-            PUBLIC jsonio14-static
+            PUBLIC jsonimpex17-static
+            PUBLIC jsonio17-static
             PUBLIC jsonarango-static
             PRIVATE velocypack
             PRIVATE libcurl
@@ -29,8 +29,8 @@ else()
       target_link_libraries( test_main
            PUBLIC gtest
            PUBLIC stdc++fs
-           PUBLIC jsonimpex14
-           PUBLIC jsonio14
+           PUBLIC jsonimpex17
+           PUBLIC jsonio17
            PUBLIC jsonarango
            PUBLIC velocypack
            PUBLIC curl

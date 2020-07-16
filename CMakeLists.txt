@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.7)
 
 # Set the name of the project
-project(jsonimpex14 CXX C)
+project(jsonimpex17 CXX C)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 17)
@@ -74,14 +74,14 @@ if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
 endif()
 
 
-# Set the jsonimpex14 source directory path
-set(JSONIMPEX14_SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
-set(JSONIMPEX14_HEADER_DIR ${CMAKE_SOURCE_DIR}/include)
+# Set the jsonimpex17 source directory path
+set(JSONIMPEX17_SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
+set(JSONIMPEX17_HEADER_DIR ${CMAKE_SOURCE_DIR}/include)
 
 
 # Set the include directories
-include_directories(${JSONIMPEX14_SOURCE_DIR})
-include_directories(${JSONIMPEX14_HEADER_DIR})
+include_directories(${JSONIMPEX17_SOURCE_DIR})
+include_directories(${JSONIMPEX17_HEADER_DIR})
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/src/gen-cpp")
 if(${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
     include_directories("/usr/local/include")

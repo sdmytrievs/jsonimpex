@@ -1,5 +1,5 @@
 # options
-message(STATUS "Building jsonimpex14 examples: ${BuildExamples}")
+message(STATUS "Building jsonimpex17 examples: ${BuildExamples}")
 
 include_directories(${CMAKE_SOURCE_DIR})
 
@@ -12,8 +12,8 @@ foreach (exampleName ${Examples})
     if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
           target_link_libraries(${exampleName}
             PUBLIC stdc++fs
-            PUBLIC jsonimpex14-static
-            PUBLIC jsonio14-static
+            PUBLIC jsonimpex17-static
+            PUBLIC jsonio17-static
             PUBLIC jsonarango-static
             PRIVATE velocypack
             PRIVATE libcurl
@@ -25,8 +25,8 @@ foreach (exampleName ${Examples})
     else()
           target_link_libraries( ${exampleName}
             PUBLIC stdc++fs
-            PUBLIC jsonimpex14
-            PUBLIC jsonio14
+            PUBLIC jsonimpex17
+            PUBLIC jsonio17
             PUBLIC jsonarango
             PUBLIC velocypack
             PUBLIC curl

@@ -1,6 +1,6 @@
 
 # Recursively collect all header files from the current directory
-file(GLOB_RECURSE HEADER_FILES_TOP  ${CMAKE_SOURCE_DIR}/include/jsonimpex14/*.h )
+file(GLOB_RECURSE HEADER_FILES_TOP  ${CMAKE_SOURCE_DIR}/include/jsonimpex17/*.h )
 
 # Recursively collect all header files from the current directory
 file(GLOB_RECURSE HEADER_FILES  *.h )
@@ -31,19 +31,19 @@ set( gencpp_HEADER
 add_library( gencpp STATIC ${gencpp_SOURCES} )
 
 # Create the shared library using the collected source files
-add_library(JSONIMPEX14_OBJECTS OBJECT ${HEADER_FILES_TOP} ${HEADER_FILES} ${SOURCE_FILES} )
+add_library(JSONIMPEX17_OBJECTS OBJECT ${HEADER_FILES_TOP} ${HEADER_FILES} ${SOURCE_FILES} )
 
-add_dependencies(JSONIMPEX14_OBJECTS gencpp)
+add_dependencies(JSONIMPEX17_OBJECTS gencpp)
 
 # Check if a shared library is to be built
 if( BUILD_IMPEX_SHARED_LIBS )
-    add_library(JSONIMPEX14_SHARED SHARED $<TARGET_OBJECTS:JSONIMPEX14_OBJECTS>)
+    add_library(JSONIMPEX17_SHARED SHARED $<TARGET_OBJECTS:JSONIMPEX17_OBJECTS>)
 
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
-      target_link_libraries(JSONIMPEX14_SHARED
+      target_link_libraries(JSONIMPEX17_SHARED
             PUBLIC gencpp
             PUBLIC stdc++fs
-            PUBLIC jsonio14-static
+            PUBLIC jsonio17-static
             PUBLIC jsonarango-static
             PRIVATE velocypack
             PRIVATE libcurl
@@ -53,10 +53,10 @@ if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
             PRIVATE pugixml
             PUBLIC pthread )
 else()
-      target_link_libraries( JSONIMPEX14_SHARED
+      target_link_libraries( JSONIMPEX17_SHARED
            PUBLIC gencpp
            PUBLIC stdc++fs
-           PUBLIC jsonio14
+           PUBLIC jsonio17
            PUBLIC jsonarango
            PUBLIC velocypack
            PUBLIC curl
@@ -67,16 +67,16 @@ else()
            PUBLIC pthread )
 endif()
 
-    set_target_properties(JSONIMPEX14_SHARED PROPERTIES OUTPUT_NAME jsonimpex14)
-    install(TARGETS JSONIMPEX14_SHARED DESTINATION lib)
+    set_target_properties(JSONIMPEX17_SHARED PROPERTIES OUTPUT_NAME jsonimpex17)
+    install(TARGETS JSONIMPEX17_SHARED DESTINATION lib)
 endif()
 
 # Check if a static library is to be built
 if( BUILD_IMPEX_STATIC_LIBS )
-    add_library(JSONIMPEX14_STATIC STATIC $<TARGET_OBJECTS:JSONIMPEX14_OBJECTS>)
-    target_link_libraries(JSONIMPEX14_STATIC gencpp )
-    set_target_properties(JSONIMPEX14_STATIC PROPERTIES OUTPUT_NAME jsonimpex14-static)
-    install(TARGETS JSONIMPEX14_STATIC DESTINATION lib)
+    add_library(JSONIMPEX17_STATIC STATIC $<TARGET_OBJECTS:JSONIMPEX17_OBJECTS>)
+    target_link_libraries(JSONIMPEX17_STATIC gencpp )
+    set_target_properties(JSONIMPEX17_STATIC PROPERTIES OUTPUT_NAME jsonimpex17-static)
+    install(TARGETS JSONIMPEX17_STATIC DESTINATION lib)
 endif()
 
 add_custom_command( OUTPUT  gen-cpp/impex_types.h gen-cpp/impex_types.cpp
@@ -99,7 +99,7 @@ add_custom_command( OUTPUT  gen-cpp/dbserver_types.h gen-cpp/DBServer.h
                   )
 
 install(
-    DIRECTORY   "${JSONIMPEX14_HEADER_DIR}/jsonimpex14"
+    DIRECTORY   "${JSONIMPEX17_HEADER_DIR}/jsonimpex17"
     DESTINATION include
 )
                   

@@ -1,6 +1,6 @@
 #include "lua-run.h"
 
-namespace jsonio14 {
+namespace jsonio17 {
 
 // Initialization
 LuaRun::LuaRun( const std::string& lib_path ): lua_lib_path( lib_path )
@@ -154,4 +154,4 @@ bool LuaRun::runFunc( const std::string& lua_script, std::string& value )
     return true;
 }
 
-} // namespace jsonio14
+} // namespace jsonio17

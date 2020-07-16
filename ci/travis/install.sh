@@ -17,7 +17,7 @@ conda install conda-devenv
 conda update -q conda
 conda info -a
 conda devenv
-source activate jsonimpex14
+source activate jsonimpex17
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release \

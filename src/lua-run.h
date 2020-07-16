@@ -5,7 +5,7 @@
 #include <iostream>
 #include <lua5.3/lua.hpp>
 
-namespace jsonio14 {
+namespace jsonio17 {
 
 /// LUA-C++ Integration Class
 class LuaRun
@@ -139,6 +139,6 @@ template <> bool LuaRun::set_vector(const std::string& valname, const std::vecto
 template <> bool LuaRun::get_vector(const std::string& valname, std::vector<std::string>& v);
 template <> bool LuaRun::runFunc( const std::string& luascript, std::string& value );
 
-} // namespace jsonio14
+} // namespace jsonio17
 
 
