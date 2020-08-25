@@ -32,8 +32,8 @@ class  KeyValueIEFile: public AbstractIEFile
 {
 public:
 
-    KeyValueIEFile( ImpexFormatFile::ImpexMode amode, const std::string& data_schema_name, const std::string& alualibPath,
-                    const FormatKeyValueFile& defData );
+    KeyValueIEFile( ImpexFormatFile::ImpexMode amode, const std::string& data_schema_name, const std::string& lua_lib_path,
+                    const FormatKeyValueFile& format_description_data );
 
     ~KeyValueIEFile() {}
 

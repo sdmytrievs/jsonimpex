@@ -537,7 +537,7 @@ void ThriftClient::set_server_key( std::string &second, const std::string& id_ke
 
 std::string ThriftClient::create_record(const std::string &collname, std::string& second, const JsonBase& recdata)
 {
-    auto  jsonrec = recdata.dump();
+    auto  jsonrec = recdata.dump( true );
     auto new_id =  pdata->CreateRecord( collname, jsonrec);
     set_server_key( second, new_id );
     return new_id;
@@ -546,7 +546,7 @@ std::string ThriftClient::create_record(const std::string &collname, std::string
 // Save/update record in the collection
 std::string ThriftClient::update_record( const std::string& collname, keysmap_t::iterator& it, const JsonBase& recdata )
 {
-    auto  jsonrec = recdata.dump();
+    auto  jsonrec = recdata.dump( true );
     std::string rid = get_server_key( it->second );
     rid = pdata->UpdateRecord(  collname, rid, jsonrec );
     return rid;

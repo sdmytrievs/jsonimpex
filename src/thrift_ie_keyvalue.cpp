@@ -456,7 +456,7 @@ bool KeyValueIEFile::writeBlockToFile( const ValuesMap& writeData_ )
     std::string headstr = format.head_regexp;
     for( auto token: tokens )
     {
-        impexValues = extractValue( token.substr(1), externData );
+        impexValues = extractValue( token.substr(1), external_data );
         if( impexValues.size() > 0 )
              headstr = regexp_replace( headstr, token, impexValues[0] );
     }
@@ -484,15 +484,15 @@ bool KeyValueIEFile::writeBlockToFile( const ValuesMap& writeData_ )
 
       get_ostream() << regexp_replace( format.key_regexp, "%key", impexKey );
 
-      impexOrganization = impexFieldOrganization( impexKey );
+      impexOrganization = impex_field_organization( impexKey );
       if( impexOrganization=="list" || impexOrganization == "set" ||
               impexOrganization == "group" )
        impexSize = impexValues.size();
       else
        impexSize = 1;
 
-      impexType = impexFieldType( impexKey );
-      for( uint ii=0; ii< impexSize; ii++  )
+      impexType = impex_field_type( impexKey );
+      for( size_t ii=0; ii< impexSize; ii++  )
        if( !format.strvalue_exp.empty()  && impexType == "string" )
          get_ostream() << regexp_replace( format.strvalue_exp, "%value", impexValues[ii] ) << format.value_token_regexp;
        else
@@ -506,7 +506,7 @@ bool KeyValueIEFile::writeBlockToFile( const ValuesMap& writeData_ )
     std::string endstr = format.end_regexp;
     for( auto token: tokens )
     {
-        impexValues = extractValue( token.substr(1), external_data );
+        impexValues = extract_value( token.substr(1), external_data );
         if( impexValues.size() > 0 )
              endstr = regexp_replace( endstr, token, impexValues[0] );
     }

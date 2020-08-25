@@ -8,7 +8,7 @@ using namespace  ::impex;
 
 namespace jsonio17 {
 
-/// Class AbstractIEFile - abstract interface of import/export to/from foreign format files..
+/// Class AbstractIEFile - abstract interface of import/export to/from foreign format files.
 class AbstractIEFile
 {
 
@@ -16,7 +16,7 @@ public:
 
     /// The constructor
     explicit AbstractIEFile( ImpexFormatFile::ImpexMode amode, const std::string& data_schema_name, const std::string& lua_lib_path ):
-        mode_use(amode), lua_run(lua_lib_path), dom_node( JsonSchema::object(data_schema_name) )
+        mode_use(amode), lua_run(lua_lib_path), label(data_schema_name), dom_node( JsonSchema::object(data_schema_name) )
     {}
 
     virtual ~AbstractIEFile()
@@ -36,7 +36,7 @@ public:
     virtual void closeFile() {}
 
     /// Load string to import from ( or export to stringstream )
-    virtual void loadString( const std::string& input_data ) {}
+    virtual void loadString( const std::string& input_data ) = 0;
 
     // Import part -----------------------------------------------------------------
 
@@ -53,24 +53,24 @@ public:
         // write data to structNode
         set_readed_data();
         // Run script for operation on data values in block
-        run_block_script(block.script, dom_node );
+        run_block_script( block.script, dom_node );
 
         // return data to json std::string
         json_block_data = dom_node.dump();
         return true;
     }
 
-    /// Convert free format json to schema defined ( FormatStructDataFile only )
-    bool readBlock( const std::string&, std::string&, std::string&, int )
-    {
-        return false;
-    }
+//    /// Convert free format json to schema defined ( FormatStructDataFile only )
+//    virtual bool readBlock( const std::string&, std::string&, std::string&, int )
+//    {
+//        return false;
+//    }
 
-    /// Read next json object  ( FormatStructDataFile only )
-    bool nextFromFile( std::string& )
-    {
-        return false;
-    }
+//    /// Read next json object  ( FormatStructDataFile only )
+//    virtual bool nextFromFile( std::string& )
+//    {
+//        return false;
+//    }
 
     // Export part -----------------------------------------------------------------
 
@@ -118,7 +118,7 @@ protected:
 
 
     /// Read data from one block in file
-    virtual bool read_block_from_file() {}
+    virtual bool read_block_from_file() = 0;
 
     /// Save readed data to DOM
     virtual void set_readed_data();
@@ -140,9 +140,9 @@ protected:
     std::string impex_field_type( const std::string& impex_field_key );
 
     /// Inser key value paies to extern data list
-    void add_map_key_value( const std::string& _key, const  std::vector<std::string>& vec );
+    void add_map_key_value( const std::string& key, const  std::vector<std::string>& values );
 
-    std::vector<std::string> extractValue( const std::string& key,
+    std::vector<std::string> extract_value( const std::string& key,
                                            const key_values_table_t& write_data )
     {
         auto itval = write_data.find(key);
