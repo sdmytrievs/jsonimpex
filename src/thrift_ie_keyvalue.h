@@ -6,7 +6,6 @@
 namespace jsonio17 {
 
 
-
 // http://eax.me/cpp-regex/
 // https://regex101.com/
 
@@ -32,18 +31,20 @@ class  KeyValueIEFile: public AbstractIEFile
 {
 public:
 
-    KeyValueIEFile( ImpexFormatFile::ImpexMode amode, const std::string& data_schema_name, const std::string& lua_lib_path,
-                    const FormatKeyValueFile& format_description_data );
+    KeyValueIEFile( ImpexFormatFile::ImpexMode amode, const std::string& data_schema_name,
+                    const std::string& lua_lib_path,  const FormatKeyValueFile& format_description_data );
 
     ~KeyValueIEFile() {}
 
     /// Open file to import
-    void openFile( const std::string& inputFname ) override;
+    void openFile( const std::string& file_path ) override;
     /// Close internal file
     void closeFile() override;
 
     /// Load string to import from ( or export to stringstream )
-    void loadString( const std::string& inputData ) override;
+    void loadString( const std::string& input_data ) override;
+    /// Get string export to ( if export to stringstream )
+    std::string getString() override;
 
     /// Convert free format json to schema defined ( FormatStructDataFile only )
     virtual bool readBlock( const std::string&, std::string&, std::string&, int ) override
@@ -57,14 +58,6 @@ public:
         return false;
     }
 
-    /// Convert readed key-value data to schema defined json
-    bool initBlock(  std::string& blockdata, const key_values_table_t& readed_data );
-
-    const key_values_table_t& readedData() const
-    {
-        return external_data;
-    }
-
     // export part -----------------------------------------------------------------
 
     /// Write data from one block to file
@@ -73,54 +66,55 @@ public:
 protected:
 
     bool use_string_stream = false;
-    std::fstream _fstream;      ///< Stream to input/output
-    std::stringstream _stringstream;      ///< Stream to input/output
+    /// File stream to input/output
+    std::fstream file_stream;
+    /// String stream to input/output
+    std::stringstream string_stream;
+
+    /// Definition of key-value pair (line) in file
+    FormatKeyValue format;
+    /// Rendering syntax for the foreign key-value file "GEMS3K" | "BIB" | "RIS" | ...
+    std::string renderer;
+    /// Obsolute Definition of value, line, row, block, comment, end-of-data separators
+    Separators separs;
+
+    /// Internal data to match regular expr
+    std::string str_buf;
+    std::string::const_iterator test_start;
+    std::string::const_iterator test_end;
+
+
     std::istream& get_istream()
     {
         if( use_string_stream )
-            return _stringstream;
+            return string_stream;
         else
-            return _fstream;
+            return file_stream;
     }
     std::ostream& get_ostream()
     {
         if( use_string_stream )
-            return _stringstream;
+            return string_stream;
         else
-            return _fstream;
+            return file_stream;
     }
 
-    /** Definition of key-value pair (line) in file */
-    //FormatKeyValuePair lineFormat;
-    /** Definition of key-value pair (line) in file */
-    FormatKeyValue format;
-    /** Rendering syntax for the foreign key-value file "GEMS3K" | "BIB" | "RIS" | ... */
-    std::string renderer;
-    /** Obsolute Definition of value, line, row, block, comment, end-of-data separators */
-    Separators separs;
-
-    // internal data
-    std::string str_buf;  ///< Internal data to match regular expr
-    std::string::const_iterator test_start;
-    std::string::const_iterator test_end;
-
-    // internal functions
-
-    bool readBlockFromFile();
-    bool readNextBlockfromFile();
-    bool readRegexp( const std::string& re_str, std::vector<std::string>& mach_str );
-    bool testRegexp( const std::string& re_str );
-    bool readStartBlock();
-    bool isEndBlock();
-    std::string readAllValue();
-    bool readKeyValuePair();
-    void addKeyValue( const std::string& _key, const std::string& _value );
-    void insertKeyValue( const std::string& _key, const std::vector<std::string>& vec );
-    void skipComments();
-
-
+    bool read_block_from_file() override;
+    bool read_next_block_from_file();
+    bool read_regexp( const std::string& re_str, std::vector<std::string>& mach_str );
+    bool test_regexp( const std::string& re_str );
+    bool read_start_block();
+    bool is_end_block();
+    std::string read_all_value();
+    bool read_key_value_pair();
+    void add_key_value( const std::string& key, const std::string& value );
+    void insert_key_value( const std::string& key, const std::vector<std::string>& values );
+    void skip_comments();
 };
 
+KeyValueIEFile* connectFormatKeyValueFile( int amode, const JsonBase& object, const std::string& lua_lib_path );
+// ImpexFormatFile::formats["FormatKeyValueFile"] = connectFormatKeyValueFile;
+// ImpexFormatFile::addFormat("FormatKeyValueFile", connectFormatKeyValueFile);
 
 } // namespace jsonio17
 

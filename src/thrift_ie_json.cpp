@@ -68,7 +68,6 @@ std::string StructDataIEFile::getString()
     return ie_stream->getString();
 }
 
-// Read next bson object
 bool StructDataIEFile::nextFromFile( std::string& inputjson )
 {
     return ie_stream->loadNext( inputjson );
