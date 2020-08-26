@@ -25,26 +25,25 @@ public:
     /// Close internal file
     void closeFile() override;
 
-    /// Load string to import from ( or export to stringstream ) not implemented
-    void loadString( const std::string& ) override;
+    /// Load string to import from ( or export to stringstream )
+    void loadString( const std::string& input_data ) override;
+    /// Get string export to ( if export to stringstream )
+    std::string getString() override;
+
 
     // Import part -----------------------------------------------------------------
 
     /// Read next json object
-    bool nextFromFile( std::string& inputjson );
+    bool nextFromFile( std::string& inputjson ) override;
 
     /// Convert free format json to schema defined
-    bool readBlock(  const std::string& inputjson, std::string& schemajson, std::string& key, int ndx=-1 );
+    bool readBlock(  const std::string& inputjson, std::string& schemajson, std::string& key, int ndx=-1 ) override;
 
 
     // export part -----------------------------------------------------------------
 
     /// Write data from one block to file
     virtual bool writeBlockToFile( const key_values_table_t& data_to_write ) override;
-
-    /// Extract data from Json to structure
-    virtual void extractDataToWrite( const std::string& json_block_data, key_values_table_t& data_to_write ) override;
-
 
 protected:
 
@@ -64,8 +63,13 @@ protected:
     /// Read data one block from json data
     bool read_block_from_json( const std::string& inputjson, std::string& key, int ndx=-1 );
 
-
+    bool extract_values(const std::string &key, const JsonFree &foreign_node, values_t &values) const;
 };
+
+StructDataIEFile* connectFormatStructDataFile( int amode, const JsonBase& object, const std::string& lua_lib_path );
+// ImpexFormatFile::formats["FormatStructDataFile"] = connectFormatStructDataFile;
+// ImpexFormatFile::addFormat("FormatStructDataFile", connectFormatStructDataFile);
+
 
 } // namespace jsonio17
 

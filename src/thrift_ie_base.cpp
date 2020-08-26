@@ -2,32 +2,32 @@
 #include "jsonio17/io_settings.h"
 #include "jsonio17/jsonschema.h"
 #include "thrift_ie_base.h"
-#include "TJSONSerializer.h"
+//#include "TJSONSerializer.h"
 
 namespace jsonio17 {
 
 
-void writeDataToJsonSchema( JsonBase& object,
-                            const std::string& struct_name, ::apache::thrift::TBase* data )
-{
-    //Set the Serializator
-    ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( ioSettings().Schema() );
-    proto->setDom( object, struct_name );
-    // Set json object to  structure
-    /*int  i = */data->write(proto.get());
-    //std::cout << "Wrote " << i << " bytes" << std::endl;
-}
+//void writeDataToJsonSchema( JsonBase& object,
+//                            const std::string& struct_name, ::apache::thrift::TBase* data )
+//{
+//    //Set the Serializator
+//    ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( ioSettings().Schema() );
+//    proto->setDom( object, struct_name );
+//    // Set json object to  structure
+//    /*int  i = */data->write(proto.get());
+//    //std::cout << "Wrote " << i << " bytes" << std::endl;
+//}
 
-void readDataFromJsonSchema( const JsonBase& object,
-                             const std::string& struct_name,  ::apache::thrift::TBase* data )
-{
-    //Set the Serializator
-    ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( ioSettings().Schema() );
-    proto->setDom( const_cast<JsonBase&>(object), struct_name );
-    // Get json object from structure
-    /*int  i = */data->read(proto.get());
-    //std::cout << "Read " << i << " bytes" << std::endl;
-}
+//void readDataFromJsonSchema( const JsonBase& object,
+//                             const std::string& struct_name,  ::apache::thrift::TBase* data )
+//{
+//    //Set the Serializator
+//    ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( ioSettings().Schema() );
+//    proto->setDom( const_cast<JsonBase&>(object), struct_name );
+//    // Get json object from structure
+//    /*int  i = */data->read(proto.get());
+//    //std::cout << "Read " << i << " bytes" << std::endl;
+//}
 
 
 void AbstractIEFile::set_readed_data()
@@ -36,7 +36,7 @@ void AbstractIEFile::set_readed_data()
     auto itr = block.defaults.begin();
     while ( itr != block.defaults.end() )
     {
-        auto fld = const_cast<JsonSchema*>(dynamic_cast<const JsonSchema*>( dom_node.field(itr->first) ));
+        auto fld = const_cast<JsonSchema*>( dom_node.field(itr->first) );
         if( fld == nullptr)
         {
             std::cout << "Not found " <<  itr->first << std::endl;
@@ -64,7 +64,7 @@ void AbstractIEFile::set_readed_data()
         if( idom->second.ignore || domkey.empty() )  // skip ignored
             continue;
 
-        auto fld = const_cast<JsonSchema*>( dynamic_cast<const JsonSchema*>( dom_node.field(domkey) ));
+        auto fld = const_cast<JsonSchema*>( dom_node.field(domkey) );
         if( !fld )
         {
             auto pos = domkey.find_last_of(".");
@@ -72,7 +72,7 @@ void AbstractIEFile::set_readed_data()
             {
                 std::string key = std::string(domkey,  pos+1 );
                 domkey = std::string(domkey, 0, pos);
-                fld = const_cast<JsonSchema*>( dynamic_cast<const JsonSchema*>( dom_node.field(domkey) ));
+                fld = const_cast<JsonSchema*>( dom_node.field(domkey) );
                 if( fld && fld->isMap() )
                 {
                     run_convert( idom->second.convert, impvalue );
@@ -84,7 +84,7 @@ void AbstractIEFile::set_readed_data()
         }
 
         run_convert( idom->second.convert, impvalue );
-        if( fld->elemTypeId() == ::apache::thrift::protocol::T_STRING )
+        if( fld->elemType() == FieldDef::T_STRING )
             run_lua_script_string( idom->second.script, impvalue, fld->isArray() );
         else
             run_lua_script( idom->second.script, impvalue, fld->isArray() );
@@ -290,7 +290,7 @@ void AbstractIEFile::extractDataToWrite( const std::string& json_block_data, key
         if( idom->second.ignore || domkey.empty() )  // skip ignored
         {   idom++; continue; }
 
-        auto fld = dynamic_cast<const JsonSchema*>( dom_node.field( domkey ) );
+        auto fld = dom_node.field( domkey );
         if( !fld )
         {   idom++; continue; } // field is not present
 
@@ -311,7 +311,7 @@ void AbstractIEFile::extractDataToWrite( const std::string& json_block_data, key
         bool isArray = impexOrganization =="list" || impexOrganization == "set";
 
         run_convert( idom->second.convert, nodeValues );
-        if( fld->elemTypeId() == ::apache::thrift::protocol::T_STRING )
+        if( fld->elemType() == FieldDef::T_STRING )
             run_lua_script_string( idom->second.script, nodeValues, isArray );
         else
             run_lua_script( idom->second.script, nodeValues, isArray );

@@ -45,6 +45,18 @@ public:
     /// Load string to import from ( or export to stringstream )
     void loadString( const std::string& inputData ) override;
 
+    /// Convert free format json to schema defined ( FormatStructDataFile only )
+    virtual bool readBlock( const std::string&, std::string&, std::string&, int ) override
+    {
+        return false;
+    }
+
+    /// Read next json object  ( FormatStructDataFile only )
+    virtual bool nextFromFile( std::string& ) override
+    {
+        return false;
+    }
+
     /// Convert readed key-value data to schema defined json
     bool initBlock(  std::string& blockdata, const key_values_table_t& readed_data );
 

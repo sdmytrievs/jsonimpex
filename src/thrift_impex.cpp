@@ -26,6 +26,11 @@ void ImpexFormatFile::loadString(const std::string &input_data)
     impex_format->loadString(input_data);
 }
 
+std::string ImpexFormatFile::getString()
+{
+    return impex_format->getString();
+}
+
 bool ImpexFormatFile::readBlock( std::string& json_block_data )
 {
     return impex_format->readBlock( json_block_data );

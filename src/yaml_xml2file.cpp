@@ -79,17 +79,17 @@ void JsonYamlXMLFile::save(const JsonBase& object) const
 {
     switch( file_type )
     {
-      case FileTypes::Json:
-          saveJson(  object );
-           break;
-      case FileTypes::Yaml:
-           saveYaml(  object );
-           break;
-      case FileTypes::XML:
-           saveXml(  object );
-           break;
-      default:
-           break;
+    case FileTypes::Json:
+        saveJson(  object );
+        break;
+    case FileTypes::Yaml:
+        saveYaml(  object );
+        break;
+    case FileTypes::XML:
+        saveXml(  object );
+        break;
+    default:
+        break;
     }
 }
 
@@ -103,25 +103,12 @@ void JsonYamlXMLArrayFile::Close()
     {
         std::fstream fout(file_path, std::ios::out );
         JSONIO_THROW_IF( !fout.good(), "JsonYamlXMLFile", 15, " file save error...  " + file_path );
-
-        switch( file_type )
-        {
-        case FileTypes::Json:
-            json::dump( fout, arr_object );
-            break;
-        case FileTypes::Yaml:
-            yaml::dump( fout, arr_object );
-            break;
-        case FileTypes::XML:
-            XML::dump( fout, arr_object );
-            break;
-        default:
-            break;
-        }
+        save_to_stream( fout );
     }
 
     is_opened = false;
 }
+
 
 void JsonYamlXMLArrayFile::Open( TxtFile::OpenModeTypes amode )
 {
@@ -139,21 +126,7 @@ void JsonYamlXMLArrayFile::Open( TxtFile::OpenModeTypes amode )
     if( open_mode == ReadOnly )
     {
         auto data_txt = TxtFile::load_all();
-
-        switch( file_type )
-        {
-        case FileTypes::Json:
-            json::loads( data_txt, arr_object );
-            break;
-        case FileTypes::Yaml:
-            yaml::loads( data_txt, arr_object );
-            break;
-        case FileTypes::XML:
-            XML::loads( data_txt, arr_object );
-            break;
-        default:
-            break;
-        }
+        read_from_string( data_txt );
     }
     else if( open_mode != WriteOnly )
     {
@@ -163,11 +136,74 @@ void JsonYamlXMLArrayFile::Open( TxtFile::OpenModeTypes amode )
     is_opened = true;
 }
 
+void JsonYamlXMLArrayFile::loadString( const std::string &data_string )
+{
+    if( isOpened() )
+    {
+        JSONIO_THROW( "JsonYamlXMLFile", 18,  "file was opened " + file_path );
+        return;
+    }
+
+    // clear settings
+    open_mode  = ReadOnly;
+    loaded_ndx = 0;
+    arr_object.clear();
+    read_from_string( data_string );
+}
+
+std::string JsonYamlXMLArrayFile::getString()
+{
+    if( open_mode == WriteOnly )
+    {
+       std::stringstream fout;
+       save_to_stream( fout );
+       return fout.str();
+    }
+    return "";
+}
+
 void JsonYamlXMLArrayFile::set_type( TxtFile::FileTypes ftype )
 {
     if( !( ftype == Json ||  ftype == Yaml || ftype == XML ) )
         JSONIO_THROW( "JsonYamlXMLFile", 11, " illegal file type." );
     file_type =  ftype;
+}
+
+void JsonYamlXMLArrayFile::read_from_string( const std::string &data_string )
+{
+    switch( file_type )
+    {
+    case FileTypes::Json:
+        json::loads( data_string, arr_object );
+        break;
+    case FileTypes::Yaml:
+        yaml::loads( data_string, arr_object );
+        break;
+    case FileTypes::XML:
+        XML::loads( data_string, arr_object );
+        break;
+    default:
+        break;
+    }
+}
+
+
+void JsonYamlXMLArrayFile::save_to_stream( std::ostream& os )
+{
+    switch( file_type )
+    {
+    case FileTypes::Json:
+        json::dump( os, arr_object );
+        break;
+    case FileTypes::Yaml:
+        yaml::dump( os, arr_object );
+        break;
+    case FileTypes::XML:
+        XML::dump( os, arr_object );
+        break;
+    default:
+        break;
+    }
 }
 
 

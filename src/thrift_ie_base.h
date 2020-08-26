@@ -37,6 +37,8 @@ public:
 
     /// Load string to import from ( or export to stringstream )
     virtual void loadString( const std::string& input_data ) = 0;
+    /// Get string export to ( if export to stringstream )
+    virtual std::string getString() = 0;
 
     // Import part -----------------------------------------------------------------
 
@@ -55,22 +57,16 @@ public:
         // Run script for operation on data values in block
         run_block_script( block.script, dom_node );
 
-        // return data to json std::string
+        // return data to json string
         json_block_data = dom_node.dump();
         return true;
     }
 
-//    /// Convert free format json to schema defined ( FormatStructDataFile only )
-//    virtual bool readBlock( const std::string&, std::string&, std::string&, int )
-//    {
-//        return false;
-//    }
+    /// Convert free format json to schema defined ( FormatStructDataFile only )
+    virtual bool readBlock( const std::string& inputjson, std::string& schemajson, std::string& key, int ndx=-1 ) =0;
 
-//    /// Read next json object  ( FormatStructDataFile only )
-//    virtual bool nextFromFile( std::string& )
-//    {
-//        return false;
-//    }
+    /// Read next json object  ( FormatStructDataFile only )
+    virtual bool nextFromFile( std::string& inputjson ) = 0;
 
     // Export part -----------------------------------------------------------------
 
@@ -85,8 +81,7 @@ public:
     {
         external_data.clear();
         extractDataToWrite( json_block_data, external_data );
-        writeBlockToFile( external_data );
-        return true;
+        return writeBlockToFile( external_data );
     }
 
 protected:

@@ -84,10 +84,20 @@ public:
     }
 
     void Close() override;
-    void Open(OpenModeTypes amode ) override;
+    void Open( OpenModeTypes amode ) override;
+
+    /// Load array from string ( do not need open file )
+    void loadString( const std::string& input_data ) override;
+    /// Export internal data to string
+    std::string getString() override;
 
     /// Setup file type
     void set_type( FileTypes ftype );
+
+protected:
+
+    void read_from_string( const std::string &data_string );
+    void save_to_stream( std::ostream &os );
 
 };
 

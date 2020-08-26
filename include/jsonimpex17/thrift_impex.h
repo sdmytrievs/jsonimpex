@@ -51,6 +51,8 @@ public:
 
     /// Load string to import from ( or export to stringstream )
     virtual void loadString( const std::string& input_data );
+    /// Get string export to ( if export to stringstream )
+    virtual std::string getString();
 
 
     // Import part -----------------------------------------------------------------
