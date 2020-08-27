@@ -23,7 +23,7 @@ uint32_t TJSONSerializer::writeMessageBegin(const std::string& name,
     arr.addString(  name );
     arr.addInt( messageType );
     arr.addInt(  seqid );
-    builders_stack.push( std::make_shared<JsonBuilderBase>(&arr) );
+    builders_stack.push( std::make_shared<JsonArrayBuilder>(arr) );
     return result;
 }
 
@@ -40,7 +40,7 @@ uint32_t TJSONSerializer::writeStructBegin(const char* name)
     if( write_context.size() > 0 )
     {
         auto obj = getDom()->addObject( write_context.top().getKey() );
-        builders_stack.push( std:shared_ptr<JsonBuilderBase>(obj) );
+        builders_stack.push( std::make_shared<JsonObjectBuilder>(obj) );
     }
     return 0;
 }
@@ -77,7 +77,7 @@ uint32_t TJSONSerializer::writeMapBegin(const TType /*keyType*/,
                                         const uint32_t /*size*/)
 {
     auto obj = getDom()->addObject( write_context.top().getName() );
-    builders_stack.push(std::make_shared<JsonBuilderBase>(obj) );
+    builders_stack.push(std::make_shared<JsonObjectBuilder>(obj) );
     return 0;
 }
 
@@ -90,7 +90,7 @@ uint32_t TJSONSerializer::writeMapEnd()
 uint32_t TJSONSerializer::writeListBegin(const TType /*elemType*/, const uint32_t /*size*/)
 {
     auto arr = getDom()->addArray( write_context.top().getName() );
-    builders_stack.push( std::make_shared<JsonBuilderBase>(arr) );
+    builders_stack.push( std::make_shared<JsonArrayBuilder>(arr) );
     return 0;
 }
 
@@ -103,7 +103,7 @@ uint32_t TJSONSerializer::writeListEnd()
 uint32_t TJSONSerializer::writeSetBegin(const TType /*elemType*/, const uint32_t /*size*/)
 {
     auto arr = getDom()->addArray( write_context.top().getName() );
-    builders_stack.push( std::make_shared<JsonBuilderBase>(arr) );
+    builders_stack.push( std::make_shared<JsonArrayBuilder>(arr) );
     return 0;
 }
 
