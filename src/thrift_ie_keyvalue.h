@@ -6,27 +6,8 @@
 namespace jsonio17 {
 
 
-// http://eax.me/cpp-regex/
-// https://regex101.com/
-
-// bib
-// "head_regexp" :   "^\\s*@article\\s*\\{\\s*(\\w+)\\s*,",
-// "key_regexp" :   "^\\s*(\\w+)\\s*=\\s*",
-// "value_regexp" :   "^\"([^\"]*)\"\\s*,{0,1}",
-// "end_regexp" :   "^\\s*\\}",
-
-// ris
-// "head_regexp" :   "",
-// "end_regexp" :   "^\\s*ER\\s*-\\s*",
-// "key_regexp" :   "^\\s*([A-Z0-9]{2})\\s*-\\s*",
-// "value_regexp" :   "",
-// "value_next" :   "\r\n",
-
-// Match a "quoted std::string"  : ^"(?:[^\\"]|\\.)*"$
-
-
-//--------------------------------------------------------------------------
-// Definition of text file with key-value pair data
+/// Class KeyValueIEFile - export/import of data records to/from text file with key-value pair data.
+/// Using a generated JSON schema of that input file format
 class  KeyValueIEFile: public AbstractIEFile
 {
 public:
@@ -75,14 +56,13 @@ protected:
     FormatKeyValue format;
     /// Rendering syntax for the foreign key-value file "GEMS3K" | "BIB" | "RIS" | ...
     std::string renderer;
-    /// Obsolute Definition of value, line, row, block, comment, end-of-data separators
-    Separators separs;
+    // Obsolute Definition of value, line, row, block, comment, end-of-data separators
+    //Separators separs;
 
     /// Internal data to match regular expr
     std::string str_buf;
     std::string::const_iterator test_start;
     std::string::const_iterator test_end;
-
 
     std::istream& get_istream()
     {
@@ -115,6 +95,7 @@ protected:
 KeyValueIEFile* connectFormatKeyValueFile( int amode, const JsonBase& object, const std::string& lua_lib_path );
 // ImpexFormatFile::formats["FormatKeyValueFile"] = connectFormatKeyValueFile;
 // ImpexFormatFile::addFormat("FormatKeyValueFile", connectFormatKeyValueFile);
+
 
 } // namespace jsonio17
 

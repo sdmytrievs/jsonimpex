@@ -2,32 +2,32 @@
 #include "jsonio17/io_settings.h"
 #include "jsonio17/jsonschema.h"
 #include "thrift_ie_base.h"
-//#include "TJSONSerializer.h"
+#include "TJSONSerializer.h"
 
 namespace jsonio17 {
 
 
-//void writeDataToJsonSchema( JsonBase& object,
-//                            const std::string& struct_name, ::apache::thrift::TBase* data )
-//{
-//    //Set the Serializator
-//    ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( ioSettings().Schema() );
-//    proto->setDom( object, struct_name );
-//    // Set json object to  structure
-//    /*int  i = */data->write(proto.get());
-//    //std::cout << "Wrote " << i << " bytes" << std::endl;
-//}
+void writeDataToJsonSchema( JsonBase& object,
+                            const std::string& struct_name, ::apache::thrift::TBase* data )
+{
+    //Set the Serializator
+    ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( ioSettings().Schema() );
+    proto->setDom( object, struct_name );
+    // Set json object to  structure
+    /*int  i = */data->write(proto.get());
+    //std::cout << "Wrote " << i << " bytes" << std::endl;
+}
 
-//void readDataFromJsonSchema( const JsonBase& object,
-//                             const std::string& struct_name,  ::apache::thrift::TBase* data )
-//{
-//    //Set the Serializator
-//    ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( ioSettings().Schema() );
-//    proto->setDom( const_cast<JsonBase&>(object), struct_name );
-//    // Get json object from structure
-//    /*int  i = */data->read(proto.get());
-//    //std::cout << "Read " << i << " bytes" << std::endl;
-//}
+void readDataFromJsonSchema( const JsonBase& object,
+                             const std::string& struct_name,  ::apache::thrift::TBase* data )
+{
+    //Set the Serializator
+    ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( ioSettings().Schema() );
+    proto->setDom( const_cast<JsonBase&>(object), struct_name );
+    // Get json object from structure
+    /*int  i = */data->read(proto.get());
+    //std::cout << "Read " << i << " bytes" << std::endl;
+}
 
 
 void AbstractIEFile::set_readed_data()

@@ -155,7 +155,7 @@ protected:
 
 void writeDataToJsonSchema( JsonBase& object, const std::string& structName, ::apache::thrift::TBase* data );
 void readDataFromJsonSchema( const JsonBase& object, const std::string& structName,  ::apache::thrift::TBase* data );
-
+std::string parseCode(/*regex_constants::error_type*/ int etype);
 
 } // namespace jsonio17
 

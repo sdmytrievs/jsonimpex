@@ -9,20 +9,19 @@ KeyValueIEFile* connectFormatKeyValueFile( int amode, const JsonBase& object, co
     FormatKeyValueFile fformatdata;
     readDataFromJsonSchema( object, "FormatKeyValueFile",  &fformatdata );
     //Create input structure
-    KeyValueIEFile* inputIEFile = new KeyValueIEFile( static_cast<ImpexFormatFile::ImpexMode>(amode), fformatdata.label, lua_lib_path, fformatdata );
+    KeyValueIEFile* inputIEFile = new KeyValueIEFile( static_cast<ImpexFormatFile::ImpexMode>(amode),
+                                                      fformatdata.label, lua_lib_path, fformatdata );
     return inputIEFile;
 }
 
 
-//--------------------------------------------------------------------------
 // Definition of text file with key-value pair data
-
 KeyValueIEFile::KeyValueIEFile( ImpexFormatFile::ImpexMode amode, const std::string& data_schema_name,
                                 const std::string& lua_lib_path,  const FormatKeyValueFile& format_description_data ):
-    AbstractIEFile( amode, data_schema_name, lua_lib_path),
-    format(format_description_data.format), renderer(format_description_data.renderer)
+    AbstractIEFile( amode, data_schema_name, lua_lib_path ),
+    format( format_description_data.format ), renderer( format_description_data.renderer )
 {
-    // set up data from  FormatKeyValueFile !!!
+    // set up data from  FormatKeyValueFile
     // label = format_description_data.label;
     comment = format_description_data.comment;
     file_name = format_description_data.fname;
@@ -32,7 +31,6 @@ KeyValueIEFile::KeyValueIEFile( ImpexFormatFile::ImpexMode amode, const std::str
     str_buf = "";
     test_start = str_buf.begin();
     test_end = str_buf.end();
-
 }
 
 // Open file to import
@@ -52,7 +50,7 @@ void KeyValueIEFile::openFile( const std::string& file_path )
     else
         file_stream.open( file_name,  std::fstream::out|std::fstream::app );
 
-    jsonioErrIf( !file_stream.good() , file_name, "Fileopen error...");
+    JSONIO_THROW_IF( !file_stream.good(), "KeyValueIEFile", 11, " could not open file to import/export from " + file_name);
 }
 
 // Close internal file
@@ -66,7 +64,7 @@ void KeyValueIEFile::loadString(const std::string &input_data)
 {
     use_string_stream = true;
 
-    if (file_stream.is_open())
+    if( file_stream.is_open() )
         file_stream.close();
 
     if( mode_use == ImpexFormatFile::modeImport )
@@ -74,13 +72,14 @@ void KeyValueIEFile::loadString(const std::string &input_data)
     else
         string_stream.str( "" );
 
-    jsonioErrIf( !string_stream.good(), "loadString", "Loading String error...");
-
+    JSONIO_THROW_IF( !file_stream.good(), "KeyValueIEFile", 12, " loading string error" );
 }
 
 std::string KeyValueIEFile::getString()
 {
-
+    if( use_string_stream)
+        return  string_stream.str();
+    JSONIO_THROW( "KeyValueIEFile", 13, " try get string when working with file stream" );
 }
 
 
@@ -91,7 +90,8 @@ bool  KeyValueIEFile::read_next_block_from_file()
     str_buf = std::string(test_start, test_end);
     // delete spaces
     if( !str_buf.empty() )
-    { std::string::size_type pos1 = str_buf.find_first_not_of(" \t\r\n");
+    {
+        std::string::size_type pos1 = str_buf.find_first_not_of(" \t\r\n");
         if( pos1 != std::string::npos )
             str_buf = str_buf.substr(pos1);
         else
@@ -105,13 +105,13 @@ bool  KeyValueIEFile::read_next_block_from_file()
 
     //let's say read by 2048 char block
     char buffer[2049];
-    memset(buffer,'\0', 2049 );
+    memset( buffer,'\0', 2049 );
     // read next block
     get_istream().read( buffer, 2048 );
     str_buf += std::string(buffer);
     test_start = str_buf.begin();
     test_end = str_buf.end();
-    //cout << endl << "!!!!" << _str_buf.c_str() << "\n<<<" << endl;
+    //cout << endl << "!!!!" << str_buf.c_str() << "\n<<<" << endl;
 
     return true;
 }
@@ -129,7 +129,7 @@ void KeyValueIEFile::skip_comments()
         if( !mach_str.empty() )
             insert_key_value( "comment", mach_str );
 
-        posb = str_buf.find_first_not_of(" \t\r\n",test_start-str_buf.begin() );
+        posb = str_buf.find_first_not_of( " \t\r\n", test_start-str_buf.begin() );
         if( posb != std::string::npos )
             test_start = str_buf.begin()+posb;
         else
@@ -159,7 +159,7 @@ bool KeyValueIEFile::read_regexp( const std::string& re_str, std::vector<std::st
         rgx::regex_constants::match_flag_type flags = rgx::regex_constants::match_continuous;//| rgx::regex_constants::match_partial;
         const rgx::regex expression( re_str.c_str() );
 
-        while(rgx::regex_search(test_start, test_end, what, expression, flags))
+        while( rgx::regex_search( test_start, test_end, what, expression, flags ) )
         {
             // match only partial
             if( !what[0].matched  )
@@ -168,11 +168,13 @@ bool KeyValueIEFile::read_regexp( const std::string& re_str, std::vector<std::st
                     return false; // end of file
             }
             else
-            { // what[0] contains the whole string
+            {
+                // what[0] contains the whole string
                 // what[>0] contains the tokens.
 
-                for( uint ii=1; ii < what.size(); ii++ )
-                { //cout <<  what[ii] << endl;
+                for( size_t ii=1; ii < what.size(); ii++ )
+                {
+                    //cout <<  what[ii] << endl;
                     mach_str.push_back(what[ii]);
                 }
                 // update search position:
@@ -185,7 +187,7 @@ bool KeyValueIEFile::read_regexp( const std::string& re_str, std::vector<std::st
     catch (rgx::regex_error &e)
     {
         std::cout << "what: " << e.what() << "; code: " << parseCode(e.code()) << std::endl;
-        jsonioErr("Error in Regular Expression", e.what(), re_str);
+        JSONIO_THROW( "KeyValueIEFile", 14, std::string(" Regular Expression parse error: ") + e.what() + "  " + re_str  );
     }
     return false;
 }
@@ -219,7 +221,7 @@ bool KeyValueIEFile::test_regexp( const std::string& re_str )
     catch (rgx::regex_error &e)
     {
         std::cout << "what: " << e.what() << "; code: " << parseCode(e.code()) << std::endl;
-        jsonioErr("Error in Regular Expression", e.what(), re_str);
+        JSONIO_THROW( "KeyValueIEFile", 15, std::string(" Regular Expression parse error: ") + e.what() + "  " + re_str  );
     }
     return false;
 }
@@ -245,10 +247,10 @@ bool KeyValueIEFile::read_start_block()
     std::vector<std::string> mach_str;
     bool ret = read_regexp( format.head_regexp, mach_str );
     if( ret )
-        for(uint ii=0; ii<mach_str.size(); ii++ )
+        for( size_t ii=0; ii<mach_str.size(); ii++ )
         {
-            std::string _key = "head"+std::to_string(ii);
-            add_key_value( _key, mach_str[ii] );
+            std::string akey = "head"+std::to_string(ii);
+            add_key_value( akey, mach_str[ii] );
         }
 
     return ret;
@@ -269,15 +271,16 @@ bool KeyValueIEFile::is_end_block()
             ret = true;
         else
             ret = test_regexp(  format.head_regexp );
-    } else
-    { // read end of block
+    }
+    else
+    {  // read end of block
         std::vector<std::string> mach_str;
         ret = read_regexp(  format.end_regexp, mach_str );
         if( ret )
-            for(uint ii=0; ii<mach_str.size(); ii++ )
+            for( size_t ii=0; ii<mach_str.size(); ii++ )
             {
-                std::string _key = "end"+std::to_string(ii);
-                add_key_value( _key, mach_str[ii] );
+                std::string akey = "end"+std::to_string(ii);
+                add_key_value( akey, mach_str[ii] );
             }
     }
     return ret;
@@ -321,13 +324,14 @@ std::string KeyValueIEFile::read_all_value()
         test_start = pos;
 
         if( pos == test_end )
-        {  if( !read_next_block_from_file() )
+        {
+            if( !read_next_block_from_file() )
                 break;
             pos = test_start;
         }
     }
-    posb = value.rfind(format.value_next);
-    return value.substr(0,posb );
+    posb = value.rfind( format.value_next );
+    return value.substr( 0,posb );
 }
 
 /// Read key value pair
@@ -342,7 +346,7 @@ bool KeyValueIEFile::read_key_value_pair()
     // get key
     if( !read_regexp(  format.key_regexp, mach_str ))
         return false;
-    key =mach_str[0];
+    key = mach_str[0];
 
     // skip comments and blanks
     skip_comments();
@@ -351,52 +355,54 @@ bool KeyValueIEFile::read_key_value_pair()
     if( !format.value_regexp.empty() )
     {
         if( read_regexp(  format.value_regexp, mach_str ))
-            value =mach_str[0];
+            value = mach_str[0];
     }
     else  // value untill end of block or key
     {
         value = read_all_value();
     }
 
-    strip_all(value);
+    trim( value );
     add_key_value( key, value );
     return true;
 }
 
 /// Inser key value paies to readed list
-void KeyValueIEFile::insert_key_value( const std::string& _key, const std::vector<std::string>& vec )
+void KeyValueIEFile::insert_key_value( const std::string& key, const std::vector<std::string>& values )
 {
-    auto itr = external_data.find(_key);
+    auto itr = external_data.find( key );
     if( itr != external_data.end() )
-    {    for( uint ii=0; ii<vec.size(); ii++ )
-            itr->second.push_back(vec[ii]);
+    {
+        for( const auto& val: values )
+            itr->second.push_back( val );
     }
     else
-        external_data.insert( std::pair<std::string, std::vector<std::string>>(_key, vec) );
+        external_data[key] = values;
 
 }
 
 /// Add key value data to Readed Key, Value pairs
-void KeyValueIEFile::add_key_value( const std::string& _key, const std::string& _value )
+void KeyValueIEFile::add_key_value( const std::string& key, const std::string& value )
 {
-    std::vector<std::string> vec;
-    vec.push_back(_value);
+    std::vector<std::string> values;
 
-    auto  organization = impex_field_organization( _key );
+    auto  organization = impex_field_organization( key );
 
     //  here we test if key is array type in  block.pairs type
     //  we split _value to vector use format.value_part_regexp
     if( organization == "list" ||   organization == "set" ||
             organization == "map" ||     organization == "group"  )
-        vec = regexp_split(_value, format.value_token_regexp );
+        values = regexp_split( value, format.value_token_regexp );
+    else
+        values = { value };
 
     if( organization == "group"  )
     {
-        for( uint ii=0; ii<vec.size(); ii++)
-            insert_key_value( _key+std::to_string(ii), { vec[ii] } );
+        for( size_t ii=0; ii<values.size(); ii++)
+            insert_key_value( key+std::to_string(ii), { values[ii] } );
         return;
     }
-    insert_key_value( _key, vec );
+    insert_key_value( key, values );
 }
 
 
@@ -412,8 +418,7 @@ bool KeyValueIEFile::read_block_from_file( )
         if( format.Ndata>0 && ii > format.Ndata )
             return true;
         if( !read_key_value_pair() )
-            jsonioErr("read_key_value_pair -error ",
-                      std::string(test_start, min(test_start+100, test_end)));
+            JSONIO_THROW( "KeyValueIEFile", 16, std::string(" read key value pair error : ")+std::string( test_start, min( test_start+100, test_end )  ));
         ii++;
     }
     /* test output
@@ -498,5 +503,59 @@ bool KeyValueIEFile::writeBlockToFile( const key_values_table_t& data_to_write )
     get_ostream() << endstr;
     return true;
 }
+
+std::string parseCode(/*regex_constants::error_type*/ int etype)
+{
+    switch (etype)
+    {
+    case rgx::regex_constants::error_collate:
+        return "error_collate: invalid collating element request";
+    case rgx::regex_constants::error_ctype:
+        return "error_ctype: invalid character class";
+    case rgx::regex_constants::error_escape:
+        return "error_escape: invalid escape character or trailing escape";
+    case rgx::regex_constants::error_backref:
+        return "error_backref: invalid back reference";
+    case rgx::regex_constants::error_brack:
+        return "error_brack: mismatched bracket([ or ])";
+    case rgx::regex_constants::error_paren:
+        return "error_paren: mismatched parentheses(( or ))";
+    case rgx::regex_constants::error_brace:
+        return "error_brace: mismatched brace({ or })";
+    case rgx::regex_constants::error_badbrace:
+        return "error_badbrace: invalid range inside a { }";
+    case rgx::regex_constants::error_range:
+        return "erro_range: invalid character range(e.g., [z-a])";
+    case rgx::regex_constants::error_space:
+        return "error_space: insufficient memory to handle this regular expression";
+    case rgx::regex_constants::error_badrepeat:
+        return "error_badrepeat: a repetition character (*, ?, +, or {) was not preceded by a valid regular expression";
+    case rgx::regex_constants::error_complexity:
+        return "error_complexity: the requested match is too complex";
+    case rgx::regex_constants::error_stack:
+        return "error_stack: insufficient memory to evaluate a match";
+    default:
+        return "";
+    }
+}
+
+// http://eax.me/cpp-regex/
+// https://regex101.com/
+
+// bib
+// "head_regexp" :   "^\\s*@article\\s*\\{\\s*(\\w+)\\s*,",
+// "key_regexp" :   "^\\s*(\\w+)\\s*=\\s*",
+// "value_regexp" :   "^\"([^\"]*)\"\\s*,{0,1}",
+// "end_regexp" :   "^\\s*\\}",
+
+// ris
+// "head_regexp" :   "",
+// "end_regexp" :   "^\\s*ER\\s*-\\s*",
+// "key_regexp" :   "^\\s*([A-Z0-9]{2})\\s*-\\s*",
+// "value_regexp" :   "",
+// "value_next" :   "\r\n",
+
+// Match a "quoted std::string"  : ^"(?:[^\\"]|\\.)*"$
+
 
 } // namespace jsonio17

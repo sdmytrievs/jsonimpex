@@ -19,7 +19,7 @@ SOURCES += \
     $$JSONIMPEX17_DIR/yamldump.cpp \
     $$JSONIMPEX17_DIR/yaml_xml2file.cpp \
     $$JSONIMPEX17_DIR/dbdriver_thrift.cpp \
-    #$$JSONIMPEX17_DIR/TJSONSerializer.cpp \
+    $$JSONIMPEX17_DIR/TJSONSerializer.cpp \
     $$JSONIMPEX17_DIR/thrift_ie_base.cpp \
     $$JSONIMPEX17_DIR/thrift_ie_json.cpp \
     $$JSONIMPEX17_DIR/thrift_ie_keyvalue.cpp \
