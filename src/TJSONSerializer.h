@@ -2,9 +2,9 @@
 
 #include <stack>
 #include <thrift/protocol/TVirtualProtocol.h>
-//#include "jsonio/thrift_schema.h"
-#include "jsonio17/jsonschema.h"
 
+#include "jsonio17/jsonschema.h"
+#include "jsonio17/jsonbuilder.h"
 
 using namespace ::apache::thrift;
 using namespace ::apache::thrift::protocol;
@@ -14,234 +14,219 @@ namespace jsonio17 {
 
 const std::string ismapkey2("-");
 
-/**
- * Class to serve output as base BSON context
- */
-class TJSONWriteContext2 {
+/// Class to serve output as base JSON context
+class TJSONWriteContext
+{
 
     std::string name;
     TType fieldType;
-    //int16_t fieldId;
     int16_t list_id;
     std::string mapkey;
 
 public:
 
-  TJSONWriteContext2( const char* aname, const TType afieldType,
-                /*const int16_t afieldId,*/ const int16_t id=0 ):
-      name(aname), fieldType(afieldType), /*fieldId(afieldId),*/
-      list_id(id), mapkey("")
-  { }
+    TJSONWriteContext( const std::string& aname, const TType afieldType, const int16_t id=0 ):
+        name(aname), fieldType(afieldType),  list_id(id), mapkey("")
+    { }
 
-  const std::string& getName()
-  {
-    return name;
-  }
-
-  std::string getKey()
-  {
-    std::string key = name;
-    switch( fieldType )
+    const std::string& getName()
     {
-     case T_SET:
-     case T_LIST:
-         { key = std::to_string(list_id++);
-           break;
-         }
-     case T_MAP:
-          if( !list_id )
-          {  list_id++;
-             key = ismapkey2;
-           } else
-            { list_id=0;
-              key = mapkey;
-            }
-           break;
-    default:
-       break;
+        return name;
     }
-    return key;
-  }
 
-  void setMapKey(const std::string& amapkey )
-  {
-    mapkey = amapkey;
-  }
+    std::string getKey()
+    {
+        std::string key = name;
+        switch( fieldType )
+        {
+        case T_SET:
+        case T_LIST:
+        {
+            key = std::to_string(list_id++);
+            break;
+        }
+        case T_MAP:
+            if( !list_id )
+            {
+                list_id++;
+                key = ismapkey2;
+            }
+            else
+            {
+                list_id=0;
+                key = mapkey;
+            }
+            break;
+        default:
+            break;
+        }
+        return key;
+    }
+
+    void setMapKey(const std::string& amapkey )
+    {
+        mapkey = amapkey;
+    }
 
 };
 
 
 class StructItr
 {
-  JsonBase* object;
-  int ndx = -1;
+    const JsonBase& object;
+    int ndx = -1;
 
 public:
 
-  StructItr(JsonBase* aobject):
-   object(aobject), ndx(-1)
-  {}
+    StructItr( const JsonBase& aobject ):
+        object(aobject), ndx(-1)
+    {}
 
-  JsonBase* next()
-  {
-    ndx++;
-    return object->getChild( static_cast<std::size_t>(ndx));
-  }
+    const JsonBase& next()
+    {
+        ndx++;
+        return object.child( static_cast<std::size_t>(ndx) );
+    }
 
-  JsonBase* current()
-  {
-    return object->getChild(static_cast<std::size_t>(ndx));
-  }
+    const JsonBase& current()
+    {
+        return object.child( static_cast<std::size_t>(ndx) );
+    }
 
-  JsonBase* data()
-  {
-    return object;
-  }
+    const JsonBase& data()
+    {
+        return object;
+    }
 
+    bool hasNext()
+    {
+        return ndx < static_cast<int>(object.size());
+    }
 };
 
 
-/**
- * Class to serve input as base BSON context
- */
-class TJSONReadContext2 {
+/// Class to serve input as base JSON context
+class TJSONReadContext {
 
-    //std::string name;
-    ThriftFieldDef fldinf;
-    uint level;              // level in list<list<....
-    std::stack<StructItr> itval;
-    //bson_iterator itval;
+    const FieldDef* fld_definition;
+    size_t level;                    // level in list<list<....
+    std::stack<StructItr> object_iterator;
     bool isArray;
     bool isMap;
-    int mapndx;
+    int map_ndx;
 
 public:
 
-  TJSONReadContext2( const ThriftFieldDef& afldinf, JsonBase* aitval ):
-      fldinf(afldinf), level(0), isArray(false), isMap(false),  mapndx(0)
-  {
-      itval.push(aitval);
-  }
-
-  const std::string& getName() const
-  {
-    return fldinf.fName;
-  }
-
-  const std::string& structName()
-  {
-      if ( !( fldinf.fTypeId.size()>(level)  &&
-              (fldinf.fTypeId[level] ==  T_STRUCT ) ))
-      {
-       throw TProtocolException(TProtocolException::INVALID_DATA,
-        "Expected struct; field \"" + fldinf.fName + "\"");
-      }
-      return fldinf.className;
-
-  }
-
-  JsonBase* getNext( std::string& mapkey )
-  {
-    mapkey = "";
-    JsonBase* it = itval.top().data();
-    if( isMap )
+    TJSONReadContext( const FieldDef* afldinf, const JsonBase& object ):
+        fld_definition( afldinf ), level(0), isArray(false), isMap(false),  map_ndx(0)
     {
-        if( !mapndx )
+        object_iterator.push( object );
+    }
+
+    std::string getName() const
+    {
+        return fld_definition->name();
+    }
+
+    std::string structName()
+    {
+        if( fld_definition->type( level ) == FieldDef::T_STRUCT )
+            JSONIO_THROW( "TJSONSerializer", 11, " expected struct; field \"" + fld_definition->name() + "\"");
+        return fld_definition->className();
+    }
+
+    const JsonBase* getNext( std::string& mapkey )
+    {
+        mapkey = "";
+        const JsonBase* it = &object_iterator.top().data();
+        if( isMap )
         {
-           it = itval.top().next();
-           if( it != nullptr )
-              mapkey = it->getKey();
-           mapndx = 1;
-        } else
-           {
-             it = itval.top().current();
-             mapndx = 0;
+            if( !map_ndx )
+            {
+                it = &object_iterator.top().next();
+                mapkey = it->getKey();
+                map_ndx = 1;
+            }
+            else
+            {
+                it = &object_iterator.top().current();
+                map_ndx = 0;
             }
 
+        }
+        else if( isArray )
+            it = &object_iterator.top().next();
+
+        return it;
     }
-    else if( isArray )
-       it = itval.top().next();
-
-   return it;
-  }
 
 
+    void getList( TType& elemType, uint32_t& size )
+    {
+        if ( !( fld_definition->type(level) ==  FieldDef::T_LIST || fld_definition->type(level) == FieldDef::T_SET ) )
+            JSONIO_THROW( "TJSONSerializer", 12, " expected list; field \"" + fld_definition->name() + "\"" );
+        std::string mapkey;
+        auto it = getNext( mapkey );
+        // go to next level
+        level++;
+        elemType = static_cast<TType>( fld_definition->type(level) );
 
-  void getList( TType& elemType, uint32_t& size )
-  {
-      if ( !( fldinf.fTypeId.size()>(level+1)  &&
-              (fldinf.fTypeId[level] ==  T_LIST || fldinf.fTypeId[level] == T_SET) ))
-      {
-       throw TProtocolException(TProtocolException::INVALID_DATA,
-        "Expected list; field \"" + fldinf.fName + "\"");
-      }
-      std::string mapkey;
-      auto it = getNext(mapkey);
-      // go to next level
-      level++;
-      elemType = static_cast<TType>(fldinf.fTypeId[level]);
+        if( it->type() == JsonBase::Null )
+        {
+            size = 0;
+        }
+        else
+        {
+            size = static_cast<uint32_t>(it->size());
+            isArray = true;
+            object_iterator.push(*it);
+        }
+    }
 
-      if( it->getType() == JSON_NULL )
-      {
-        size = 0;
-      }
-      else
-      {
-        size = static_cast<uint32_t>(it->getChildrenCount());
-        isArray = true;
-        itval.push(it);
-      }
-  }
+    void endList()
+    {
+        object_iterator.pop();
+        level--;
+    }
 
-  void endList()
-  {
-     itval.pop();
-     level--;
-  }
+    void getMap( TType& keyType, TType& valType, uint32_t& size )
+    {
+        if( !( fld_definition->type(level) ==  FieldDef::T_MAP ) )
+            JSONIO_THROW( "TJSONSerializer", 13, " expected map; field \"" + fld_definition->name() + "\"");
 
-  void getMap( TType& keyType, TType& valType, uint32_t& size )
-  {
-      if ( !( fldinf.fTypeId.size()>(level+2)  &&
-              (fldinf.fTypeId[level] ==  T_MAP ) ))
-      {
-       throw TProtocolException(TProtocolException::INVALID_DATA,
-        "Expected map; field \"" + fldinf.fName + "\"");
-      }
+        // go to next level
+        level++;
+        keyType = static_cast<TType>( fld_definition->type(level) );
+        level++;
+        valType = static_cast<TType>( fld_definition->type(level) );
 
-      // go to next level
-      level++;
-      keyType = static_cast<TType>(fldinf.fTypeId[level]);
-      level++;
-      valType = static_cast<TType>(fldinf.fTypeId[level]);
+        // calculate size
+        std::string mapkey;
+        auto it = getNext(mapkey);
+        if( it->type() != JsonBase::Object )
+        {
+            size = 0;
+        }
+        else
+        {
+            size = static_cast<uint32_t>( it->size() );
+            isMap = true;
+            object_iterator.push(*it);
+        }
+    }
 
-      // calculate size
-      std::string mapkey;
-      auto it = getNext(mapkey);
-      if( it->getType() != JSON_OBJECT )
-      {
-        size = 0;
-      }
-      else
-      {
-        size = static_cast<uint32_t>(it->getChildrenCount());
-        isMap = true;
-        itval.push(it);
-      }
-  }
-
-  void endMap()
-  {
-     itval.pop();
-     level--;
-     level--;
-  }
-
+    void endMap()
+    {
+        object_iterator.pop();
+        level--;
+        level--;
+    }
 
 };
 
 
 /**
- * bson protocol for Thrift.
+ * json protocol for Thrift.
  *
  * Implements a protocol which uses bson as the wire-format.
  *
@@ -274,192 +259,173 @@ class TJSONSerializer : public TVirtualProtocol<TJSONSerializer>
 {
 public:
 
-  TJSONSerializer( const SchemasData& aschema);
-  ~TJSONSerializer();
+    TJSONSerializer( const SchemasData& aschema );
+    ~TJSONSerializer();
+
+
+    //  Writing functions.
+
+    uint32_t writeMessageBegin(const std::string& name,
+                               const TMessageType messageType,
+                               const int32_t seqid);
+
+    uint32_t writeMessageEnd();
+
+    uint32_t writeStructBegin(const char* name);
+
+    uint32_t writeStructEnd();
+
+    uint32_t writeFieldBegin(const char* name, const TType fieldType, const int16_t fieldId);
+
+    uint32_t writeFieldEnd();
+
+    uint32_t writeFieldStop();
+
+    uint32_t writeMapBegin(const TType keyType, const TType valType, const uint32_t size);
+
+    uint32_t writeMapEnd();
+
+    uint32_t writeListBegin(const TType elemType, const uint32_t size);
+
+    uint32_t writeListEnd();
+
+    uint32_t writeSetBegin(const TType elemType, const uint32_t size);
+
+    uint32_t writeSetEnd();
+
+    uint32_t writeBool(const bool value);
+
+    uint32_t writeByte(const int8_t byte);
+
+    uint32_t writeI16(const int16_t i16);
+
+    uint32_t writeI32(const int32_t i32);
+
+    uint32_t writeI64(const int64_t i64);
+
+    uint32_t writeDouble(const double dub);
+
+    uint32_t writeString(const std::string& str);
+
+    uint32_t writeBinary(const std::string& str);
+
+    //  Reading functions
+
+    uint32_t readMessageBegin(std::string& name, TMessageType& messageType, int32_t& seqid);
+
+    uint32_t readMessageEnd();
+
+    uint32_t readStructBegin(std::string& name);
+
+    uint32_t readStructEnd();
+
+    uint32_t readFieldBegin(std::string& name, TType& fieldType, int16_t& fieldId);
+
+    uint32_t readFieldEnd();
+
+    uint32_t readMapBegin(TType& keyType, TType& valType, uint32_t& size);
+
+    uint32_t readMapEnd();
+
+    uint32_t readListBegin(TType& elemType, uint32_t& size);
+
+    uint32_t readListEnd();
+
+    uint32_t readSetBegin(TType& elemType, uint32_t& size);
+
+    uint32_t readSetEnd();
+
+    uint32_t readBool(bool& value);
+
+    // Provide the default readBool() implementation for std::vector<bool>
+    using TVirtualProtocol<TJSONSerializer>::readBool;
+
+    uint32_t readByte(int8_t& byte);
+
+    uint32_t readI16(int16_t& i16);
+
+    uint32_t readI32(int32_t& i32);
+
+    uint32_t readI64(int64_t& i64);
+
+    uint32_t readDouble(double& dub);
+
+    uint32_t readString(std::string& str);
+
+    uint32_t readBinary(std::string& str);
+
+
+    /// Set up read mode
+    void setDom( const JsonBase& object, const std::string& schema_name )
+    {
+
+        auto top_struct = schema.getStruct(schema_name);
+        if( top_struct == nullptr )
+            JSONIO_THROW( "TJSONSerializer", 14, " expected struct definition \"" + schema_name + "\"");
+        struct_schemas.push( top_struct );
+        top_read_object = &object;
+    }
+
+    /// Set up write mode
+    void setDom( JsonBase& object, const std::string& schema_name )
+    {
+        auto top_struct = schema.getStruct(schema_name);
+        if ( top_struct == nullptr )
+            JSONIO_THROW( "TJSONSerializer", 15, " expected struct definition \"" + schema_name + "\"");
+        struct_schemas.push( top_struct );
+        builders_stack.push( std::make_shared<JsonObjectBuilder>( &object ) );
+    }
+
 
 private:
 
-  void tranWriteStart()
-  {
-      if( contexts_.size() == 0 )
-      {
-        bobj_tansport->clearField();
-      }
-  }
+    const SchemasData& schema;
+    std::stack<const StructDef*> struct_schemas;
 
+    // write context
+    std::stack< std::shared_ptr<JsonBuilderBase> > builders_stack;
+    std::stack<TJSONWriteContext> write_context;
 
-  uint32_t transWriteEnd()
-  {
-    uint32_t returns = 0;
-    //if( contexts_.size() == 0 )
-    //{ }
-    return returns;
-  }
-
-  uint32_t transReadStart()
-  {
-      uint32_t returns = 0;
-      JsonBase* data = bobj_tansport;
-      if( bitr.size() > 0 )
-      {
-          std::string mapkey;
-          data = readcntxt_.top().getNext(mapkey);
-          StructDef* strc_ = schema->getStruct(readcntxt_.top().structName());
-          if ( strc_ == nullptr )
-          {
-                  throw TProtocolException(TProtocolException::INVALID_DATA,
-                   "Expected struct definition; field \"" + readcntxt_.top().structName() + "\"");
-          }
-          strSchema.push( strc_);
-      }
-      bitr.push(data);
-      bitrndx = 0;
-      return returns;
-  }
-
-
-  void transReadEnd()
-  {
-    bitr.pop();
-    bitrndx =0;
-    if( bitr.size() > 0 )
-      strSchema.pop();
-  }
-
-  int readInt();
-
-public:
-
-  //  Writing functions.
-
-  uint32_t writeMessageBegin(const std::string& name,
-                             const TMessageType messageType,
-                             const int32_t seqid);
-
-  uint32_t writeMessageEnd();
-
-  uint32_t writeStructBegin(const char* name);
-
-  uint32_t writeStructEnd();
-
-  uint32_t writeFieldBegin(const char* name, const TType fieldType, const int16_t fieldId);
-
-  uint32_t writeFieldEnd();
-
-  uint32_t writeFieldStop();
-
-  uint32_t writeMapBegin(const TType keyType, const TType valType, const uint32_t size);
-
-  uint32_t writeMapEnd();
-
-  uint32_t writeListBegin(const TType elemType, const uint32_t size);
-
-  uint32_t writeListEnd();
-
-  uint32_t writeSetBegin(const TType elemType, const uint32_t size);
-
-  uint32_t writeSetEnd();
-
-  uint32_t writeBool(const bool value);
-
-  uint32_t writeByte(const int8_t byte);
-
-  uint32_t writeI16(const int16_t i16);
-
-  uint32_t writeI32(const int32_t i32);
-
-  uint32_t writeI64(const int64_t i64);
-
-  uint32_t writeDouble(const double dub);
-
-  uint32_t writeString(const std::string& str);
-
-  uint32_t writeBinary(const std::string& str);
-
-  //  Reading functions
-
-  uint32_t readMessageBegin(std::string& name, TMessageType& messageType, int32_t& seqid);
-
-  uint32_t readMessageEnd();
-
-  uint32_t readStructBegin(std::string& name);
-
-  uint32_t readStructEnd();
-
-  uint32_t readFieldBegin(std::string& name, TType& fieldType, int16_t& fieldId);
-
-  uint32_t readFieldEnd();
-
-  uint32_t readMapBegin(TType& keyType, TType& valType, uint32_t& size);
-
-  uint32_t readMapEnd();
-
-  uint32_t readListBegin(TType& elemType, uint32_t& size);
-
-  uint32_t readListEnd();
-
-  uint32_t readSetBegin(TType& elemType, uint32_t& size);
-
-  uint32_t readSetEnd();
-
-  uint32_t readBool(bool& value);
-
-  // Provide the default readBool() implementation for std::vector<bool>
-  using TVirtualProtocol<TJSONSerializer>::readBool;
-
-  uint32_t readByte(int8_t& byte);
-
-  uint32_t readI16(int16_t& i16);
-
-  uint32_t readI32(int32_t& i32);
-
-  uint32_t readI64(int64_t& i64);
-
-  uint32_t readDouble(double& dub);
-
-  uint32_t readString(std::string& str);
-
-  uint32_t readBinary(std::string& str);
-
-
-  void setDom( JsonBase& obj, const std::string& strname )
+    JsonBuilderBase* getDom()
     {
+        return builders_stack.top().get();
+    }
 
-       StructDef* strc_ = schema->getStruct(strname);
-       if ( strc_ == nullptr )
-       {
-              throw TProtocolException(TProtocolException::INVALID_DATA,
-               "Expected struct definition; field \"" + strname + "\"");
-       }
-       strSchema.push( strc_ );
-       bobj_tansport = obj;
-       _objectStack.push(bobj_tansport);
+    // read context
+    const JsonBase* top_read_object;
+    std::stack<StructItr> read_struct_itr;
+    std::stack<TJSONReadContext> read_context;
 
-   }
 
-  private:
+    uint32_t trans_read_start()
+    {
+        uint32_t returns = 0;
+        const JsonBase* data = top_read_object;
+        if( read_struct_itr.size() > 0 )
+        {
+            std::string mapkey;
+            data = read_context.top().getNext( mapkey );
 
-  static ThriftFieldDef topfield;
+            auto astruct = schema.getStruct( read_context.top().structName() );
+            if( astruct == nullptr )
+                JSONIO_THROW( "TJSONSerializer", 17, " expected struct definition \"" + read_context.top().structName() + "\"");
+            struct_schemas.push( astruct );
+        }
+        read_struct_itr.push( *data );
+        return returns;
+    }
 
-  const SchemasData* schema;
-  JsonBase* bobj_tansport;
-  std::stack<JsonBase*> _objectStack;
-  //bson* bobj_tansport;
+    void trans_read_end()
+    {
+        read_struct_itr.pop();
+        if( read_struct_itr.size() > 0 )
+            struct_schemas.pop();
+    }
 
-  // write context
-  std::stack<TJSONWriteContext2> contexts_;
+    int read_int();
 
-  // read context
-  std::stack<StructDef*> strSchema;
-  std::stack<StructItr> bitr;
-  int bitrndx =0;
-  std::stack<TJSONReadContext2> readcntxt_;
-
-  JsonBase* getDom()
-      {
-        return _objectStack.top();
-      }
 };
 
 } // namespace jsonio17
+
 

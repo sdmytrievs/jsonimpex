@@ -23,7 +23,7 @@ void readDataFromJsonSchema( const JsonBase& object,
 {
     //Set the Serializator
     ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( ioSettings().Schema() );
-    proto->setDom( const_cast<JsonBase&>(object), struct_name );
+    proto->setDom( object, struct_name );
     // Get json object from structure
     /*int  i = */data->read(proto.get());
     //std::cout << "Read " << i << " bytes" << std::endl;
