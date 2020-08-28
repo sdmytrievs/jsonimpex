@@ -56,7 +56,7 @@ include($$JSONIMPEX17_DIR/jsonimpex17.pri)
 
 HEADERS += \
         $$TESTS_DIR/tst_jsonimpex.h \
-        $$TESTS_DIR/tst_yaml.h \
+        $$TESTS_DIR/tst_yaml_xml.h \
         tests/example_schema.h
 
 SOURCES += \

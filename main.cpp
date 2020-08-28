@@ -4,15 +4,13 @@
 #include "jsonio17/jsondump.h"
 #include "jsonio17/schema_thrift.h"
 #include "jsonio17/io_settings.h"
-#include "jsonimpex17/yamldump.h"
+#include "jsonimpex17/xmldump.h"
 #include "tests/example_schema.h"
 
 using namespace jsonio17;
 
 void FreeSchema();
-
 void SimpleSchema();
-
 void ComplexSchema();
 
 
@@ -23,9 +21,7 @@ int main()
         ioSettings().addSchemaFormat( schema_thrift, schema_str );
 
         FreeSchema();
-
         SimpleSchema();
-
         ComplexSchema();
 
     }
@@ -49,33 +45,32 @@ int main()
 void FreeSchema()
 {
     auto json_arr = json::loads( test_free_str );
-    auto yaml_txt = yaml::dump(json_arr);
-    std::cout << yaml_txt << std::endl << "------------" << std::endl;
+    auto xml_txt = XML::dump(json_arr);
+    std::cout << xml_txt << std::endl << "------------" << std::endl;
 
-    auto yaml_arr = JsonFree::array();
-    yaml::loads( yaml_txt, yaml_arr  );
-    std::cout << yaml::dump(yaml_arr) << std::endl << "------------" << std::endl;
+    auto xml_arr = JsonFree::array();
+    XML::loads( xml_txt, xml_arr  );
+    std::cout << XML::dump(xml_arr) << std::endl << "------------" << std::endl;
 
-    std::cout << yaml::Yaml2Json(yaml_txt) << std::endl << "------------" << std::endl;
 }
 
 void SimpleSchema()
 {
     auto json_obj = json::loads( "SimpleSchemaTest", simple_schema_value );
-    auto yaml_txt = yaml::dump(json_obj);
-    std::cout << yaml::dump(json_obj) << std::endl << "------------" << std::endl;
+    auto xml_txt = XML::dump(json_obj);
+    std::cout << xml_txt << std::endl << "------------" << std::endl;
 
-    auto yaml_obj = yaml::loads( "SimpleSchemaTest", yaml_txt );
-    std::cout << yaml::dump(yaml_obj) << std::endl << "------------" << std::endl;
+    auto xml_obj = XML::loads( "SimpleSchemaTest", xml_txt );
+    std::cout << XML::dump(xml_obj) << std::endl << "------------" << std::endl;
 }
 
 
 void ComplexSchema()
 {
     auto json_obj = json::loads( "ComplexSchemaTest", complex_schema_value );
-    auto yaml_txt = yaml::dump(json_obj);
-    std::cout << yaml::dump(json_obj) << std::endl << std::endl;
+    auto xml_txt = XML::dump(json_obj);
+    std::cout << xml_txt << std::endl << std::endl;
 
-    auto yaml_obj = yaml::loads( "ComplexSchemaTest", yaml_txt );
-    std::cout << yaml::dump(yaml_obj) << std::endl << "------------" << std::endl;
+    auto xml_obj = XML::loads( "ComplexSchemaTest", xml_txt );
+    std::cout << XML::dump(xml_obj) << std::endl << "------------" << std::endl;
 }

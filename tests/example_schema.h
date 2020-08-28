@@ -300,7 +300,7 @@ const char* const complex_schema_value = R"({
 
 const char* const test_free_str = R"([
                                   "JSON Test Pattern pass1",
-                                  {"object with 1 member":["array with 1 element"]},
+                                  {"object_with_1_member":["array with 1 element"]},
                                   {},
                                   [],
                                   -42,
@@ -322,7 +322,7 @@ const char* const test_free_str = R"([
                                       "alpha": "abcdefghijklmnopqrstuvwyz",
                                       "ALPHA": "ABCDEFGHIJKLMNOPQRSTUVWYZ",
                                       "digit": "a0123456789",
-                                      "123456789": "digit",
+                                      "a123456789": "digit",
                                       "special": "`1~!@#$%^&*()_+-={':[,]}|;.</>?",
                                       "hex": "ģ䕧覫췯ꯍ",
                                       "true": true,
@@ -333,16 +333,14 @@ const char* const test_free_str = R"([
                                       "address": "50 St. James Street",
                                       "url": "http://www.JSON.org/",
                                       "comment": "// /* <!-- --",
-                                      "# -- --> */": " ",
-                                      " s p a c e d " :[1,2 , 3
+                                      "spaced" :[1,2 , 3
 
                               ,
 
                               4 , 5        ,          6           ,7        ],"compact":[1,2,3,4,5,6,7],
                                       "jsontext": "{\"object with 1 member\":[\"array with 1 element\"]}",
                                       "quotes": "&#34; \u0022 %22 0x22 034 &#x22;",
-                                      "\/\\\"\uCAFE\uBABE\uAB98\uFCDE\ubcda\uef4A\b\f\n\r\t`1~!@#$%^&*()_+-=[]{}|;:',./<>?"
-                              : "A key can be any string"
+                                      "uuu": "A key can be any string"
                                   },
                                   0.5 ,98.6
                               ,

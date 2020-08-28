@@ -28,6 +28,7 @@ Serialize/deserialize object to Yaml format data.
 ```
 
 > _source: "+";    test: "+";  example: "+"_
+>  Problems with null object write+read
 
 3. xmldump.h (cpp)
 
@@ -41,8 +42,8 @@ Serialize/deserialize object to XML format data.
 
 ```
 
-> _source: "+";    test: "-";  example: "-"_
-> Need tests and example
+> _source: "+";    test: "+-";  example: "+"_
+>  Some problems with {}, [], " " and null
 
 4. yaml_xml2file.h (cpp)
 

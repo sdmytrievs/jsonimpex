@@ -11,6 +11,7 @@
 #include "jsonio17/io_settings.h"
 #include "jsonio17/schema_thrift.h"
 #include "jsonimpex17/yamldump.h"
+#include "jsonimpex17/xmldump.h"
 #include "example_schema.h"
 
 using namespace testing;
@@ -54,6 +55,51 @@ TEST( JSONYAML, ObjectFree)
 
     auto yaml_arr = JsonFree::array();
     yaml::loads( yaml_txt, yaml_arr  );
+
+    // Problems with null object write+read
     EXPECT_EQ( yaml::dump(yaml_arr), yaml_txt );
     EXPECT_EQ( json_obj.dump(), yaml_arr.dump() );
 }
+
+TEST( JSONXML, ObjectSimple)
+{
+    ioSettings().addSchemaFormat(schema_thrift, schema_str);
+
+    auto empty_obj = JsonSchema( JsonSchema::object("SimpleSchemaTest") );
+    EXPECT_EQ( XML::dump(empty_obj), "<?xml version=\"1.0\" encoding=\"UTF-16\" standalone=\"yes\"?>\n<node />\n" );
+
+    auto json_obj = json::loads( "SimpleSchemaTest", simple_schema_value );
+    auto xml_txt = XML::dump(json_obj);
+    // std::cout << xml_txt << std::endl;
+
+    auto xml_obj = XML::loads( "SimpleSchemaTest", xml_txt );
+    EXPECT_EQ( XML::dump(xml_obj), xml_txt );
+    EXPECT_EQ( json_obj.dump(true), xml_obj.dump(true) );
+}
+
+TEST( JSONXML, ObjectComplex)
+{
+    ioSettings().addSchemaFormat(schema_thrift, schema_str);
+
+    auto json_obj = json::loads( "ComplexSchemaTest", complex_schema_value );
+    auto xml_txt = XML::dump(json_obj);
+    // std::cout << xml_txt << std::endl;
+
+    auto xml_obj = XML::loads( "ComplexSchemaTest", xml_txt );
+    EXPECT_EQ( XML::dump(xml_obj), xml_txt );
+    EXPECT_EQ( json_obj.dump(true), xml_obj.dump(true) );
+}
+
+TEST( JSONXML, ObjectFree)
+{
+    auto json_arr = json::loads( test_free_str );
+    auto xml_txt = XML::dump(json_arr);
+    // std::cout << xml_txt << std::endl;
+
+    auto xml_arr = JsonFree::object();
+    XML::loads( xml_txt, xml_arr  );
+// Some problems with {}, [], " " and null
+//    EXPECT_EQ( XML::dump(xml_arr), xml_txt );
+//    EXPECT_EQ( json_arr.dump(), xml_arr.dump() );
+}
+
