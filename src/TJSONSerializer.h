@@ -228,29 +228,29 @@ public:
 /**
  * json protocol for Thrift.
  *
- * Implements a protocol which uses bson as the wire-format.
+ * Implements a protocol which uses JSON object as the wire/read-format.
  *
  * Thrift types are represented as described below:
  *
- * 1. Every Thrift integer type is represented as a bson_iterator_int, bson_iterator_bool.
+ * 1. Every Thrift integer type is represented as a int, bool.
  *
- * 2. Thrift doubles are represented as bson_iterator_double
+ * 2. Thrift doubles are represented as double
  *
- * 3. Thrift std::string values are emitted as bson_iterator_std::string.
+ * 3. Thrift std::string values are emitted as string.
  *
- * 4. Thrift binary values are represented as bson_iterator_bin_data.
+ * 4. Thrift binary values are represented as string.
  *
- * 5. Thrift structs are represented as BSON object
+ * 5. Thrift structs are represented as JSON object
  *
- * 6. Thrift lists and sets are represented as BSON arrays
+ * 6. Thrift lists and sets are represented as JSON arrays
  *
- * 7. Thrift maps are represented as BSON object, by the count of the Thrift pairs, followed by a
- *    BSON object containing the key-value pairs. Note that BSON keys can only
+ * 7. Thrift maps are represented as JSON object, by the count of the Thrift pairs, followed by a
+ *    JSON object containing the key-value pairs. Note that JSON keys can only
  *    be strings, which means that the key type of the Thrift map should be
  *    restricted to numeric or std::string types -- in the case of numerics, they
  *    are serialized as strings.
  *
- * 8. Thrift messages are represented as BSON arrays, with the protocol
+ * 8. Thrift messages are represented as JSON arrays, with the protocol
  *    version #, the message name, the message type, and the sequence ID as
  *    the first 4 elements.
  *

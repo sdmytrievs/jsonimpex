@@ -33,7 +33,11 @@ public:
 
     NodeHandler( JsonBase& object ): m_object(object)
     {
-        m_objectStack.push( std::make_shared<JsonObjectBuilder>(&m_object) );
+        if(  object.isObject() )
+            m_objectStack.push( std::make_shared<JsonObjectBuilder>(&m_object) );
+        else
+            m_objectStack.push( std::make_shared<JsonArrayBuilder>(&m_object) );
+
     }
 
     virtual void OnDocumentStart( const YAML::Mark& /*mark*/ ) {}
@@ -459,7 +463,6 @@ void dump( std::ostream &os, const JsonBase &object )
 void loads(const std::string &yaml_str, JsonBase &object)
 {
     try{
-
         std::stringstream stream(yaml_str);
         YAML::Parser parser(stream);
         NodeHandler builder(object);

@@ -5,13 +5,13 @@
 
 namespace jsonio17 {
 
-/// Class TableIEFile - export/import of data records to/from text file with key-value pair data.
+/// Class TableIEFile - export / import data records to / from a text file with table data.
 /// Using a generated JSON schema of that input file format
 class  TableIEFile: public AbstractIEFile
 {
 public:
 
-    TableIEFile( ImpexFormatFile::ImpexMode amode,const std::string& data_schema_name,
+    TableIEFile( ImpexFormatFile::ImpexMode amode, const std::string& data_schema_name,
                  const std::string& lua_lib_path, const FormatTableFile& format_description_data );
 
     ~TableIEFile() {}
