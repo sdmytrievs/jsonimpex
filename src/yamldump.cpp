@@ -160,7 +160,8 @@ void NodeHandler::OnScalar(const YAML::Mark&, const std::string& /*tag*/,
     switch (m_stateStack.top().state)
     {
     case WaitingForSequenceEntry:
-    { auto key = std::to_string(m_stateStack.top().ndx++);
+    {
+        auto key = std::to_string(m_stateStack.top().ndx++);
         m_objectStack.top()->testScalar( key, value );
         break;
     }

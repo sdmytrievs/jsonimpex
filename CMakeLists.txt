@@ -33,7 +33,7 @@ endif()
 # Define which types of libraries to build
 option( BUILD_IMPEX_SHARED_LIBS "Build shared libraries." ON)
 option( BUILD_IMPEX_STATIC_LIBS "Build static libraries." ON)
-option(BuildExamples "Build EXAMPLES" OFF)
+option(BuildExamples "Build EXAMPLES" ON)
 option(BuildTests "Build test suite" ON)
 
 # Currently is not setup to produce a dynamic library using MSVC, only static

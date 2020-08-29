@@ -4,7 +4,8 @@ message(STATUS "Building jsonimpex17 examples: ${BuildExamples}")
 include_directories(${CMAKE_SOURCE_DIR})
 
 set(Examples
-        time_parser )
+        yaml_example
+        xml_example )
 
 foreach (exampleName ${Examples})
 

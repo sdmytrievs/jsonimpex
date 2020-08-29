@@ -175,10 +175,10 @@ void add_array( const std::string& key, const std::string& value,  JsonBuilderBa
         val = str.substr(0, pos);
         str = str.substr( pos+1 );
         pos = str.find( ',' );
-        trim(val, " \n\t\r\'\"");
+        //trim(val, " \n\t\r\'\"");
         childobj.testScalar( std::to_string(ii++), val );
     }
-    trim(str, " \n\t\r\'\"");
+    //trim(str, " \n\t\r\'\"");
     childobj.testScalar( std::to_string(ii), str );
 }
 
@@ -225,7 +225,7 @@ void parse( const pugi::xml_node& node,  JsonBuilderBase& builder  )
                 add_array( node.name(), value, builder );
             else
             {
-                trim(value, " \n\t\r\'\"");
+                //trim(value, " \n\t\r\'\"");
                 builder.testScalar( node.name(), value );
             }
         }

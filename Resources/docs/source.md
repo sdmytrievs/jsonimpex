@@ -12,8 +12,7 @@
 LUA-C++ Integration Class.
 Internal scripts used into the import/export process.
 
-> _source: "+";    test: "-";  example: "-"_
-> Need tests and example
+> _source: "+";   test: "+";  example: "internal"_
 
 2. yamldump.h (cpp)
 
@@ -27,8 +26,7 @@ Serialize/deserialize object to Yaml format data.
 
 ```
 
-> _source: "+";    test: "+";  example: "+"_
->  Problems with null object write+read
+> _source: "+";   test: "+";  example: "+"_
 
 3. xmldump.h (cpp)
 
@@ -42,7 +40,7 @@ Serialize/deserialize object to XML format data.
 
 ```
 
-> _source: "+";    test: "+-";  example: "+"_
+> _source: "+";   test: "+-";  example: "+"_
 >  Some problems with {}, [], " " and null
 
 4. yaml_xml2file.h (cpp)
@@ -79,8 +77,6 @@ Prepared an "impex.thrift" file describing 3 file formats for import/export of d
 to internal store schema-based JSON object.
 
 > _source: "+";    test: "-";  example: "-"_
-> Need tests and example
-
 
 8. thrift_ie_base.h (cpp)
 
@@ -117,7 +113,7 @@ struct FormatStructDataFile {
 
 ```
 
-> _source: "+";    test: "-";  example: "-"_
+> _source: "+";    test: "-";  example: "internal"_
 > Need tests and example
 
 10. thrift_ie_keyvalue.h (cpp)
@@ -153,7 +149,7 @@ struct FormatKeyValueFile {
 ````
 
 
-> _source: "+";    test: "-";  example: "-"_
+> _source: "+";    test: "-";  example: "internal"_
 > Need tests and example
 
 11. thrift_ie_table.h (cpp)
@@ -188,7 +184,7 @@ struct FormatTableFile {
 
 ```
 
-> _source: "+";    test: "-";  example: "-"_
+> _source: "+";    test: "-";  example: "internal"_
 > Need tests and example
 
 
@@ -196,7 +192,7 @@ struct FormatTableFile {
 
 To do:
 
-- Implement examples and tests for 1-11
+- Implement examples and tests for 4-11
 
 - Changed for new API thrift server functions and PythonArango server
 

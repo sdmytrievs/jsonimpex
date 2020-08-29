@@ -1,4 +1,5 @@
 message(STATUS "Building test suite: ${BuildTests}")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/lua" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/")
 
 include(CTest)
 enable_testing()
