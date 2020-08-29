@@ -40,7 +40,7 @@ Serialize/deserialize object to XML format data.
 
 ```
 
-> _source: "+";   test: "+-";  example: "+"_
+> _source: "+";   test: "+";  example: "+"_
 >  Some problems with {}, [], " " and null
 
 4. yaml_xml2file.h (cpp)
@@ -49,8 +49,7 @@ Class JsonYamlXMLFile for read/write json/yaml/xml files.
 Class JsonYamlXMLArrayFile  for read/write json/yaml/xml arrays files.
 
 
-> _source: "+";    test: "-";  example: "-"_
-> Need tests and example
+> _source: "+";    test: "+";  example: "-"_
 
 5. dbdriver_thrift.h (cpp)
 
@@ -192,7 +191,7 @@ struct FormatTableFile {
 
 To do:
 
-- Implement examples and tests for 4-11
+- Implement examples and tests for 6-11
 
 - Changed for new API thrift server functions and PythonArango server
 
