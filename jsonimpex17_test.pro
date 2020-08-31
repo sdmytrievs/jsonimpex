@@ -64,3 +64,5 @@ SOURCES += \
 
 DISTFILES += \
     Resources/docs/source.md
+
+#thrift -r -v --gen cpp

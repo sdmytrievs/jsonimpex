@@ -65,9 +65,7 @@ Implementation of Database Driver using the Thrift server.
 Class TJSONSerializer json protocol for Thrift.
 Implements a protocol which uses JSON object as the wire/read-format.
 
-
-> _source: "+";    test: "-";  example: "-"_
-> Need tests and example
+> _source: "+";    test: "+";  example: "internal"_
 
 7. thrift_impex.h (cpp)
 
@@ -79,7 +77,7 @@ to internal store schema-based JSON object.
 
 8. thrift_ie_base.h (cpp)
 
-Class AbstractIEFile - loe level abstract interface of import/export to/from foreign format files.
+Class AbstractIEFile - love level abstract interface of import/export to/from foreign format files.
 
 > _source: "+";    test: "-";  example: "-"_
 > Need tests and example
@@ -191,7 +189,7 @@ struct FormatTableFile {
 
 To do:
 
-- Implement examples and tests for 6-11
+- Implement examples and tests for 7-11
 
 - Changed for new API thrift server functions and PythonArango server
 

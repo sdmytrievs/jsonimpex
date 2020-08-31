@@ -138,7 +138,7 @@ struct FormatKeyValue {
     /** Data Value(s):  "\\s*([^#\\n;]*)" (import)  or  "%value" (export)  */
     4: string value_regexp
     /** Key-Value pair end delimiter (used if empty value_regexp or export mode )  */
-    5: string value_next = "\n"
+    5: string value_next = "\\n"
     /** Regular Expression to iterate over matches  (used to convert value to string list or if export mode ) */
     6: optional string value_token_regexp = " "
     /** Regular Expression for skip comments */
@@ -192,13 +192,13 @@ struct FormatTable {
      3: list<string> headers
 
      /** Row delimiter  */
-     4: string rowend = "\n"
+     4: string rowend = "\\n"
      /** Number of lines in one block (could be more than one) */
      5: i32 rows_one_block = 1
      /** Regular expression:  next block head in case the number of lines in one block is not fixed  */
      6: string row_header_regexp = ""
      /** Columns delimiters  */
-     7: string colends = "\t "
+     7: string colends = "\\t "
      /** Quoted field as text */
      8: bool   usequotes = true
      /** Can be more than one delimiter between columns */

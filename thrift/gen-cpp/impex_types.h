@@ -718,7 +718,7 @@ class FormatKeyValue : public virtual ::apache::thrift::TBase {
 
   FormatKeyValue(const FormatKeyValue&);
   FormatKeyValue& operator=(const FormatKeyValue&);
-  FormatKeyValue() : head_regexp(), end_regexp(), key_regexp(), value_regexp(), value_next("\n"), value_token_regexp(" "), comment_regexp(), Ndata(0), strvalue_exp() {
+  FormatKeyValue() : head_regexp(), end_regexp(), key_regexp(), value_regexp(), value_next("\\n"), value_token_regexp(" "), comment_regexp(), Ndata(0), strvalue_exp() {
   }
 
   virtual ~FormatKeyValue() noexcept;
@@ -997,7 +997,7 @@ class FormatTable : public virtual ::apache::thrift::TBase {
 
   FormatTable(const FormatTable&);
   FormatTable& operator=(const FormatTable&);
-  FormatTable() : Nhcols(0), Nhrows(0), rowend("\n"), rows_one_block(1), row_header_regexp(""), colends("\t "), usequotes(true), usemore(false), comment_regexp(), row_size(0) {
+  FormatTable() : Nhcols(0), Nhrows(0), rowend("\\n"), rows_one_block(1), row_header_regexp(""), colends("\\t "), usequotes(true), usemore(false), comment_regexp(), row_size(0) {
   }
 
   virtual ~FormatTable() noexcept;

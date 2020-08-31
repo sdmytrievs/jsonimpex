@@ -100,7 +100,7 @@ public:
 
     bool hasNext()
     {
-        return ndx < static_cast<int>(object.size());
+        return ndx < static_cast<int>(object.size())-1;
     }
 };
 
@@ -130,7 +130,7 @@ public:
 
     std::string structName()
     {
-        if( fld_definition->type( level ) == FieldDef::T_STRUCT )
+        if( fld_definition->type( level ) != FieldDef::T_STRUCT )
             JSONIO_THROW( "TJSONSerializer", 11, " expected struct; field \"" + fld_definition->name() + "\"");
         return fld_definition->className();
     }

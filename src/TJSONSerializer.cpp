@@ -117,9 +117,9 @@ uint32_t TJSONSerializer::writeBool(const bool value)
 {
     string key = write_context.top().getKey();
     if( key == ismapkey2 )
-        write_context.top().setMapKey( to_string(value) );
+        write_context.top().setMapKey( ( value ? "true": "false" ) );
     else
-        getDom()->testScalar(  key, to_string(value) ); // appendBool
+        getDom()->testScalar(  key, ( value ? "true": "false" ) ); // appendBool
     return 0;
 }
 

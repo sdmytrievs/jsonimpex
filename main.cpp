@@ -5,24 +5,22 @@
 #include "jsonio17/schema_thrift.h"
 #include "jsonio17/io_settings.h"
 #include "jsonimpex17/xmldump.h"
-#include "tests/example_schema.h"
+#include "thrift_ie_json.h"
+#include "tests/impex_schema.h"
+
 
 using namespace jsonio17;
 
 void FreeSchema();
-void SimpleSchema();
-void ComplexSchema();
 
 
 int main()
 {
     try{
 
-        ioSettings().addSchemaFormat( schema_thrift, schema_str );
+        ioSettings().addSchemaFormat( schema_thrift, impex_schema_str );
 
         FreeSchema();
-        SimpleSchema();
-        ComplexSchema();
 
     }
     catch(jsonio17::jsonio_exception& e)
@@ -44,33 +42,14 @@ int main()
 
 void FreeSchema()
 {
-    auto json_arr = json::loads( test_free_str );
-    auto xml_txt = XML::dump(json_arr);
-    std::cout << xml_txt << std::endl << "------------" << std::endl;
+    auto in_object = json::loads( "FormatTableFile", FormatTableFile_value );
+    std::cout << in_object.dump() << "\n-------------------\n";
+    FormatTableFile fformatdata;
+    readDataFromJsonSchema(  in_object, "FormatTableFile",  &fformatdata );
 
-    auto xml_arr = JsonFree::array();
-    XML::loads( xml_txt, xml_arr  );
-    std::cout << XML::dump(xml_arr) << std::endl << "------------" << std::endl;
-
+    //fformatdata.printTo( std::cout);
+    auto out_object = JsonSchema::object( "FormatTableFile" );
+    writeDataToJsonSchema( out_object,"FormatTableFile",  &fformatdata );
+    std::cout << out_object.dump() << "\n-------------------\n";
 }
 
-void SimpleSchema()
-{
-    auto json_obj = json::loads( "SimpleSchemaTest", simple_schema_value );
-    auto xml_txt = XML::dump(json_obj);
-    std::cout << xml_txt << std::endl << "------------" << std::endl;
-
-    auto xml_obj = XML::loads( "SimpleSchemaTest", xml_txt );
-    std::cout << XML::dump(xml_obj) << std::endl << "------------" << std::endl;
-}
-
-
-void ComplexSchema()
-{
-    auto json_obj = json::loads( "ComplexSchemaTest", complex_schema_value );
-    auto xml_txt = XML::dump(json_obj);
-    std::cout << xml_txt << std::endl << std::endl;
-
-    auto xml_obj = XML::loads( "ComplexSchemaTest", xml_txt );
-    std::cout << XML::dump(xml_obj) << std::endl << "------------" << std::endl;
-}
