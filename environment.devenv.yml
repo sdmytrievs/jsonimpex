@@ -16,6 +16,8 @@ dependencies:
   - lua5.3
   - yaml-cpp
   - pugixml
+  - thrift-cpp
+  - lua
 
 environment:
 

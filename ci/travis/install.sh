@@ -18,6 +18,7 @@ conda update -q conda
 conda info -a
 conda devenv
 source activate jsonimpex17
+./conda-install-dependencies.sh
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release \
@@ -26,5 +27,5 @@ cmake -DCMAKE_BUILD_TYPE=Release \
       ..
 # Build step
 make #-j${CPU_COUNT}
-#make install
+make install
 conda list
