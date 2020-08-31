@@ -11,9 +11,6 @@ dependencies:
   - nlohmann_json
   - velocypack
   - jsonarango
-  - jsonio17
-  - thrift
-  - lua5.3
   - yaml-cpp
   - pugixml
   - thrift-cpp
