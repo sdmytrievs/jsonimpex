@@ -3,7 +3,6 @@
 # Uncomment what is necessary to reinstall by force 
 rm -f ${CONDA_PREFIX}/lib/libjsonio.a
 
-threads=3
 BRANCH_JSON=master
 
 
@@ -15,11 +14,11 @@ test -f ${CONDA_PREFIX}/lib/libjsonio17.a || {
 	mkdir -p ~/code && \
 		cd ~/code && \
 		git clone https://bitbucket.org/gems4/jsonio17.git -b $BRANCH_JSON && \
-		cd jsonio && \
+		cd jsonio17 && \
 		mkdir -p build && \
 		cd build && \
-                cmake .. -DCMAKE_CXX_FLAGS=-fPIC -DCMAKE_BUILD_TYPE=Release -DBuildJsonioExamples=OFF && \
-		make -j $threads && \
+                cmake .. -DCMAKE_CXX_FLAGS=-fPIC -DCMAKE_BUILD_TYPE=Release && \
+		make  && \
 		make install
 
 	# Removing generated build files
