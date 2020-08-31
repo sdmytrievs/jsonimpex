@@ -17,9 +17,9 @@ echo ****** Compiling JSONIO ******
 echo ******                  ******
 echo
 
-echo git clone jsonio...
-git clone https://bitbucket.org/gems4/jsonio.git
-cd jsonio
+echo git clone jsonio17...
+git clone https://bitbucket.org/gems4/jsonio17.git
+cd jsonio17
 
 echo "Configuring..."
 cmake -G"Visual Studio 15 2017" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH="%CONDA_PREFIX%\Library" .. -A x64 -S . -B build

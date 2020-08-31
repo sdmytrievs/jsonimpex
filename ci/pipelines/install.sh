@@ -21,9 +21,8 @@ source activate jsonimpex17
 mkdir build
 cd build
 # Configure step
-cmake -GNinja \
-    -DCMAKE_BUILD_TYPE=Release \
+cmake  -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_LIBDIR=lib \
     ..
-ninja install
+make install
 conda list
