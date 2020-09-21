@@ -514,8 +514,8 @@ std::set<std::string> ThriftClientAPI::getCollectionNames( AbstractDBDriver::Col
 // Default Constructor
 ThriftClient::ThriftClient():AbstractDBDriver()
 {
-    std::string newHost =  ioSettings().value("jsonimpex.ThriftDBSocketHost",defHost );
-    int newPort = ioSettings().value("jsonimpex.ThriftDBSocketPort", defPort );
+    std::string newHost =  ioSettings().value( jsonimpex_section_name+"."+"ThriftDBSocketHost", defHost );
+    int newPort = ioSettings().value( jsonimpex_section_name+"."+"ThriftDBSocketPort", defPort );
     reset_db_connection( newHost, newPort );
 }
 
