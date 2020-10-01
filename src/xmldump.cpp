@@ -125,7 +125,13 @@ void object_emitter( pugi::xml_node& out, const JsonBase& object )
         switch( objtype )
         {
         case JsonBase::Object:
-            ch1 = out.append_child(childobj.getKey().c_str());
+        {
+            auto akey = childobj.getKey();
+            double dval;
+            if(  is<double>( dval, akey.c_str()))
+                akey = "iii"+akey;
+            ch1 = out.append_child(akey.c_str());
+        }
             break;
         case JsonBase::Array:
             ch1 = out.append_child("element");
@@ -182,12 +188,19 @@ void add_array( const std::string& key, const std::string& value,  JsonBuilderBa
     childobj.testScalar( std::to_string(ii), str );
 }
 
+inline std::string key_name( const char* node_name )
+{
+  std::string key = node_name;
+  if( key.find("iii") == 0 )
+     key = key.substr(3);
+  return key;
+}
 
 void parse( const pugi::xml_node& node,  JsonBuilderBase& builder  )
 {
     if( !node.first_child() )
     {
-        builder.testScalar( node.name(), "null" );
+        builder.testScalar( key_name(node.name()), "null" );
         return;
     }
 
@@ -222,17 +235,17 @@ void parse( const pugi::xml_node& node,  JsonBuilderBase& builder  )
         std::string value = node.text().as_string();
         //if( !value.empty() )
         { if( node.attribute("isarray").as_bool() == true )
-                add_array( node.name(), value, builder );
+                add_array( key_name(node.name()), value, builder );
             else
             {
                 //trim(value, " \n\t\r\'\"");
-                builder.testScalar( node.name(), value );
+                builder.testScalar( key_name(node.name()), value );
             }
         }
     }
     else if( isobject )
     {
-        auto childobj =  builder.addObject(  node.name() );
+        auto childobj =  builder.addObject(  key_name(node.name()) );
         for (pugi::xml_node_iterator it = node.begin(); it != node.end(); ++it)
         {
             if( it->type() != pugi::node_element )
@@ -242,7 +255,7 @@ void parse( const pugi::xml_node& node,  JsonBuilderBase& builder  )
     }
     else if( isarray )
     {
-        auto childobj =  builder.addArray( node.name() );
+        auto childobj =  builder.addArray( key_name(node.name()) );
         int ii=0;
         for (pugi::xml_node_iterator it = node.begin(); it != node.end(); ++it, ++ii)
         {
