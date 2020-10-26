@@ -1,10 +1,17 @@
 #include "jsonio17/io_settings.h"
-#include "jsonimpex17/thrift_impex.h"
 #include "thrift_ie_base.h"
+#include "jsonimpex17/thrift_impex.h"
 
 namespace jsonio17 {
 
 std::map<std::string, IEFileFactory_f> ImpexFormatFile::formats = {};
+
+ImpexFormatFile::ImpexFormatFile(ImpexFormatFile::ImpexMode mode_of_use, const std::string &impex_format_name, const JsonBase &object):
+    impex_format( create_format_data( mode_of_use, impex_format_name, object ))
+{ }
+
+ImpexFormatFile::~ImpexFormatFile()
+{ }
 
 const std::string&  ImpexFormatFile::dataName() const
 {

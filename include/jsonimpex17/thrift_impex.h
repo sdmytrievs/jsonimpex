@@ -34,12 +34,9 @@ public:
     }
 
     /// The constructor
-    explicit ImpexFormatFile( ImpexMode mode_of_use, const std::string& impex_format_name, const JsonBase& object ):
-        impex_format( create_format_data( mode_of_use, impex_format_name, object ))
-    { }
+    explicit ImpexFormatFile( ImpexMode mode_of_use, const std::string& impex_format_name, const JsonBase& object );
 
-    virtual ~ImpexFormatFile()
-    { }
+    virtual ~ImpexFormatFile();
 
     /// Name of the current data schema name
     const std::string&  dataName() const;
