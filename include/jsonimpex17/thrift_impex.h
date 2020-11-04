@@ -32,6 +32,8 @@ public:
     {
         formats[impex_format_name] = format_method;
     }
+    /// Registering default import/export formats and Factory Method where instances are actually created
+    static void initDefaultFormats();
 
     /// The constructor
     explicit ImpexFormatFile( ImpexMode mode_of_use, const std::string& impex_format_name, const JsonBase& object );
