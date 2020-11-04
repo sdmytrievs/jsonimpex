@@ -8,9 +8,9 @@ CONFIG -= qt
 QMAKE_CFLAGS += pedantic -Wall -Wextra -Wwrite-strings -Werror
 #QMAKE_CXXFLAGS += -ansi -pedantic -Wall -Wextra -Weffc++
 QMAKE_CXXFLAGS += -Wall -Wextra -Wformat-nonliteral -Wcast-align -Wpointer-arith \
- -Wmissing-declarations -Winline -Wundef \ #-Weffc++ \
+ -Wmissing-declarations -Winline -Wundef \ #-Weffc++ -Wfloat-equal  \
  -Wcast-qual -Wshadow -Wwrite-strings -Wno-unused-parameter \
- -Wfloat-equal -pedantic -ansi
+ -pedantic -ansi
 
 #QMAKE_CXXFLAGS += -pg  # gprof information
 

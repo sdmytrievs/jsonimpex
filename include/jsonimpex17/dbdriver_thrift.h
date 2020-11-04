@@ -13,6 +13,8 @@ const std::string defHost = "localhost";
 /// Default port that the socket is connected to
 const int defPort = 9090;
 
+const std::string jsonimpex_section_name = "jsonimpex";
+
 /// Implementation of Database Driver using Low-Level C++ Driver for ArangoDB.
 class ThriftClient: public AbstractDBDriver
 {
