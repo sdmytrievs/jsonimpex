@@ -254,6 +254,15 @@ void AbstractIEFile::add_map_key_value( const std::string& field_key, const  std
 
 
 // Extract data from internal schema based json
+AbstractIEFile::AbstractIEFile(ImpexFormatFile::ImpexMode amode, const std::string &data_schema_name, const std::string &lua_lib_path):
+    mode_use(amode), lua_run(lua_lib_path), label(data_schema_name), dom_node( JsonSchema::object(data_schema_name) )
+{}
+
+AbstractIEFile::~AbstractIEFile()
+{
+    closeFile();
+}
+
 void AbstractIEFile::extractDataToWrite( const std::string& json_block_data, key_values_table_t& data_to_write )
 {
     std::string impexKey, impexOrganization, nodeValue;
