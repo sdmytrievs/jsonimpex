@@ -15,6 +15,11 @@ const int defPort = 9090;
 
 const std::string jsonimpex_section_name = "jsonimpex";
 
+inline std::string jsonimpex_section(const std::string &item)
+{
+    return   jsonio17::jsonimpex_section_name+"."+item;
+}
+
 /// Implementation of Database Driver using Low-Level C++ Driver for ArangoDB.
 class ThriftClient: public AbstractDBDriver
 {
