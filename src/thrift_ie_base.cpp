@@ -11,7 +11,8 @@ void writeDataToJsonSchema( JsonBase& object,
                             const std::string& struct_name, ::apache::thrift::TBase* data )
 {
     //Set the Serializator
-    ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( ioSettings().Schema() );
+    std::shared_ptr<TMemoryBuffer> buffer(new TMemoryBuffer());
+    ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( buffer, &ioSettings().Schema() );
     proto->setDom( object, struct_name );
     // Set json object to  structure
     /*int  i = */data->write(proto.get());
@@ -22,7 +23,8 @@ void readDataFromJsonSchema( const JsonBase& object,
                              const std::string& struct_name,  ::apache::thrift::TBase* data )
 {
     //Set the Serializator
-    ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( ioSettings().Schema() );
+    std::shared_ptr<TMemoryBuffer> buffer(new TMemoryBuffer());
+    ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( buffer, &ioSettings().Schema() );
     proto->setDom( object, struct_name );
     // Get json object from structure
     /*int  i = */data->read(proto.get());

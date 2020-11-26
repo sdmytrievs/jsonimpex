@@ -3,8 +3,8 @@ using namespace std;
 
 namespace jsonio17 {
 
-TJSONSerializer::TJSONSerializer( const SchemasData& aschema ):
-    TVirtualProtocol<TJSONSerializer>( nullptr ),
+TJSONSerializer::TJSONSerializer( std::shared_ptr<TTransport> ptrans, const SchemasData* aschema ):
+    TVirtualProtocol<TJSONSerializer>( ptrans ),
     schema(aschema), top_read_object(nullptr)
 {}
 
@@ -36,7 +36,7 @@ uint32_t TJSONSerializer::writeMessageEnd()
 
 uint32_t TJSONSerializer::writeStructBegin(const char* name)
 {
-    struct_schemas.push( schema.getStruct(name) );
+    struct_schemas.push( schema->getStruct(name) );
     if( write_context.size() > 0 )
     {
         auto obj = getDom()->addObject( write_context.top().getKey() );
