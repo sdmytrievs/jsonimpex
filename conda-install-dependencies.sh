@@ -17,7 +17,7 @@ test -f ${CONDA_PREFIX}/lib/libjsonio17.a || {
 		cd jsonio17 && \
 		mkdir -p build && \
 		cd build && \
-                cmake .. -DCMAKE_CXX_FLAGS=-fPIC -DCMAKE_BUILD_TYPE=Release && \
+                cmake .. -DCMAKE_CXX_FLAGS=-fPIC -DCMAKE_BUILD_TYPE=Release -DBuildExamples=OFF -DBuildTests=OFF && \
 		make  && \
 		make install
 
