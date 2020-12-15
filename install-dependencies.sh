@@ -144,6 +144,24 @@ test -f /usr/local/lib/libthrift.a || {
                  rm -rf ~/code
 }
 
+# if no JSONIIMPEX installed in /usr/local/lib/libjsonimpex17.a (/usr/local/include/jsonimpex17)
+test -f /usr/local/lib/libjsonimpex17.a || {
+
+        # Building jsonimpex library
+        mkdir -p ~/code && \
+                cd ~/code && \
+                git clone https://bitbucket.org/gems4/jsonimpex17.git -b $BRANCH_JSON && \
+                cd jsonimpex17 && \
+                mkdir -p build && \
+                cd build && \
+                cmake .. -DCMAKE_CXX_FLAGS=-fPIC -DCMAKE_BUILD_TYPE=Release -DBuildExamples=OFF -DBuildTests=OFF && \
+                make  && \
+                make install
+
+        # Removing generated build files
+        cd ~ && \
+                 rm -rf ~/code
+}
 
 if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
    sudo ldconfig
