@@ -47,6 +47,9 @@ LIBS +=  -ljsonio17 -ljsonarango -lcurl  -lvelocypack
 LIBS += -lyaml-cpp  -lpugixml -lthrift
 macx-clang:LIBS += -llua
 !macx-clang:LIBS += -llua5.3
+INCLUDEPATH   += "/usr/include/lua5.3"
+DEPENDPATH   += "/usr/include/lua5.3"
+
 
 OBJECTS_DIR   = obj
 

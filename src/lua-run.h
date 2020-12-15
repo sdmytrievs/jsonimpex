@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include <lua5.3/lua.hpp>
+#include <lua.hpp>
 
 namespace jsonio17 {
 
