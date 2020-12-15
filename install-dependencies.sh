@@ -13,7 +13,8 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 
     #Needs gcc v.5 or higher and ArangoDB server locally installed
     sudo apt-get update
-        sudo apt-get install -y lua5.3-dev libcurl4-openssl-dev
+    sudo apt-get install -y lua5.3-dev libcurl4-openssl-dev
+
 fi
 
 # Uncomment what is necessary to reinstall by force
@@ -25,6 +26,25 @@ fi
 #sudo rm -f /usr/local/lib/libthrift.a
 
 threads=3
+BRANCH_JSON=master
+
+# Velocypack from ArangoDB (added for installing ArangoDB database client)
+# if no VPack installed in /usr/local/lib/libvelocypack.a (/usr/local/include/velocypack)
+test -f /usr/local/lib/liblua.a || {
+
+        # Building velocypack library
+        mkdir -p ~/code && \
+                cd ~/code && \
+                curl -R -O http://www.lua.org/ftp/lua--5.4.2.tar.gz && \
+                tar -zxf lua--5.4.2.tar.gz && \
+                cd lua--5.4.2 && \
+                make "MYCFLAGS=-fPIC" linux && \
+                sudo make install
+
+        # Removing generated build files
+        cd ~ && \
+                 rm -rf ~/code
+}
 
 
 # Velocypack from ArangoDB (added for installing ArangoDB database client)
@@ -144,24 +164,6 @@ test -f /usr/local/lib/libthrift.a || {
                  rm -rf ~/code
 }
 
-# if no JSONIIMPEX installed in /usr/local/lib/libjsonimpex17.a (/usr/local/include/jsonimpex17)
-test -f /usr/local/lib/libjsonimpex17.a || {
-
-        # Building jsonimpex library
-        mkdir -p ~/code && \
-                cd ~/code && \
-                git clone https://bitbucket.org/gems4/jsonimpex17.git -b $BRANCH_JSON && \
-                cd jsonimpex17 && \
-                mkdir -p build && \
-                cd build && \
-                cmake .. -DCMAKE_CXX_FLAGS=-fPIC -DCMAKE_BUILD_TYPE=Release -DBuildExamples=OFF -DBuildTests=OFF && \
-                make  && \
-                make install
-
-        # Removing generated build files
-        cd ~ && \
-                 rm -rf ~/code
-}
 
 if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
    sudo ldconfig

@@ -49,7 +49,6 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # Set the list of compiler flags for GNU compiler
 if(${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
     add_compile_options(-std=c++17 -Wall -Wno-pedantic -Wno-variadic-macros -Wno-deprecated )
-    include_directories("/usr/include/lua5.3")
 endif()
 
 # Set the list of compiler flags for Clang compiler
