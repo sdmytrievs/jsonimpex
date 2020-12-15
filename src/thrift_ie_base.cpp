@@ -11,7 +11,8 @@ void writeDataToJsonSchema( JsonBase& object,
                             const std::string& struct_name, ::apache::thrift::TBase* data )
 {
     //Set the Serializator
-    ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( ioSettings().Schema() );
+    std::shared_ptr<TMemoryBuffer> buffer(new TMemoryBuffer());
+    ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( buffer, &ioSettings().Schema() );
     proto->setDom( object, struct_name );
     // Set json object to  structure
     /*int  i = */data->write(proto.get());
@@ -22,7 +23,8 @@ void readDataFromJsonSchema( const JsonBase& object,
                              const std::string& struct_name,  ::apache::thrift::TBase* data )
 {
     //Set the Serializator
-    ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( ioSettings().Schema() );
+    std::shared_ptr<TMemoryBuffer> buffer(new TMemoryBuffer());
+    ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( buffer, &ioSettings().Schema() );
     proto->setDom( object, struct_name );
     // Get json object from structure
     /*int  i = */data->read(proto.get());
@@ -254,6 +256,15 @@ void AbstractIEFile::add_map_key_value( const std::string& field_key, const  std
 
 
 // Extract data from internal schema based json
+AbstractIEFile::AbstractIEFile(ImpexFormatFile::ImpexMode amode, const std::string &data_schema_name, const std::string &lua_lib_path):
+    mode_use(amode), lua_run(lua_lib_path), label(data_schema_name), dom_node( JsonSchema::object(data_schema_name) )
+{}
+
+AbstractIEFile::~AbstractIEFile()
+{
+    closeFile();
+}
+
 void AbstractIEFile::extractDataToWrite( const std::string& json_block_data, key_values_table_t& data_to_write )
 {
     std::string impexKey, impexOrganization, nodeValue;

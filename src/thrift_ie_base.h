@@ -15,14 +15,9 @@ class AbstractIEFile
 public:
 
     /// The constructor
-    explicit AbstractIEFile( ImpexFormatFile::ImpexMode amode, const std::string& data_schema_name, const std::string& lua_lib_path ):
-        mode_use(amode), lua_run(lua_lib_path), label(data_schema_name), dom_node( JsonSchema::object(data_schema_name) )
-    {}
+    explicit AbstractIEFile( ImpexFormatFile::ImpexMode amode, const std::string& data_schema_name, const std::string& lua_lib_path );
 
-    virtual ~AbstractIEFile()
-    {
-        closeFile();
-    }
+    virtual ~AbstractIEFile();
 
     /// Name of data type
     const std::string&  name() const

@@ -2,7 +2,7 @@
 
 #include <stack>
 #include <thrift/protocol/TVirtualProtocol.h>
-
+#include <thrift/transport/TBufferTransports.h>
 #include "jsonio17/jsonschema.h"
 #include "jsonio17/jsonbuilder.h"
 
@@ -259,7 +259,7 @@ class TJSONSerializer : public TVirtualProtocol<TJSONSerializer>
 {
 public:
 
-    TJSONSerializer( const SchemasData& aschema );
+    TJSONSerializer( std::shared_ptr<TTransport> ptrans, const SchemasData* aschema );
     ~TJSONSerializer();
 
 
@@ -359,7 +359,7 @@ public:
     void setDom( const JsonBase& object, const std::string& schema_name )
     {
 
-        auto top_struct = schema.getStruct(schema_name);
+        auto top_struct = schema->getStruct(schema_name);
         if( top_struct == nullptr )
             JSONIO_THROW( "TJSONSerializer", 14, " expected struct definition \"" + schema_name + "\"");
         struct_schemas.push( top_struct );
@@ -369,7 +369,7 @@ public:
     /// Set up write mode
     void setDom( JsonBase& object, const std::string& schema_name )
     {
-        auto top_struct = schema.getStruct(schema_name);
+        auto top_struct = schema->getStruct(schema_name);
         if ( top_struct == nullptr )
             JSONIO_THROW( "TJSONSerializer", 15, " expected struct definition \"" + schema_name + "\"");
         struct_schemas.push( top_struct );
@@ -379,7 +379,7 @@ public:
 
 private:
 
-    const SchemasData& schema;
+    const SchemasData* schema;
     std::stack<const StructDef*> struct_schemas;
 
     // write context
@@ -406,7 +406,7 @@ private:
             std::string mapkey;
             data = read_context.top().getNext( mapkey );
 
-            auto astruct = schema.getStruct( read_context.top().structName() );
+            auto astruct = schema->getStruct( read_context.top().structName() );
             if( astruct == nullptr )
                 JSONIO_THROW( "TJSONSerializer", 17, " expected struct definition \"" + read_context.top().structName() + "\"");
             struct_schemas.push( astruct );
