@@ -1,8 +1,8 @@
 name: jsonimpex17
 
 dependencies:
-  - gxx_linux-64=7.3.0  # [linux]
-  - cmake>=3.13
+  - gxx_linux-64=9.3.0  # [linux]
+  - cmake>=3.7
   - ninja # [unix]
   - make  # [win]
   - git
@@ -11,7 +11,6 @@ dependencies:
   - nlohmann_json
   - velocypack
   - jsonarango
-  - boost-cpp
   - yaml-cpp
   - pugixml
   - thrift-cpp
