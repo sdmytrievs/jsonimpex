@@ -21,12 +21,11 @@ source activate jsonimpex17
 mkdir build
 cd build
 # Configure step
-cmake -GNinja \
+cmake  \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_LIBDIR=lib \
-    -DBuildExamples=OFF \
     ..
-ninja
+make
 if [ $? -eq 0 ]
 then
     echo "The cmake step ran OK"
@@ -34,7 +33,7 @@ else
     echo "The cmake step failed" >&2
     exit 1
 fi
-ninja install
+make install
 if [ $? -eq 0 ]
 then
     echo "The make step ran OK"
