@@ -8,26 +8,54 @@ if [ "$(uname)" == "Darwin" ]; then
     brew upgrade
     brew install cmake
     brew install lua
-    
+
+    EXTN=dylib
+    CXXSTANDARD=17
+
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 
     #Needs gcc v.5 or higher and ArangoDB server locally installed
     sudo apt-get update
-        sudo apt-get install -y lua5.3-dev libcurl4-openssl-dev
+    sudo apt-get install -y libcurl4-openssl-dev
+
+    EXTN=so
+    CXXSTANDARD=11
+
+    #sudo rm -f /usr/local/lib/liblua.a
+    # Lua is a powerful, efficient, lightweight, embeddable scripting language
+    # if no lua installed in /usr/local/lib/liblua.a (/usr/local/include)
+    test -f /usr/local/lib/liblua.a || {
+
+        # Building velocypack library
+        mkdir -p ~/code && \
+                cd ~/code && \
+                curl -R -O http://www.lua.org/ftp/lua-5.4.2.tar.gz && \
+                tar zxf lua-5.4.2.tar.gz && \
+                cd lua-5.4.2 && \
+                make "MYCFLAGS=-fPIC" linux && \
+                sudo make install
+
+        # Removing generated build files
+        cd ~ && \
+                 rm -rf ~/code
+   }
+
 fi
 
 # Uncomment what is necessary to reinstall by force
-#sudo rm -f /usr/local/lib/libvelocypack.*
-#sudo rm -f /usr/local/lib/libjsonarango.*
-#sudo rm -f /usr/local/lib/libjsonio17.*
-#sudo rm -f /usr/local/lib/libpugixml.*
-#sudo rm -f /usr/local/lib/libyaml-cpp.*
-#sudo rm -f /usr/local/lib/libthrift.a
+#sudo rm -f /usr/local/lib/libvelocypack.a
+#sudo rm -f /usr/local/lib/libjsonarango.$EXTN
+#sudo rm -f /usr/local/lib/libjsonio17.$EXTN
+#sudo rm -f /usr/local/lib/libpugixml.$EXTN
+#sudo rm -f /usr/local/lib/libyaml-cpp.$EXTN
+#sudo rm -f /usr/local/lib/libthrift.$EXTN
 
 threads=3
+BRANCH_JSON=master
+BuildType=Release
 
 
-# Velocypack from ArangoDB (added for installing ArangoDB database client)
+# Velocypack from ArangoDB (added for installing jsonArango database client)
 # if no VPack installed in /usr/local/lib/libvelocypack.a (/usr/local/include/velocypack)
 test -f /usr/local/lib/libvelocypack.a || {
 
@@ -38,7 +66,7 @@ test -f /usr/local/lib/libvelocypack.a || {
                 cd velocypack && \
                 mkdir -p build && \
                 cd build && \
-                cmake .. -DCMAKE_CXX_FLAGS=-fPIC -DBuildVelocyPackExamples=OFF && \
+                cmake .. -DCMAKE_CXX_FLAGS=-fPIC -DBuildVelocyPackExamples=OFF -DCMAKE_CXX_STANDARD=$CXXSTANDARD && \
                 make -j $threads && \
                 sudo make install
 
@@ -47,19 +75,19 @@ test -f /usr/local/lib/libvelocypack.a || {
                  rm -rf ~/code
 }
 
-# JSONIO ArangoDB database client
-# if no JSONIO installed in /usr/local/lib/libjsonarango.a
-test -f /usr/local/lib/libjsonarango.a || {
+# jsonArango database client
+# if no jsonArango installed in /usr/local/lib/libjsonarango.a
+test -f /usr/local/lib/libjsonarango.$EXTN || {
 
         # Building jsonio library
         mkdir -p ~/code && \
                 cd ~/code && \
-                git clone https://bitbucket.org/gems4/jsonarango.git -b $BRANCH_JSON && \
-                cd jsonio && \
+                git clone https://bitbucket.org/gems4/jsonarango.git && \
+                cd jsonarango && \
                 mkdir -p build && \
                 cd build && \
                 cmake .. -DCMAKE_CXX_FLAGS=-fPIC -DCMAKE_BUILD_TYPE=Release && \
-                make -j $threads && \
+                make && \
                 sudo make install
 
         # Removing generated build files
@@ -68,18 +96,18 @@ test -f /usr/local/lib/libjsonarango.a || {
 }
 
 # JSONIO17 database client
-# if no JSONIO installed in /usr/local/lib/libjsonio17.a (/usr/local/include/jsonio17)
-test -f /usr/local/lib/libjsonio17.a || {
+# if no JSONIO installed in /usr/local/lib/libjsonio17.$EXTN (/usr/local/include/jsonio17)
+test -f /usr/local/lib/libjsonio17.$EXTN || {
 
         # Building jsonio library
         mkdir -p ~/code && \
                 cd ~/code && \
                 git clone https://bitbucket.org/gems4/jsonio17.git -b $BRANCH_JSON && \
-                cd jsonio && \
+                cd jsonio17 && \
                 mkdir -p build && \
                 cd build && \
-                cmake .. -DCMAKE_CXX_FLAGS=-fPIC -DCMAKE_BUILD_TYPE=$BuildType -DCMAKE_INSTALL_PREFIX=$INSTALL_JSON && \
-                make -j $threads && \
+                cmake .. -DCMAKE_CXX_FLAGS=-fPIC -DCMAKE_BUILD_TYPE=$BuildType && \
+                make && \
                 sudo make install
 
         # Removing generated build files
@@ -88,7 +116,7 @@ test -f /usr/local/lib/libjsonio17.a || {
 }
 
 # pugixml
-test -f /usr/local/lib/libpugixml.so || {
+test -f /usr/local/lib/libpugixml.$EXTN || {
 
         # Building pugixml library
         mkdir -p ~/code && \
@@ -107,7 +135,7 @@ test -f /usr/local/lib/libpugixml.so || {
 }
 
 # YAMLCPP
-test -f /usr/local/lib/libyaml-cpp.so || {
+test -f /usr/local/lib/libyaml-cpp.$EXTN || {
 
         # Building yaml-cpp library
         mkdir -p ~/code && \
@@ -127,7 +155,7 @@ test -f /usr/local/lib/libyaml-cpp.so || {
 
 # Thrift
 # if no Thrift installed in /usr/local/lib/libthrift.a (/usr/local/include/thrift)
-test -f /usr/local/lib/libthrift.a || {
+test -f /usr/local/lib/libthrift.$EXTN || {
 
         # Building thrift library
         mkdir -p ~/code && \

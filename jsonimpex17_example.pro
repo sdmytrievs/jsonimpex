@@ -48,11 +48,14 @@ INCLUDEPATH   += $$JSONIMPEX17_DIR
 INCLUDEPATH   += $$JSONIMPEX17_HEADERS_DIR
 INCLUDEPATH   += $$THRIFT_HEADERS_DIR
 
+LIBS += -llua -ldl
 LIBS +=  -lstdc++fs
 LIBS +=  -ljsonio17 -ljsonarango -lcurl  -lvelocypack
 LIBS += -lyaml-cpp  -lpugixml -lthrift
-macx-clang:LIBS += -llua
-!macx-clang:LIBS += -llua5.3
+#macx-clang:LIBS += -llua
+#!macx-clang:LIBS += -llua5.3
+#INCLUDEPATH   += "/usr/include/lua5.3"
+#DEPENDPATH   += "/usr/include/lua5.3"
 
 #LIBS += -pg  # gprof information
 

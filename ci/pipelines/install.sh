@@ -21,8 +21,24 @@ source activate jsonimpex17
 mkdir build
 cd build
 # Configure step
-cmake  -DCMAKE_BUILD_TYPE=Release \
+cmake  \
+    -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_LIBDIR=lib \
     ..
+make
+if [ $? -eq 0 ]
+then
+    echo "The cmake step ran OK"
+else
+    echo "The cmake step failed" >&2
+    exit 1
+fi
 make install
+if [ $? -eq 0 ]
+then
+    echo "The make step ran OK"
+else
+    echo "The make step failed" >&2
+    exit 1
+fi
 conda list

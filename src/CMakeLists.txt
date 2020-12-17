@@ -48,7 +48,8 @@ if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
             PRIVATE velocypack
             PRIVATE libcurl
             PRIVATE thrift
-            PRIVATE lua5.3
+#            PRIVATE lua5.3
+            PRIVATE lua
             PRIVATE yaml-cpp
             PRIVATE pugixml
             PUBLIC pthread )
@@ -61,7 +62,7 @@ else()
            PUBLIC velocypack
            PUBLIC curl
            PRIVATE thrift
-           PRIVATE lua5.3
+           PRIVATE lua
            PRIVATE yaml-cpp
            PRIVATE pugixml
            PUBLIC pthread )
