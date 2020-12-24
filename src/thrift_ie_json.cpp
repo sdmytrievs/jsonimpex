@@ -30,7 +30,7 @@ StructDataIEFile::StructDataIEFile( ImpexFormatFile::ImpexMode amode, const std:
     block = format_description_data.block;
 
     // select file type
-    std::transform(renderer.begin(), renderer.end(), renderer.begin(), [](unsigned char c){ return std::tolower(c); });
+    std::transform(renderer.begin(), renderer.end(), renderer.begin(), [](unsigned char c){ return tolower(c); });
     foreign_data_type = JsonYamlXMLFile::type_from_extension( renderer );
 
 }
