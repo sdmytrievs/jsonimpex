@@ -47,7 +47,7 @@ if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
             PUBLIC jsonarango-static
             PRIVATE velocypack
             PRIVATE libcurl
-            PRIVATE thrift
+            PRIVATE libthrift
 #            PRIVATE lua5.3
             PRIVATE lua
             PRIVATE yaml-cpp
