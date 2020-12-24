@@ -12,13 +12,12 @@ foreach (exampleName ${Examples})
     add_executable(${exampleName} ${exampleName}.cpp)
     if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
           target_link_libraries(${exampleName}
-            PUBLIC stdc++fs
             PUBLIC jsonimpex17-static
             PUBLIC jsonio17-static
             PUBLIC jsonarango-static
             PRIVATE velocypack
             PRIVATE libcurl
-            PRIVATE thrift
+            PRIVATE thriftmd
 #            PRIVATE lua5.3
             PRIVATE lua
             PRIVATE yaml-cpp
