@@ -14,7 +14,7 @@ dependencies:
   - boost-cpp
   - yaml-cpp
   - pugixml
-  - thrift-cpp
+  - libthrift
   - lua
 
 environment:
