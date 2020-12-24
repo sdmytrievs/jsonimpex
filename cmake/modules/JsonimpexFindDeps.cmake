@@ -42,7 +42,7 @@ if(NOT PUGIXML_LIB)
   message(FATAL_ERROR "libpugixml library not found")
 endif()
 
-find_library(THRIFT_LIB thrift)
+find_library(THRIFT_LIB thrift-cpp)
 if(NOT THRIFT_LIB)
   message(FATAL_ERROR "thrift library not found")
 endif()
