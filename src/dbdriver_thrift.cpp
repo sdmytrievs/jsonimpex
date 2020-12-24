@@ -367,7 +367,7 @@ void ThriftClientAPI::selectQuery( const std::string& collname, const DBQueryBas
     }
 
     //cout << _data.records.size() << " records in collection " << getKeywd() << endl;
-    for (uint i = 0; i < list_data.records.size(); ++i)
+    for (size_t i = 0; i < list_data.records.size(); ++i)
         setfnc( list_data.records[i].value );
 
 }
@@ -403,7 +403,7 @@ void ThriftClientAPI::allQuery( const std::string& collname, const std::set<std:
     }
 
     //cout << _data.records.size() << " records in collection " << getKeywd() << endl;
-    for (uint i = 0; i < list_data.records.size(); ++i)
+    for (size_t i = 0; i < list_data.records.size(); ++i)
     {
         //cout << _data.records[i].c_str() << endl;
         setfnc(   list_data.records[i].value, list_data.records[i].key );

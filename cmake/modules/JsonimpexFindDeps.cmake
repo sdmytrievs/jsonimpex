@@ -42,7 +42,12 @@ if(NOT PUGIXML_LIB)
   message(FATAL_ERROR "libpugixml library not found")
 endif()
 
+if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
+#https://github.com/conda-forge/thrift-cpp-feedstock/blob/master/recipe/meta.yaml
+find_library(THRIFT_LIB thriftmd)
+else()
 find_library(THRIFT_LIB thrift)
+endif()
 if(NOT THRIFT_LIB)
   message(FATAL_ERROR "thrift library not found")
 endif()

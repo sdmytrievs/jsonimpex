@@ -11,10 +11,10 @@ dependencies:
   - nlohmann_json
   - velocypack
   - jsonarango
-  - boost-cpp
   - yaml-cpp
   - pugixml
-  - thrift-cpp
+  - boost-cpp>=1.72.0
+  - thrift-cpp>=0.13.0
   - lua
 
 environment:

@@ -42,17 +42,14 @@ if( BUILD_IMPEX_SHARED_LIBS )
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
       target_link_libraries(JSONIMPEX17_SHARED
             PUBLIC gencpp
-            PUBLIC stdc++fs
             PUBLIC jsonio17-static
             PUBLIC jsonarango-static
             PRIVATE velocypack
             PRIVATE libcurl
-            PRIVATE thrift
-#            PRIVATE lua5.3
+            PRIVATE thriftmd
             PRIVATE lua
             PRIVATE yaml-cpp
-            PRIVATE pugixml
-            PUBLIC pthread )
+            PRIVATE pugixml )
 else()
       target_link_libraries( JSONIMPEX17_SHARED
            PUBLIC gencpp
