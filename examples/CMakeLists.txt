@@ -18,11 +18,9 @@ foreach (exampleName ${Examples})
             PRIVATE velocypack
             PRIVATE libcurl
             PRIVATE thriftmd
-#            PRIVATE lua5.3
             PRIVATE lua
             PRIVATE yaml-cpp
-            PRIVATE pugixml
-            PUBLIC pthread )
+            PRIVATE pugixml )
     else()
           target_link_libraries( ${exampleName}
             PUBLIC stdc++fs

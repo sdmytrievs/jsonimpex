@@ -21,11 +21,9 @@ if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
             PRIVATE velocypack
             PRIVATE libcurl
             PRIVATE thriftmd
-#            PRIVATE lua5.3
             PRIVATE lua
             PRIVATE yaml-cpp
-            PRIVATE pugixml
-            PUBLIC pthread )
+            PRIVATE pugixml )
 else()
       target_link_libraries( test_main
            PUBLIC gtest
