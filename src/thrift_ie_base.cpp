@@ -60,6 +60,8 @@ void AbstractIEFile::set_readed_data()
         impvalue = it->second;
         it++;
 
+        if( impvalue.empty() )
+            continue;
         auto idom = block.matches.find( impkey );
         if( idom == block.matches.end() ) // not converted
             continue;
