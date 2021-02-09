@@ -89,7 +89,7 @@ void AbstractIEFile::set_readed_data()
             }
             continue;
         }
-        std::cout << domkey << "  " << impvalue[0] << std::endl;
+
         run_convert( idom->second.convert, impvalue );
         if( fld->elemType() == FieldDef::T_STRING )
             run_lua_script_string( idom->second.script, impvalue, fld->isArray() );
