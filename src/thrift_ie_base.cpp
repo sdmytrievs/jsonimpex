@@ -38,7 +38,8 @@ void AbstractIEFile::set_readed_data()
     auto itr = block.defaults.begin();
     while ( itr != block.defaults.end() )
     {
-        auto fld = const_cast<JsonSchema*>( dom_node.field(itr->first) );
+        auto names = split(itr->first, field_path_delimiters);
+        auto fld =  dom_node.field_add(names);
         if( fld == nullptr)
         {
             std::cout << "Not found " <<  itr->first << std::endl;
@@ -59,6 +60,8 @@ void AbstractIEFile::set_readed_data()
         impvalue = it->second;
         it++;
 
+        if( impvalue.empty() )
+            continue;
         auto idom = block.matches.find( impkey );
         if( idom == block.matches.end() ) // not converted
             continue;
@@ -66,7 +69,8 @@ void AbstractIEFile::set_readed_data()
         if( idom->second.ignore || domkey.empty() )  // skip ignored
             continue;
 
-        auto fld = const_cast<JsonSchema*>( dom_node.field(domkey) );
+        auto names = split(domkey, field_path_delimiters);
+        auto fld =  dom_node.field_add(names);
         if( !fld )
         {
             auto pos = domkey.find_last_of(".");
@@ -74,7 +78,8 @@ void AbstractIEFile::set_readed_data()
             {
                 std::string key = std::string(domkey,  pos+1 );
                 domkey = std::string(domkey, 0, pos);
-                fld = const_cast<JsonSchema*>( dom_node.field(domkey) );
+                names = split(domkey, field_path_delimiters);
+                fld =  dom_node.field_add(names);
                 if( fld && fld->isMap() )
                 {
                     run_convert( idom->second.convert, impvalue );
@@ -93,11 +98,12 @@ void AbstractIEFile::set_readed_data()
 
         if( fld->isArray() && !fld->isMap() )
         {
-            fld->set_from( impvalue );
+            fld->loads_list_from( impvalue );
         }
-        else
-            if( impvalue.size()>0 )
-                fld->set_from( impvalue[0] );
+        else  if( impvalue.size()>0 )
+        {
+           fld->loads_from( impvalue[0] );
+        }
     }
 }
 
@@ -107,11 +113,14 @@ void AbstractIEFile::run_convert( const std::map<std::string,std::string>&  conv
 {
     if( convert.empty() )
         return;
-    for( size_t ii=0; ii< values.size(); ii++ )
+
+    auto copy_values = std::move(values);
+    values.clear();
+    for( size_t ii=0; ii< copy_values.size(); ii++ )
     {
-        auto itmap = convert.find( values[ii] );
+        auto itmap = convert.find( copy_values[ii] );
         if( itmap != convert.end() )
-            values[ii] = itmap->second;
+            values.push_back( itmap->second );
     }
 }
 

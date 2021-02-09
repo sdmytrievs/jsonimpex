@@ -17,10 +17,8 @@ void ImpexFormatFile::initDefaultFormats()
 
 ImpexFormatFile::ImpexFormatFile(ImpexFormatFile::ImpexMode mode_of_use, const std::string &impex_format_name, const JsonBase &object):
     impex_format( create_format_data( mode_of_use, impex_format_name, object ))
-{
-    if( formats.empty() )
-        initDefaultFormats();
-}
+{ }
+
 
 ImpexFormatFile::~ImpexFormatFile()
 { }
@@ -87,6 +85,8 @@ AbstractIEFile *ImpexFormatFile::create_format_data( ImpexMode amode, const std:
     if( impex_format_name.empty() )
         return nullptr;
 
+    if( formats.empty() )
+        initDefaultFormats();
     auto format = formats.find( impex_format_name );
     if( format != formats.end() )
         return format->second( amode, object, lua_lib_path );
