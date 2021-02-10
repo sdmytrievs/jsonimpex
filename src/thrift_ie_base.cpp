@@ -1,6 +1,7 @@
 #include <iostream>
 #include "jsonio17/io_settings.h"
 #include "jsonio17/jsonschema.h"
+#include "jsonio17/jsondump.h"
 #include "thrift_ie_base.h"
 #include "TJSONSerializer.h"
 
@@ -38,8 +39,7 @@ void AbstractIEFile::set_readed_data()
     auto itr = block.defaults.begin();
     while ( itr != block.defaults.end() )
     {
-        auto names = split(itr->first, field_path_delimiters);
-        auto fld =  dom_node.field_add(names);
+        auto fld =  dom_node.field_add(itr->first);
         if( fld == nullptr)
         {
             std::cout << "Not found " <<  itr->first << std::endl;
@@ -69,8 +69,7 @@ void AbstractIEFile::set_readed_data()
         if( idom->second.ignore || domkey.empty() )  // skip ignored
             continue;
 
-        auto names = split(domkey, field_path_delimiters);
-        auto fld =  dom_node.field_add(names);
+        auto fld =  dom_node.field_add(domkey);
         if( !fld )
         {
             auto pos = domkey.find_last_of(".");
@@ -78,8 +77,7 @@ void AbstractIEFile::set_readed_data()
             {
                 std::string key = std::string(domkey,  pos+1 );
                 domkey = std::string(domkey, 0, pos);
-                names = split(domkey, field_path_delimiters);
-                fld =  dom_node.field_add(names);
+                fld =  dom_node.field_add(domkey);
                 if( fld && fld->isMap() )
                 {
                     run_convert( idom->second.convert, impvalue );
@@ -89,13 +87,13 @@ void AbstractIEFile::set_readed_data()
             }
             continue;
         }
-
         run_convert( idom->second.convert, impvalue );
         if( fld->elemType() == FieldDef::T_STRING )
             run_lua_script_string( idom->second.script, impvalue, fld->isArray() );
         else
             run_lua_script( idom->second.script, impvalue, fld->isArray() );
 
+        //std::cout << domkey << " : " << json::dump(impvalue)  << std::endl;
         if( fld->isArray() && !fld->isMap() )
         {
             fld->loads_list_from( impvalue );
