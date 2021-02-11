@@ -103,7 +103,7 @@ bool StructDataIEFile::writeBlockToFile( const key_values_table_t& )
 bool StructDataIEFile::extract_values( const std::string &key, const JsonFree& foreign_node, values_t& values ) const
 {
     auto fld = foreign_node.field( key );
-    if( fld )
+    if( fld && !fld->isNull() )
     {
         if( fld->isArray() )
         {
@@ -161,7 +161,6 @@ bool StructDataIEFile::read_block_from_json( const std::string& inputjson, std::
         key2 = key = itr.first;
         if( ndx >= 0)
             key2 = regexp_replace( key, "%", std::to_string(ndx) );
-
 
         if( extract_values( key2, foreign_node, values ) )
         {

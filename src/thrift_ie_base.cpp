@@ -82,7 +82,7 @@ void AbstractIEFile::set_readed_data()
                 {
                     run_convert( idom->second.convert, impvalue );
                     run_lua_script_string( idom->second.script, impvalue, false );
-                    fld->set_value_via_path( key, impvalue[0]  ); // add line to map
+                    fld->load_value_via_path( key, impvalue[0]  ); // add line to map
                 }
             }
             continue;
