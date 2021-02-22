@@ -140,7 +140,7 @@ TEST( JSONYAML, TestYamlArrayFileLoad )
     for( size_t ii=0; ii<5; ii++)
     {
         EXPECT_TRUE( fjson.loadNext( obj ));
-        EXPECT_EQ( obj.toString(true), std::string("{\"key\":")+std::to_string(ii)+"}\n" );
+        EXPECT_EQ( obj.toString(true), std::string("{\"key\":")+std::to_string(ii)+"}" );
     }
     EXPECT_NO_THROW( fjson.Close() );
     EXPECT_EQ( fjson.load_all(), fdata );
@@ -279,6 +279,6 @@ TEST( JSONXML, TestXMLArrayFileLoad )
     for( size_t ii=0; ii<5; ii++)
     {
         EXPECT_TRUE( fjson.loadNext( obj ));
-        EXPECT_EQ( obj.toString(true), std::string("{\"key\":")+std::to_string(ii)+"}\n" );
+        EXPECT_EQ( obj.toString(true), std::string("{\"key\":")+std::to_string(ii)+"}" );
     }
 }
