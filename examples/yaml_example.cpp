@@ -48,7 +48,7 @@ int main()
 
 void FreeSchema()
 {
-    auto json_arr = json::loads( test_free_str );
+    auto json_arr = json::loads( "{\"about\":{\"version\":1},\"values\":[[1,2],[3,4]]}" );
     auto yaml_txt = yaml::dump(json_arr);
     std::cout << yaml_txt << std::endl << "------------" << std::endl;
 

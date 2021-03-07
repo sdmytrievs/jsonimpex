@@ -179,6 +179,7 @@ void AbstractIEFile::run_block_script( const std::string& luascript, JsonSchema&
 
     std::string json_data = object.dump( true );
     std::string newjson = lua_run.run( luascript, json_data, false );
+    //std::cout << newjson << std::endl;
     if( !newjson.empty() )
     {
         object.loads( newjson );
