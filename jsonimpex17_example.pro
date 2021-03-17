@@ -11,9 +11,7 @@ QMAKE_CXXFLAGS += -Wall -Wextra -Wformat-nonliteral -Wcast-align -Wpointer-arith
  -Wmissing-declarations -Winline -Wundef \ #-Weffc++ -Wfloat-equal  \
  -Wcast-qual -Wshadow -Wwrite-strings -Wno-unused-parameter \
  -pedantic -ansi
-
 #QMAKE_CXXFLAGS += -pg  # gprof information
-
 }
 
 macx-g++ {
@@ -49,8 +47,10 @@ INCLUDEPATH   += $$JSONIMPEX17_HEADERS_DIR
 INCLUDEPATH   += $$THRIFT_HEADERS_DIR
 
 LIBS += -llua -ldl
-LIBS +=  -lstdc++fs
-LIBS +=  -ljsonio17 -ljsonarango -lcurl  -lvelocypack
+unix:!macx-clang:LIBS += -lstdc++fs
+win32:LIBS +=  -ljsonio17-static -ljsonarango-static -llibcurl
+!win32:LIBS += -ljsonio17 -ljsonarango -lcurl
+LIBS +=   -lvelocypack
 LIBS += -lyaml-cpp  -lpugixml -lthrift
 #macx-clang:LIBS += -llua
 #!macx-clang:LIBS += -llua5.3
