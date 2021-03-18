@@ -61,7 +61,7 @@ LIBS += -lyaml-cpp  -lpugixml -lthrift
 
 OBJECTS_DIR   = obj
 
-include($$THRIFT_DIR/thrift.pri)
+#include($$THRIFT_DIR/thrift.pri)
 include($$JSONIMPEX17_DIR/jsonimpex17.pri)
 
 SOURCES += \

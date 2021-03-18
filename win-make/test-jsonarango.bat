@@ -51,6 +51,8 @@ echo %INCLUDE%
 mkdir tmp_json
 cd tmp_json
 
+curl -R -O http://www.lua.org/ftp/lua-5.4.2.tar.gz
+tar zxf lua-5.4.2.tar.gz
 
 echo
 echo ******                		 ******
@@ -65,24 +67,10 @@ cd pugixml
 echo "Configuring..."
 cmake -G%COMPILER_VER_NAME%  -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=%LOCALINSTALL% .. -S . -B build
 echo "Building..."
-cmake --build build  --target install --config Release
-cd ..
-
-echo
-echo ******                		 ******
-echo ****** Compiling yaml-cpp         ******
-echo ******                		 ******
-echo
-
-echo Get yaml-cpp from git...
-git clone https://github.com/jbeder/yaml-cpp.git
-cd yaml-cpp
-
-echo "Configuring..."
-cmake -G %COMPILER_VER_NAME% -DYAML_CPP_BUILD_TESTS=OFF -DYAML_CPP_BUILD_TOOLS=OFF -DYAML_CPP_BUILD_CONTRIB=OFF -DCMAKE_INSTALL_PREFIX=%LOCALINSTALL% .. -S . -B build
-echo "Building..."
-cmake --build build  --target install --config Release
+cmake --build build  --target install
 cd ..\..
+
+msbuild "tmp_json\thrift\lib\cpp\libthrift.vcxproj" /fl /flp:logfile=MyProjectOutput.log;verbosity=diagnostic
 
 REM Housekeeping
 rem rd /s /q tmp_json

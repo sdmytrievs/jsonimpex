@@ -42,10 +42,15 @@ INCLUDEPATH   += $$JSONIMPEX17_HEADERS_DIR
 INCLUDEPATH   += $$THRIFT_HEADERS_DIR
 INCLUDEPATH   += $$TESTS_DIR
 
-LIBS +=  -lstdc++fs
-LIBS +=  -ljsonio17 -ljsonarango -lcurl  -lvelocypack
-LIBS += -lyaml-cpp  -lpugixml -lthrift
-LIBS += -llua -ldl
+unix:!macx-clang:LIBS += -lstdc++fs
+win32:LIBS +=  -ljsonio17-static -ljsonarango-static -llibcurl
+!win32:LIBS += -ljsonio17 -ljsonarango -lcurl
+LIBS +=   -lvelocypack
+LIBS += -lyaml-cppd  -lpugixml # -lthrift
+unix:!macx-clang:LIBS += -llua -ldl
+macx-clang:LIBS += -llua
+win32:LIBS += -llua54
+
 #macx-clang:LIBS += -llua
 #!macx-clang:LIBS += -llua5.3
 #INCLUDEPATH   += "/usr/include/lua5.3"

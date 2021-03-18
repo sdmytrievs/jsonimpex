@@ -169,7 +169,7 @@ cd pugixml
 echo "Configuring..."
 cmake -G%COMPILER_VER_NAME%  -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=%LOCALINSTALL% .. -S . -B build
 echo "Building..."
-cmake --build build  --target install --config Release
+cmake --build build  --target install
 cd ..
 
 echo
@@ -185,7 +185,7 @@ cd yaml-cpp
 echo "Configuring..."
 cmake -G %COMPILER_VER_NAME% -DYAML_CPP_BUILD_TESTS=OFF -DYAML_CPP_BUILD_TOOLS=OFF -DYAML_CPP_BUILD_CONTRIB=OFF -DCMAKE_INSTALL_PREFIX=%LOCALINSTALL% .. -S . -B build
 echo "Building..."
-cmake --build build  --target install --config Release
+cmake --build build  --target install
 cd ..\..
 
 
