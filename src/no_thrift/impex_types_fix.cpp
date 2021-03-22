@@ -1030,8 +1030,9 @@ uint32_t FormatBlock::read(::jsonio17::TJSONSerializer* iprot) {
 
   xfer += iprot->readStructEnd();
 
-  //if (!isset_matches)
-  //  throw TProtocolException(TProtocolException::INVALID_DATA);
+  if (!isset_matches)
+       jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected matches");
+      //  throw TProtocolException(TProtocolException::INVALID_DATA);
   return xfer;
 }
 
@@ -1306,11 +1307,14 @@ uint32_t FormatTextFile::read(::jsonio17::TJSONSerializer* iprot) {
 
   xfer += iprot->readStructEnd();
 
-//  if (!isset_block)
+  if (!isset_block)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected block");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
-//  if (!isset_lines)
+  if (!isset_lines)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected lines");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
-//  if (!isset_label)
+  if (!isset_label)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected label");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   return xfer;
 }
@@ -1616,11 +1620,14 @@ uint32_t FormatKeyValue::read(::jsonio17::TJSONSerializer* iprot) {
 
   xfer += iprot->readStructEnd();
 
-//  if (!isset_head_regexp)
+  if (!isset_head_regexp)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected head_regexp");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
-//  if (!isset_end_regexp)
+  if (!isset_end_regexp)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected end_regexp");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
-//  if (!isset_key_regexp)
+  if (!isset_key_regexp)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected key_regexp");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   return xfer;
 }
@@ -1916,13 +1923,17 @@ uint32_t FormatKeyValueFile::read(::jsonio17::TJSONSerializer* iprot) {
 
   xfer += iprot->readStructEnd();
 
-//  if (!isset_block)
+  if (!isset_block)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected block");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
-//  if (!isset_format)
+  if (!isset_format)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected format");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
-//  if (!isset_renderer)
+  if (!isset_renderer)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected renderer");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
-//  if (!isset_label)
+  if (!isset_label)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected label");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   return xfer;
 }
@@ -2610,13 +2621,17 @@ uint32_t FormatTableFile::read(::jsonio17::TJSONSerializer* iprot) {
 
   xfer += iprot->readStructEnd();
 
-//  if (!isset_block)
+  if (!isset_block)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected block");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
-//  if (!isset_format)
+  if (!isset_format)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected format");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
-//  if (!isset_renderer)
+  if (!isset_renderer)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected renderer");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
-//  if (!isset_label)
+  if (!isset_label)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected label");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   return xfer;
 }
@@ -2879,12 +2894,16 @@ uint32_t FormatStructDataFile::read(::jsonio17::TJSONSerializer* iprot) {
 
   xfer += iprot->readStructEnd();
 
-//  if (!isset_block)
+  if (!isset_block)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected block");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
-//  if (!isset_renderer)
+  if (!isset_renderer)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected renderer");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
-//  if (!isset_label)
+  if (!isset_label)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected label");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
+
   return xfer;
 }
 
@@ -3327,17 +3346,23 @@ uint32_t ImpexFormat::read(::jsonio17::TJSONSerializer* iprot) {
 
   xfer += iprot->readStructEnd();
 
-//  if (!isset__id)
+  if (!isset__id)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected _id");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
-//  if (!isset__key)
+  if (!isset__key)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected _key");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
-//  if (!isset__rev)
+  if (!isset__rev)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected _rev");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
-//  if (!isset_name)
+  if (!isset_name)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected name");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
-//  if (!isset_impexschema)
+  if (!isset_impexschema)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected impexschema");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
-//  if (!isset_impex)
+  if (!isset_impex)
+      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected impex");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   return xfer;
 }
