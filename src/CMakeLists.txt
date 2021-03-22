@@ -123,7 +123,7 @@ if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
             PRIVATE velocypack
             PRIVATE libcurl
             PRIVATE lua
-            PRIVATE yaml-cppd
+            PRIVATE yaml-cpp
             PRIVATE pugixml )
 else()
       target_link_libraries( JSONIMPEX17_SHARED
