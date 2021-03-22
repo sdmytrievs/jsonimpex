@@ -35,6 +35,7 @@ option( BUILD_IMPEX_SHARED_LIBS "Build shared libraries." ON)
 option( BUILD_IMPEX_STATIC_LIBS "Build static libraries." ON)
 option(BuildExamples "Build EXAMPLES" ON)
 option(BuildTests "Build test suite" ON)
+option(JSONIMPEX_USE_THRIFT "Build jsonimpex17 with thrift library." OFF)
 
 # Currently is not setup to produce a dynamic library using MSVC, only static
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
