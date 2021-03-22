@@ -4,6 +4,8 @@ CONFIG -= app_bundle
 CONFIG += thread
 CONFIG -= qt
 
+DEFINES += USE_THRIFT
+
 !win32 {
   DEFINES += __unix
 }
@@ -28,25 +30,22 @@ win32 {
 # Define the directory where jsonimpex17 source code is located
 JSONIMPEX17_DIR =  $$PWD/src
 JSONIMPEX17_HEADERS_DIR =  $$PWD/include
-THRIFT_DIR    = $$PWD/thrift
-THRIFT_HEADERS_DIR =  $$THRIFT_DIR/gen-cpp
 TESTS_DIR =  $$PWD/tests
 
 DEPENDPATH   += $$JSONIMPEX17_DIR
 DEPENDPATH   += $$JSONIMPEX17_HEADERS_DIR
-DEPENDPATH   += $$THRIFT_HEADERS_DIR
 DEPENDPATH   += $$TESTS_DIR
 
 INCLUDEPATH   += $$JSONIMPEX17_DIR
 INCLUDEPATH   += $$JSONIMPEX17_HEADERS_DIR
-INCLUDEPATH   += $$THRIFT_HEADERS_DIR
 INCLUDEPATH   += $$TESTS_DIR
 
 unix:!macx-clang:LIBS += -lstdc++fs
 win32:LIBS +=  -ljsonio17-static -ljsonarango-static -llibcurl
 !win32:LIBS += -ljsonio17 -ljsonarango -lcurl
 LIBS +=   -lvelocypack
-LIBS += -lyaml-cppd  -lpugixml # -lthrift
+!win32::LIBS += -lyaml-cpp  -lpugixml
+win32::LIBS += -lyaml-cppd  -lpugixml
 unix:!macx-clang:LIBS += -llua -ldl
 macx-clang:LIBS += -llua
 win32:LIBS += -llua54
@@ -56,11 +55,20 @@ win32:LIBS += -llua54
 #INCLUDEPATH   += "/usr/include/lua5.3"
 #DEPENDPATH   += "/usr/include/lua5.3"
 
-
 OBJECTS_DIR   = obj
 
-include($$TESTS_DIR/gtest_dependency.pri)
+contains(DEFINES, USE_THRIFT) {
+
+THRIFT_DIR    = $$PWD/thrift
+THRIFT_HEADERS_DIR =  $$THRIFT_DIR/gen-cpp
+DEPENDPATH   += $$THRIFT_HEADERS_DIR
+INCLUDEPATH   += $$THRIFT_HEADERS_DIR
+LIBS += -lyaml-cpp  -lpugixml -lthrift
+
 include($$THRIFT_DIR/thrift.pri)
+}
+
+include($$TESTS_DIR/gtest_dependency.pri)
 include($$JSONIMPEX17_DIR/jsonimpex17.pri)
 
 HEADERS += \

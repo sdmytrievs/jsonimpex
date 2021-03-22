@@ -2,9 +2,18 @@
 
 #include "jsonio17/jsonschema.h"
 #include "jsonimpex17/thrift_impex.h"
-#include "impex_types.h"
 #include "lua-run.h"
+
+
+#ifdef USE_THRIFT
+#include "impex_types.h"
+using  impex_struct_t = ::apache::thrift::TBase;
 using namespace  ::impex;
+#else
+#include "no_thrift/impex_types_fix.h"
+using  impex_struct_t = ::jsonio17::impex::TBase;
+using namespace  ::impex;
+#endif
 
 namespace jsonio17 {
 
@@ -148,8 +157,8 @@ protected:
 
 };
 
-void writeDataToJsonSchema( JsonBase& object, const std::string& structName, ::apache::thrift::TBase* data );
-void readDataFromJsonSchema( const JsonBase& object, const std::string& structName,  ::apache::thrift::TBase* data );
+void writeDataToJsonSchema( JsonBase& object, const std::string& structName, impex_struct_t* data );
+void readDataFromJsonSchema( const JsonBase& object, const std::string& structName,  impex_struct_t* data );
 std::string parseCode(/*regex_constants::error_type*/ int etype);
 
 } // namespace jsonio17

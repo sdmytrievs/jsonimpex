@@ -3,6 +3,8 @@ CONFIG += thread console c++17
 CONFIG -= app_bundle
 CONFIG -= qt
 
+#DEFINES += USE_THRIFT
+
 !win32 {
   DEFINES += __unix
 QMAKE_CFLAGS += pedantic -Wall -Wextra -Wwrite-strings -Werror
@@ -31,37 +33,43 @@ win32 {
   LIBPATH += "C:\usr\local\lib"
 }
 
-
 # Define the directory where jsonimpex17 source code is located
 JSONIMPEX17_DIR =  $$PWD/src
 JSONIMPEX17_HEADERS_DIR =  $$PWD/include
-THRIFT_DIR    = $$PWD/thrift
-THRIFT_HEADERS_DIR =  $$THRIFT_DIR/gen-cpp
-
 DEPENDPATH   += $$JSONIMPEX17_DIR
 DEPENDPATH   += $$JSONIMPEX17_HEADERS_DIR
-DEPENDPATH   += $$THRIFT_HEADERS_DIR
-
 INCLUDEPATH   += $$JSONIMPEX17_DIR
 INCLUDEPATH   += $$JSONIMPEX17_HEADERS_DIR
-INCLUDEPATH   += $$THRIFT_HEADERS_DIR
 
-LIBS += -llua -ldl
 unix:!macx-clang:LIBS += -lstdc++fs
 win32:LIBS +=  -ljsonio17-static -ljsonarango-static -llibcurl
 !win32:LIBS += -ljsonio17 -ljsonarango -lcurl
 LIBS +=   -lvelocypack
-LIBS += -lyaml-cpp  -lpugixml -lthrift
+!win32::LIBS += -lyaml-cpp  -lpugixml
+win32::LIBS += -lyaml-cppd  -lpugixml
+unix:!macx-clang:LIBS += -llua -ldl
+macx-clang:LIBS += -llua
+win32:LIBS += -llua54
 #macx-clang:LIBS += -llua
 #!macx-clang:LIBS += -llua5.3
 #INCLUDEPATH   += "/usr/include/lua5.3"
 #DEPENDPATH   += "/usr/include/lua5.3"
-
 #LIBS += -pg  # gprof information
+
 
 OBJECTS_DIR   = obj
 
-#include($$THRIFT_DIR/thrift.pri)
+contains(DEFINES, USE_THRIFT) {
+
+THRIFT_DIR    = $$PWD/thrift
+THRIFT_HEADERS_DIR =  $$THRIFT_DIR/gen-cpp
+DEPENDPATH   += $$THRIFT_HEADERS_DIR
+INCLUDEPATH   += $$THRIFT_HEADERS_DIR
+LIBS += -lthrift
+
+include($$THRIFT_DIR/thrift.pri)
+}
+
 include($$JSONIMPEX17_DIR/jsonimpex17.pri)
 
 SOURCES += \

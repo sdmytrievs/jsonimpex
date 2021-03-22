@@ -3,10 +3,16 @@ using namespace std;
 
 namespace jsonio17 {
 
+#ifdef USE_THRIFT
 TJSONSerializer::TJSONSerializer( std::shared_ptr<TTransport> ptrans, const SchemasData* aschema ):
     TVirtualProtocol<TJSONSerializer>( ptrans ),
     schema(aschema), top_read_object(nullptr)
 {}
+#else
+TJSONSerializer::TJSONSerializer( const SchemasData* aschema ):
+    schema(aschema), top_read_object(nullptr)
+{}
+#endif
 
 TJSONSerializer::~TJSONSerializer()
 {}
@@ -262,7 +268,7 @@ uint32_t TJSONSerializer::readFieldBegin( std::string& name, TType& fieldType, i
     }
     else // stop process
     {
-        fieldType = ::apache::thrift::protocol::T_STOP;
+        fieldType = T_STOP;
     }
     return 0;
 }
@@ -393,5 +399,104 @@ uint32_t TJSONSerializer::readBinary(std::string& str)
     str = it->toString();
     return 0;
 }
+
+#ifndef USE_THRIFT
+
+/**
+ * Helper template for implementing TProtocol::skip().
+ *
+ * Templatized to avoid having to make virtual function calls.
+ */
+uint32_t TJSONSerializer::skip( TType type) {
+
+    switch (type) {
+    case T_BOOL: {
+        bool boolv;
+        return readBool(boolv);
+    }
+    case T_BYTE: {
+        int8_t bytev = 0;
+        return readByte(bytev);
+    }
+    case T_I16: {
+        int16_t i16;
+        return readI16(i16);
+    }
+    case T_I32: {
+        int32_t i32;
+        return readI32(i32);
+    }
+    case T_I64: {
+        int64_t i64;
+        return readI64(i64);
+    }
+    case T_DOUBLE: {
+        double dub;
+        return readDouble(dub);
+    }
+    case T_STRING: {
+        std::string str;
+        return readBinary(str);
+    }
+    case T_STRUCT: {
+        uint32_t result = 0;
+        std::string name;
+        int16_t fid;
+        TType ftype;
+        result += readStructBegin(name);
+        while (true) {
+            result += readFieldBegin(name, ftype, fid);
+            if (ftype == T_STOP) {
+                break;
+            }
+            result += skip(ftype);
+            result += readFieldEnd();
+        }
+        result += readStructEnd();
+        return result;
+    }
+    case T_MAP: {
+        uint32_t result = 0;
+        TType keyType;
+        TType valType;
+        uint32_t i, size;
+        result += readMapBegin(keyType, valType, size);
+        for (i = 0; i < size; i++) {
+            result += skip(keyType);
+            result += skip(valType);
+        }
+        result += readMapEnd();
+        return result;
+    }
+    case T_SET: {
+        uint32_t result = 0;
+        TType elemType;
+        uint32_t i, size;
+        result += readSetBegin(elemType, size);
+        for (i = 0; i < size; i++) {
+            result += skip(elemType);
+        }
+        result += readSetEnd();
+        return result;
+    }
+    case T_LIST: {
+        uint32_t result = 0;
+        TType elemType;
+        uint32_t i, size;
+        result += readListBegin(elemType, size);
+        for (i = 0; i < size; i++) {
+            result += skip(elemType);
+        }
+        result += readListEnd();
+        return result;
+    }
+    default:
+        break;
+    }
+    JSONIO_THROW( "TJSONSerializer", 18, "invalid TType");
+
+}
+
+#endif
 
 } // namespace jsonio17

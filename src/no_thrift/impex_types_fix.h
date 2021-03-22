@@ -1,0 +1,1611 @@
+#pragma once
+
+#include <iosfwd>
+#include <functional>
+#include <memory>
+#include <map>
+#include <string>
+
+#include "impex_base.h"
+#include "jsonio17/jsondump.h"
+
+
+namespace impex {
+
+template <class T>
+std::string to_string( const T& value )
+{
+   return  ::jsonio17::json::dump(value);
+}
+
+/**
+ * Classes of direction types
+ */
+struct DirectionType {
+  enum type {
+    /**
+     * import
+     */
+    IMPORT = 0,
+    /**
+     * export
+     */
+    EXPORT = 1
+  };
+};
+
+extern const std::map<int, const char*> _DirectionType_VALUES_TO_NAMES;
+
+std::ostream& operator<<(std::ostream& out, const DirectionType::type& val);
+
+std::string to_string(const DirectionType::type& val);
+
+class FormatValue;
+
+class FormatKeyword;
+
+class DataType;
+
+class DataObject;
+
+class Separators;
+
+class FormatBlock;
+
+class FormatTextFile;
+
+class FormatKeyValue;
+
+class FormatKeyValueFile;
+
+class FormatTable;
+
+class FormatTableFile;
+
+class FormatStructDataFile;
+
+class FormatImportExportFile;
+
+class ImpexFormat;
+
+typedef struct _FormatValue__isset {
+  _FormatValue__isset() : format(false), factor(false), increment(false) {}
+  bool format :1;
+  bool factor :1;
+  bool increment :1;
+} _FormatValue__isset;
+
+/**
+ * Definition of the data value format in imported/exported file
+ */
+class FormatValue : public virtual ::jsonio17::impex::TBase {
+ public:
+
+  FormatValue(const FormatValue&);
+  FormatValue& operator=(const FormatValue&);
+  FormatValue() : format(), factor(0), increment(0) {
+  }
+
+  virtual ~FormatValue() noexcept;
+  /**
+   * Format scanf/printf (to string first): "%s" | "in" | "out" | "endl" | "txel" | "txkw"; "in" | "out" | "endl" for stream input
+   */
+  std::string format;
+  /**
+   * Factor != 0, default 1; Each num.value is multiplied (import) or divided (export) by factor
+   */
+  double factor;
+  /**
+   * Increment, default 0; added to each numerical value (import) or subtracted from (export)
+   */
+  double increment;
+
+  _FormatValue__isset __isset;
+
+  void __set_format(const std::string& val);
+
+  void __set_factor(const double val);
+
+  void __set_increment(const double val);
+
+  bool operator == (const FormatValue & rhs) const
+  {
+    if (!(format == rhs.format))
+      return false;
+    if (__isset.factor != rhs.__isset.factor)
+      return false;
+    else if (__isset.factor && !(factor == rhs.factor))
+      return false;
+    if (__isset.increment != rhs.__isset.increment)
+      return false;
+    else if (__isset.increment && !(increment == rhs.increment))
+      return false;
+    return true;
+  }
+  bool operator != (const FormatValue &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const FormatValue & ) const;
+
+  uint32_t read(::jsonio17::TJSONSerializer* iprot);
+  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(FormatValue &a, FormatValue &b);
+
+std::ostream& operator<<(std::ostream& out, const FormatValue& obj);
+
+typedef struct _FormatKeyword__isset {
+  _FormatKeyword__isset() : format(false), delim_begin(false), delim_end(false) {}
+  bool format :1;
+  bool delim_begin :1;
+  bool delim_end :1;
+} _FormatKeyword__isset;
+
+/**
+ * Format to read/print keywords in key-value pair file
+ */
+class FormatKeyword : public virtual ::jsonio17::impex::TBase {
+ public:
+
+  FormatKeyword(const FormatKeyword&);
+  FormatKeyword& operator=(const FormatKeyword&);
+  FormatKeyword() : format(), delim_begin(), delim_end() {
+  }
+
+  virtual ~FormatKeyword() noexcept;
+  /**
+   * scanf/printf format for keyword
+   */
+  std::string format;
+  /**
+   * delimiter for keyword begin e.g. "\"" | "<" | ""
+   */
+  std::string delim_begin;
+  /**
+   * delimiter for keyword end e.g. "\"" | ">" | ""
+   */
+  std::string delim_end;
+
+  _FormatKeyword__isset __isset;
+
+  void __set_format(const std::string& val);
+
+  void __set_delim_begin(const std::string& val);
+
+  void __set_delim_end(const std::string& val);
+
+  bool operator == (const FormatKeyword & rhs) const
+  {
+    if (!(format == rhs.format))
+      return false;
+    if (__isset.delim_begin != rhs.__isset.delim_begin)
+      return false;
+    else if (__isset.delim_begin && !(delim_begin == rhs.delim_begin))
+      return false;
+    if (__isset.delim_end != rhs.__isset.delim_end)
+      return false;
+    else if (__isset.delim_end && !(delim_end == rhs.delim_end))
+      return false;
+    return true;
+  }
+  bool operator != (const FormatKeyword &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const FormatKeyword & ) const;
+
+  uint32_t read(::jsonio17::TJSONSerializer* iprot);
+  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(FormatKeyword &a, FormatKeyword &b);
+
+std::ostream& operator<<(std::ostream& out, const FormatKeyword& obj);
+
+typedef struct _DataType__isset {
+  _DataType__isset() : datatype(false), organization(false) {}
+  bool datatype :1;
+  bool organization :1;
+} _DataType__isset;
+
+/**
+ * Type of object from the imported or exported file (for use in keyword lookup list or map)
+ */
+class DataType : public virtual ::jsonio17::impex::TBase {
+ public:
+
+  DataType(const DataType&);
+  DataType& operator=(const DataType&);
+  DataType() : datatype(), organization() {
+  }
+
+  virtual ~DataType() noexcept;
+  /**
+   * Basis type "string" | "float" | "double" | "i16" | "i32" | "bool" | ...
+   */
+  std::string datatype;
+  /**
+   * Organization: "" | "list" | "set" | "map" | "group" | "embedded" | ...
+   */
+  std::string organization;
+
+  _DataType__isset __isset;
+
+  void __set_datatype(const std::string& val);
+
+  void __set_organization(const std::string& val);
+
+  bool operator == (const DataType & rhs) const
+  {
+    if (!(datatype == rhs.datatype))
+      return false;
+    if (!(organization == rhs.organization))
+      return false;
+    return true;
+  }
+  bool operator != (const DataType &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const DataType & ) const;
+
+  uint32_t read(::jsonio17::TJSONSerializer* iprot);
+  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(DataType &a, DataType &b);
+
+std::ostream& operator<<(std::ostream& out, const DataType& obj);
+
+typedef struct _DataObject__isset {
+  _DataObject__isset() : field(false), ignore(false), script(false), convert(false) {}
+  bool field :1;
+  bool ignore :1;
+  bool script :1;
+  bool convert :1;
+} _DataObject__isset;
+
+/**
+ * Thrift key of data object "8" or "3.8" or "2.3.8" or "" to ignore (import); any string not starting from a digit as comment (export)
+ */
+class DataObject : public virtual ::jsonio17::impex::TBase {
+ public:
+
+  DataObject(const DataObject&);
+  DataObject& operator=(const DataObject&);
+  DataObject() : field(), ignore(0), script() {
+  }
+
+  virtual ~DataObject() noexcept;
+  /**
+   * Either Thrift key or name of the data field in recursive form (s e.g. "4.3.1" or name1.name2 )
+   */
+  std::string field;
+  /**
+   * Set to true if the corresponding value in file has to be ignored (default: false)
+   */
+  bool ignore;
+  /**
+   * Default "" or contains lua script for operation on data values in block
+   */
+  std::string script;
+  /**
+   * Default empty or contains pair(s) read_value : saved_value e.g. "e": "4" (usually for setting enum values)
+   */
+  std::map<std::string, std::string>  convert;
+
+  _DataObject__isset __isset;
+
+  void __set_field(const std::string& val);
+
+  void __set_ignore(const bool val);
+
+  void __set_script(const std::string& val);
+
+  void __set_convert(const std::map<std::string, std::string> & val);
+
+  bool operator == (const DataObject & rhs) const
+  {
+    if (!(field == rhs.field))
+      return false;
+    if (__isset.ignore != rhs.__isset.ignore)
+      return false;
+    else if (__isset.ignore && !(ignore == rhs.ignore))
+      return false;
+    if (__isset.script != rhs.__isset.script)
+      return false;
+    else if (__isset.script && !(script == rhs.script))
+      return false;
+    if (__isset.convert != rhs.__isset.convert)
+      return false;
+    else if (__isset.convert && !(convert == rhs.convert))
+      return false;
+    return true;
+  }
+  bool operator != (const DataObject &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const DataObject & ) const;
+
+  uint32_t read(::jsonio17::TJSONSerializer* iprot);
+  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(DataObject &a, DataObject &b);
+
+std::ostream& operator<<(std::ostream& out, const DataObject& obj);
+
+typedef struct _Separators__isset {
+  _Separators__isset() : v_sep(false), l_sep(false), r_sep(false), c_head(false), c_end(false), eod(false), encoding(false), str_delim(false), bod(false) {}
+  bool v_sep :1;
+  bool l_sep :1;
+  bool r_sep :1;
+  bool c_head :1;
+  bool c_end :1;
+  bool eod :1;
+  bool encoding :1;
+  bool str_delim :1;
+  bool bod :1;
+} _Separators__isset;
+
+/**
+ * Definition of value, line, row, block, comment, end-of-data separators
+ */
+class Separators : public virtual ::jsonio17::impex::TBase {
+ public:
+
+  Separators(const Separators&);
+  Separators& operator=(const Separators&);
+  Separators() : v_sep(), l_sep(), r_sep(), c_head(), c_end(), eod(), encoding(), str_delim(), bod() {
+  }
+
+  virtual ~Separators() noexcept;
+  /**
+   * Value separator (for arrays) " " | "," | "\t" | "integer" (=fixed field width)
+   */
+  std::string v_sep;
+  /**
+   * Line separator "\n" ...
+   */
+  std::string l_sep;
+  /**
+   * Row separator (table), "\n" ...
+   */
+  std::string r_sep;
+  /**
+   * Head comment separator  e.g. "#" or '%'
+   */
+  std::string c_head;
+  /**
+   * End comment separator e.g. "\n"
+   */
+  std::string c_end;
+  /**
+   * string indicating end of data (as list of blocks) in file or "" as default ']' (end of file)
+   */
+  std::string eod;
+  /**
+   * encoding ("" for standard system encoding)
+   */
+  std::string encoding;
+  /**
+   * Delimiter for strings - default "\""
+   */
+  std::string str_delim;
+  /**
+   * string indicating begin of data (as list of blocks) in file or "" as default '['
+   */
+  std::string bod;
+
+  _Separators__isset __isset;
+
+  void __set_v_sep(const std::string& val);
+
+  void __set_l_sep(const std::string& val);
+
+  void __set_r_sep(const std::string& val);
+
+  void __set_c_head(const std::string& val);
+
+  void __set_c_end(const std::string& val);
+
+  void __set_eod(const std::string& val);
+
+  void __set_encoding(const std::string& val);
+
+  void __set_str_delim(const std::string& val);
+
+  void __set_bod(const std::string& val);
+
+  bool operator == (const Separators & rhs) const
+  {
+    if (!(v_sep == rhs.v_sep))
+      return false;
+    if (!(l_sep == rhs.l_sep))
+      return false;
+    if (__isset.r_sep != rhs.__isset.r_sep)
+      return false;
+    else if (__isset.r_sep && !(r_sep == rhs.r_sep))
+      return false;
+    if (__isset.c_head != rhs.__isset.c_head)
+      return false;
+    else if (__isset.c_head && !(c_head == rhs.c_head))
+      return false;
+    if (__isset.c_end != rhs.__isset.c_end)
+      return false;
+    else if (__isset.c_end && !(c_end == rhs.c_end))
+      return false;
+    if (__isset.eod != rhs.__isset.eod)
+      return false;
+    else if (__isset.eod && !(eod == rhs.eod))
+      return false;
+    if (__isset.encoding != rhs.__isset.encoding)
+      return false;
+    else if (__isset.encoding && !(encoding == rhs.encoding))
+      return false;
+    if (__isset.str_delim != rhs.__isset.str_delim)
+      return false;
+    else if (__isset.str_delim && !(str_delim == rhs.str_delim))
+      return false;
+    if (__isset.bod != rhs.__isset.bod)
+      return false;
+    else if (__isset.bod && !(bod == rhs.bod))
+      return false;
+    return true;
+  }
+  bool operator != (const Separators &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Separators & ) const;
+
+  uint32_t read(::jsonio17::TJSONSerializer* iprot);
+  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(Separators &a, Separators &b);
+
+std::ostream& operator<<(std::ostream& out, const Separators& obj);
+
+typedef struct _FormatBlock__isset {
+  _FormatBlock__isset() : defaults(false), pairs(false), script(false) {}
+  bool defaults :1;
+  bool pairs :1;
+  bool script :1;
+} _FormatBlock__isset;
+
+/**
+ * Text block format in file corresponding to one database document (record)
+ */
+class FormatBlock : public virtual ::jsonio17::impex::TBase {
+ public:
+
+  FormatBlock(const FormatBlock&);
+  FormatBlock& operator=(const FormatBlock&);
+  FormatBlock() : script() {
+  }
+
+  virtual ~FormatBlock() noexcept;
+  /**
+   * Default Key, Value pairs to DOM (import)  or to output (export)
+   */
+  std::map<std::string, std::string>  defaults;
+  /**
+   * Lookup map of keyword-value pair format
+   */
+  std::map<std::string, DataType>  pairs;
+  /**
+   * >=1 keywd, DataObject pairs connecting the block of data in file with DOM.
+   */
+  std::map<std::string, DataObject>  matches;
+  /**
+   * Default "" or contains lua script for operation on data values in full DOM
+   */
+  std::string script;
+
+  _FormatBlock__isset __isset;
+
+  void __set_defaults(const std::map<std::string, std::string> & val);
+
+  void __set_pairs(const std::map<std::string, DataType> & val);
+
+  void __set_matches(const std::map<std::string, DataObject> & val);
+
+  void __set_script(const std::string& val);
+
+  bool operator == (const FormatBlock & rhs) const
+  {
+    if (!(defaults == rhs.defaults))
+      return false;
+    if (!(pairs == rhs.pairs))
+      return false;
+    if (!(matches == rhs.matches))
+      return false;
+    if (__isset.script != rhs.__isset.script)
+      return false;
+    else if (__isset.script && !(script == rhs.script))
+      return false;
+    return true;
+  }
+  bool operator != (const FormatBlock &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const FormatBlock & ) const;
+
+  uint32_t read(::jsonio17::TJSONSerializer* iprot);
+  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(FormatBlock &a, FormatBlock &b);
+
+std::ostream& operator<<(std::ostream& out, const FormatBlock& obj);
+
+typedef struct _FormatTextFile__isset {
+  _FormatTextFile__isset() : separs(false), comment(false), file_name(false), Nblocks(false), Nlines(false), Nchars(false), direction(false) {}
+  bool separs :1;
+  bool comment :1;
+  bool file_name :1;
+  bool Nblocks :1;
+  bool Nlines :1;
+  bool Nchars :1;
+  bool direction :1;
+} _FormatTextFile__isset;
+
+/**
+ * Definition of text data file format
+ */
+class FormatTextFile : public virtual ::jsonio17::impex::TBase {
+ public:
+
+  FormatTextFile(const FormatTextFile&);
+  FormatTextFile& operator=(const FormatTextFile&);
+  FormatTextFile() : label(), comment(), file_name(), Nblocks(0), Nlines(0), Nchars(0), direction((DirectionType::type)0) {
+  }
+
+  virtual ~FormatTextFile() noexcept;
+  /**
+   * Format definition for one or more blocks for data records - default 1 block
+   */
+  FormatBlock block;
+  /**
+   * Will be format lines list
+   */
+  std::vector<std::string>  lines;
+  /**
+   * Label of data type (vertex type), e.g. "datasource", "element" ...
+   */
+  std::string label;
+  /**
+   * Definition of value, line, row, block, comment, end-of-data separators
+   */
+  Separators separs;
+  /**
+   * Export: the whole comment text; Import: the comment begin markup string (to skip until endl)
+   */
+  std::string comment;
+  /**
+   * File name or "console" for export
+   */
+  std::string file_name;
+  /**
+   * number of data block in file >=1, 0 if unknown
+   */
+  int32_t Nblocks;
+  /**
+   * number of text lines in file (>=1), 0 if unknown
+   */
+  int32_t Nlines;
+  /**
+   * total number of characters in file, 0 if unknown
+   */
+  int32_t Nchars;
+  /**
+   * direction
+   * 
+   * @see DirectionType
+   */
+  DirectionType::type direction;
+
+  _FormatTextFile__isset __isset;
+
+  void __set_block(const FormatBlock& val);
+
+  void __set_lines(const std::vector<std::string> & val);
+
+  void __set_label(const std::string& val);
+
+  void __set_separs(const Separators& val);
+
+  void __set_comment(const std::string& val);
+
+  void __set_file_name(const std::string& val);
+
+  void __set_Nblocks(const int32_t val);
+
+  void __set_Nlines(const int32_t val);
+
+  void __set_Nchars(const int32_t val);
+
+  void __set_direction(const DirectionType::type val);
+
+  bool operator == (const FormatTextFile & rhs) const
+  {
+    if (!(block == rhs.block))
+      return false;
+    if (!(lines == rhs.lines))
+      return false;
+    if (!(label == rhs.label))
+      return false;
+    if (!(separs == rhs.separs))
+      return false;
+    if (__isset.comment != rhs.__isset.comment)
+      return false;
+    else if (__isset.comment && !(comment == rhs.comment))
+      return false;
+    if (__isset.file_name != rhs.__isset.file_name)
+      return false;
+    else if (__isset.file_name && !(file_name == rhs.file_name))
+      return false;
+    if (__isset.Nblocks != rhs.__isset.Nblocks)
+      return false;
+    else if (__isset.Nblocks && !(Nblocks == rhs.Nblocks))
+      return false;
+    if (__isset.Nlines != rhs.__isset.Nlines)
+      return false;
+    else if (__isset.Nlines && !(Nlines == rhs.Nlines))
+      return false;
+    if (__isset.Nchars != rhs.__isset.Nchars)
+      return false;
+    else if (__isset.Nchars && !(Nchars == rhs.Nchars))
+      return false;
+    if (!(direction == rhs.direction))
+      return false;
+    return true;
+  }
+  bool operator != (const FormatTextFile &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const FormatTextFile & ) const;
+
+  uint32_t read(::jsonio17::TJSONSerializer* iprot);
+  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(FormatTextFile &a, FormatTextFile &b);
+
+std::ostream& operator<<(std::ostream& out, const FormatTextFile& obj);
+
+typedef struct _FormatKeyValue__isset {
+  _FormatKeyValue__isset() : value_regexp(false), value_next(true), value_token_regexp(true), comment_regexp(false), Ndata(false), strvalue_exp(false), key_order(false) {}
+  bool value_regexp :1;
+  bool value_next :1;
+  bool value_token_regexp :1;
+  bool comment_regexp :1;
+  bool Ndata :1;
+  bool strvalue_exp :1;
+  bool key_order :1;
+} _FormatKeyValue__isset;
+
+/**
+ * Definition of key-value import/export format
+ * We use Regular Expression in case of import and Print Format in case of export.
+ * Use names "head0", ..., "headN", "end0", ..., "endN" to import/export data from/to head and end part
+ */
+class FormatKeyValue : public virtual ::jsonio17::impex::TBase {
+ public:
+
+  FormatKeyValue(const FormatKeyValue&);
+  FormatKeyValue& operator=(const FormatKeyValue&);
+  FormatKeyValue() : head_regexp(), end_regexp(), key_regexp(), value_regexp(), value_next("\\n"), value_token_regexp(" "), comment_regexp(), Ndata(0), strvalue_exp() {
+  }
+
+  virtual ~FormatKeyValue() noexcept;
+  /**
+   * Head of Block:  "\\s*([^\\s]+)\\s*;\\s*(([\\w\\t \\+\\-\\(\\):\\.]+)\\s*=\\s*([^;]+))" (import)
+   * or  "\n%head0\n\t%head1\n" (export)
+   */
+  std::string head_regexp;
+  /**
+   * End of Block: "([^\n]+)" (import)  or  "%end0\n" (export)
+   */
+  std::string end_regexp;
+  /**
+   * Keyword:  "\\s*;\\s*\\-{0,1}([a-zA-Z]\\w*)\\s*" (import)  or  "\t-%key\t" (export)
+   */
+  std::string key_regexp;
+  /**
+   * Data Value(s):  "\\s*([^#\\n;]*)" (import)  or  "%value" (export)
+   */
+  std::string value_regexp;
+  /**
+   * Key-Value pair end delimiter (used if empty value_regexp or export mode )
+   */
+  std::string value_next;
+  /**
+   * Regular Expression to iterate over matches  (used to convert value to string list or if export mode )
+   */
+  std::string value_token_regexp;
+  /**
+   * Regular Expression for skip comments
+   */
+  std::string comment_regexp;
+  /**
+   * number of data items per block (0 if not set)
+   */
+  int32_t Ndata;
+  /**
+   * Data String Value(s): only for export  "\'%value\'"
+   */
+  std::string strvalue_exp;
+  /**
+   * Keyword order list:  only for export
+   */
+  std::vector<std::string>  key_order;
+
+  _FormatKeyValue__isset __isset;
+
+  void __set_head_regexp(const std::string& val);
+
+  void __set_end_regexp(const std::string& val);
+
+  void __set_key_regexp(const std::string& val);
+
+  void __set_value_regexp(const std::string& val);
+
+  void __set_value_next(const std::string& val);
+
+  void __set_value_token_regexp(const std::string& val);
+
+  void __set_comment_regexp(const std::string& val);
+
+  void __set_Ndata(const int32_t val);
+
+  void __set_strvalue_exp(const std::string& val);
+
+  void __set_key_order(const std::vector<std::string> & val);
+
+  bool operator == (const FormatKeyValue & rhs) const
+  {
+    if (!(head_regexp == rhs.head_regexp))
+      return false;
+    if (!(end_regexp == rhs.end_regexp))
+      return false;
+    if (!(key_regexp == rhs.key_regexp))
+      return false;
+    if (!(value_regexp == rhs.value_regexp))
+      return false;
+    if (!(value_next == rhs.value_next))
+      return false;
+    if (__isset.value_token_regexp != rhs.__isset.value_token_regexp)
+      return false;
+    else if (__isset.value_token_regexp && !(value_token_regexp == rhs.value_token_regexp))
+      return false;
+    if (__isset.comment_regexp != rhs.__isset.comment_regexp)
+      return false;
+    else if (__isset.comment_regexp && !(comment_regexp == rhs.comment_regexp))
+      return false;
+    if (__isset.Ndata != rhs.__isset.Ndata)
+      return false;
+    else if (__isset.Ndata && !(Ndata == rhs.Ndata))
+      return false;
+    if (!(strvalue_exp == rhs.strvalue_exp))
+      return false;
+    if (__isset.key_order != rhs.__isset.key_order)
+      return false;
+    else if (__isset.key_order && !(key_order == rhs.key_order))
+      return false;
+    return true;
+  }
+  bool operator != (const FormatKeyValue &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const FormatKeyValue & ) const;
+
+  uint32_t read(::jsonio17::TJSONSerializer* iprot);
+  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(FormatKeyValue &a, FormatKeyValue &b);
+
+std::ostream& operator<<(std::ostream& out, const FormatKeyValue& obj);
+
+typedef struct _FormatKeyValueFile__isset {
+  _FormatKeyValueFile__isset() : separators(false), comment(false), fname(false), Nblocks(false), Nlines(false), direction(false) {}
+  bool separators :1;
+  bool comment :1;
+  bool fname :1;
+  bool Nblocks :1;
+  bool Nlines :1;
+  bool direction :1;
+} _FormatKeyValueFile__isset;
+
+/**
+ * Definition of text file with key-value pair data
+ */
+class FormatKeyValueFile : public virtual ::jsonio17::impex::TBase {
+ public:
+
+  FormatKeyValueFile(const FormatKeyValueFile&);
+  FormatKeyValueFile& operator=(const FormatKeyValueFile&);
+  FormatKeyValueFile() : renderer(), label(), comment(), fname(), Nblocks(0), Nlines(0), direction((DirectionType::type)0) {
+  }
+
+  virtual ~FormatKeyValueFile() noexcept;
+  /**
+   * Format for one or more blocks for data records
+   */
+  FormatBlock block;
+  /**
+   * Definition of key-value block in file
+   */
+  FormatKeyValue format;
+  /**
+   * Rendering syntax for the foreign key-value file "GEMS3K" | "BIB" | "RIS" | ...
+   */
+  std::string renderer;
+  /**
+   * Label of data type (vertex type), e.g. "datasource", "element" ...
+   */
+  std::string label;
+  /**
+   * Definition of value, line, row, block, comment, end-of-data separators
+   */
+  Separators separators;
+  /**
+   * Export: the whole comment text; Import: the comment begin markup string (to skip until endl)
+   */
+  std::string comment;
+  /**
+   * File name or "console" for export
+   */
+  std::string fname;
+  /**
+   * number of data blocks (records) >=1, 0 if unknown
+   */
+  int32_t Nblocks;
+  /**
+   * total number of text lines in the file, 0 if unknown
+   */
+  int32_t Nlines;
+  /**
+   * direction
+   * 
+   * @see DirectionType
+   */
+  DirectionType::type direction;
+
+  _FormatKeyValueFile__isset __isset;
+
+  void __set_block(const FormatBlock& val);
+
+  void __set_format(const FormatKeyValue& val);
+
+  void __set_renderer(const std::string& val);
+
+  void __set_label(const std::string& val);
+
+  void __set_separators(const Separators& val);
+
+  void __set_comment(const std::string& val);
+
+  void __set_fname(const std::string& val);
+
+  void __set_Nblocks(const int32_t val);
+
+  void __set_Nlines(const int32_t val);
+
+  void __set_direction(const DirectionType::type val);
+
+  bool operator == (const FormatKeyValueFile & rhs) const
+  {
+    if (!(block == rhs.block))
+      return false;
+    if (!(format == rhs.format))
+      return false;
+    if (!(renderer == rhs.renderer))
+      return false;
+    if (!(label == rhs.label))
+      return false;
+    if (!(separators == rhs.separators))
+      return false;
+    if (__isset.comment != rhs.__isset.comment)
+      return false;
+    else if (__isset.comment && !(comment == rhs.comment))
+      return false;
+    if (__isset.fname != rhs.__isset.fname)
+      return false;
+    else if (__isset.fname && !(fname == rhs.fname))
+      return false;
+    if (__isset.Nblocks != rhs.__isset.Nblocks)
+      return false;
+    else if (__isset.Nblocks && !(Nblocks == rhs.Nblocks))
+      return false;
+    if (__isset.Nlines != rhs.__isset.Nlines)
+      return false;
+    else if (__isset.Nlines && !(Nlines == rhs.Nlines))
+      return false;
+    if (!(direction == rhs.direction))
+      return false;
+    return true;
+  }
+  bool operator != (const FormatKeyValueFile &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const FormatKeyValueFile & ) const;
+
+  uint32_t read(::jsonio17::TJSONSerializer* iprot);
+  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(FormatKeyValueFile &a, FormatKeyValueFile &b);
+
+std::ostream& operator<<(std::ostream& out, const FormatKeyValueFile& obj);
+
+typedef struct _FormatTable__isset {
+  _FormatTable__isset() : Nhcols(false), Nhrows(false), headers(false), rowend(true), rows_one_block(true), row_header_regexp(true), colends(true), usequotes(true), usemore(true), comment_regexp(false), row_size(true), colsizes(false), value_regexp(false) {}
+  bool Nhcols :1;
+  bool Nhrows :1;
+  bool headers :1;
+  bool rowend :1;
+  bool rows_one_block :1;
+  bool row_header_regexp :1;
+  bool colends :1;
+  bool usequotes :1;
+  bool usemore :1;
+  bool comment_regexp :1;
+  bool row_size :1;
+  bool colsizes :1;
+  bool value_regexp :1;
+} _FormatTable__isset;
+
+/**
+ * Definition of of the table input format
+ * if defined  colsizes, split by sizes
+ * if defined  value_regexp, split used regexpr
+ * otherwise split by  columns delimiter
+ */
+class FormatTable : public virtual ::jsonio17::impex::TBase {
+ public:
+
+  FormatTable(const FormatTable&);
+  FormatTable& operator=(const FormatTable&);
+  FormatTable() : Nhcols(0), Nhrows(0), rowend("\\n"), rows_one_block(1), row_header_regexp(""), colends("\\t "), usequotes(true), usemore(false), comment_regexp(), row_size(0) {
+  }
+
+  virtual ~FormatTable() noexcept;
+  /**
+   * Number of header columns
+   */
+  int32_t Nhcols;
+  /**
+   * Number of header rows (start porting from row )
+   */
+  int32_t Nhrows;
+  /**
+   * Names of header columns
+   */
+  std::vector<std::string>  headers;
+  /**
+   * Row delimiter
+   */
+  std::string rowend;
+  /**
+   * Number of lines in one block (could be more than one)
+   */
+  int32_t rows_one_block;
+  /**
+   * Regular expression:  next block head in case the number of lines in one block is not fixed
+   */
+  std::string row_header_regexp;
+  /**
+   * Columns delimiters
+   */
+  std::string colends;
+  /**
+   * Quoted field as text
+   */
+  bool usequotes;
+  /**
+   * Can be more than one delimiter between columns
+   */
+  bool usemore;
+  /**
+   * Regular Expression for skip comments
+   */
+  std::string comment_regexp;
+  /**
+   * Row size in case of using fixed colsizes
+   */
+  int32_t row_size;
+  /**
+   * Fixed size of columns for importing ( apply to all if one item )
+   */
+  std::vector<int32_t>  colsizes;
+  /**
+   * Regular Expression for column value(s) ( apply to all if one item )
+   */
+  std::vector<std::string>  value_regexp;
+
+  _FormatTable__isset __isset;
+
+  void __set_Nhcols(const int32_t val);
+
+  void __set_Nhrows(const int32_t val);
+
+  void __set_headers(const std::vector<std::string> & val);
+
+  void __set_rowend(const std::string& val);
+
+  void __set_rows_one_block(const int32_t val);
+
+  void __set_row_header_regexp(const std::string& val);
+
+  void __set_colends(const std::string& val);
+
+  void __set_usequotes(const bool val);
+
+  void __set_usemore(const bool val);
+
+  void __set_comment_regexp(const std::string& val);
+
+  void __set_row_size(const int32_t val);
+
+  void __set_colsizes(const std::vector<int32_t> & val);
+
+  void __set_value_regexp(const std::vector<std::string> & val);
+
+  bool operator == (const FormatTable & rhs) const
+  {
+    if (!(Nhcols == rhs.Nhcols))
+      return false;
+    if (!(Nhrows == rhs.Nhrows))
+      return false;
+    if (!(headers == rhs.headers))
+      return false;
+    if (!(rowend == rhs.rowend))
+      return false;
+    if (!(rows_one_block == rhs.rows_one_block))
+      return false;
+    if (!(row_header_regexp == rhs.row_header_regexp))
+      return false;
+    if (!(colends == rhs.colends))
+      return false;
+    if (!(usequotes == rhs.usequotes))
+      return false;
+    if (!(usemore == rhs.usemore))
+      return false;
+    if (__isset.comment_regexp != rhs.__isset.comment_regexp)
+      return false;
+    else if (__isset.comment_regexp && !(comment_regexp == rhs.comment_regexp))
+      return false;
+    if (__isset.row_size != rhs.__isset.row_size)
+      return false;
+    else if (__isset.row_size && !(row_size == rhs.row_size))
+      return false;
+    if (__isset.colsizes != rhs.__isset.colsizes)
+      return false;
+    else if (__isset.colsizes && !(colsizes == rhs.colsizes))
+      return false;
+    if (__isset.value_regexp != rhs.__isset.value_regexp)
+      return false;
+    else if (__isset.value_regexp && !(value_regexp == rhs.value_regexp))
+      return false;
+    return true;
+  }
+  bool operator != (const FormatTable &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const FormatTable & ) const;
+
+  uint32_t read(::jsonio17::TJSONSerializer* iprot);
+  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(FormatTable &a, FormatTable &b);
+
+std::ostream& operator<<(std::ostream& out, const FormatTable& obj);
+
+typedef struct _FormatTableFile__isset {
+  _FormatTableFile__isset() : separators(false), comment(false), fname(false), Nblocks(false), Nlines(false), direction(false) {}
+  bool separators :1;
+  bool comment :1;
+  bool fname :1;
+  bool Nblocks :1;
+  bool Nlines :1;
+  bool direction :1;
+} _FormatTableFile__isset;
+
+/**
+ * Definition of table text file format
+ */
+class FormatTableFile : public virtual ::jsonio17::impex::TBase {
+ public:
+
+  FormatTableFile(const FormatTableFile&);
+  FormatTableFile& operator=(const FormatTableFile&);
+  FormatTableFile() : renderer(), label(), comment(), fname(), Nblocks(0), Nlines(0), direction((DirectionType::type)0) {
+  }
+
+  virtual ~FormatTableFile() noexcept;
+  /**
+   * Format for one or more blocks for data records
+   */
+  FormatBlock block;
+  /**
+   * Definition of key-value block in file
+   */
+  FormatTable format;
+  /**
+   * Rendering syntax for the foreign key-value file "GEMS3K" | "BIB" | "RIS" | ...
+   */
+  std::string renderer;
+  /**
+   * Label of data type (vertex type), e.g. "datasource", "element" ...
+   */
+  std::string label;
+  /**
+   * Definition of value, line, row, block, comment, end-of-data separators
+   */
+  Separators separators;
+  /**
+   * Export: the whole comment text; Import: the comment begin markup string (to skip until endl)
+   */
+  std::string comment;
+  /**
+   * File name or "console" for export
+   */
+  std::string fname;
+  /**
+   * number of data blocks (records) >=1, 0 if unknown
+   */
+  int32_t Nblocks;
+  /**
+   * total number of text lines in the file, 0 if unknown
+   */
+  int32_t Nlines;
+  /**
+   * direction
+   * 
+   * @see DirectionType
+   */
+  DirectionType::type direction;
+
+  _FormatTableFile__isset __isset;
+
+  void __set_block(const FormatBlock& val);
+
+  void __set_format(const FormatTable& val);
+
+  void __set_renderer(const std::string& val);
+
+  void __set_label(const std::string& val);
+
+  void __set_separators(const Separators& val);
+
+  void __set_comment(const std::string& val);
+
+  void __set_fname(const std::string& val);
+
+  void __set_Nblocks(const int32_t val);
+
+  void __set_Nlines(const int32_t val);
+
+  void __set_direction(const DirectionType::type val);
+
+  bool operator == (const FormatTableFile & rhs) const
+  {
+    if (!(block == rhs.block))
+      return false;
+    if (!(format == rhs.format))
+      return false;
+    if (!(renderer == rhs.renderer))
+      return false;
+    if (!(label == rhs.label))
+      return false;
+    if (!(separators == rhs.separators))
+      return false;
+    if (__isset.comment != rhs.__isset.comment)
+      return false;
+    else if (__isset.comment && !(comment == rhs.comment))
+      return false;
+    if (__isset.fname != rhs.__isset.fname)
+      return false;
+    else if (__isset.fname && !(fname == rhs.fname))
+      return false;
+    if (__isset.Nblocks != rhs.__isset.Nblocks)
+      return false;
+    else if (__isset.Nblocks && !(Nblocks == rhs.Nblocks))
+      return false;
+    if (__isset.Nlines != rhs.__isset.Nlines)
+      return false;
+    else if (__isset.Nlines && !(Nlines == rhs.Nlines))
+      return false;
+    if (!(direction == rhs.direction))
+      return false;
+    return true;
+  }
+  bool operator != (const FormatTableFile &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const FormatTableFile & ) const;
+
+  uint32_t read(::jsonio17::TJSONSerializer* iprot);
+  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(FormatTableFile &a, FormatTableFile &b);
+
+std::ostream& operator<<(std::ostream& out, const FormatTableFile& obj);
+
+typedef struct _FormatStructDataFile__isset {
+  _FormatStructDataFile__isset() : comment(false), fname(false), Nblocks(false), Nlines(false), direction(false) {}
+  bool comment :1;
+  bool fname :1;
+  bool Nblocks :1;
+  bool Nlines :1;
+  bool direction :1;
+} _FormatStructDataFile__isset;
+
+/**
+ * Definition of foreign structured data JSON/YAML/XML text file
+ */
+class FormatStructDataFile : public virtual ::jsonio17::impex::TBase {
+ public:
+
+  FormatStructDataFile(const FormatStructDataFile&);
+  FormatStructDataFile& operator=(const FormatStructDataFile&);
+  FormatStructDataFile() : renderer("JSON"), label(), comment(), fname(), Nblocks(0), Nlines(0), direction((DirectionType::type)0) {
+  }
+
+  virtual ~FormatStructDataFile() noexcept;
+  /**
+   * Format for one or more blocks for data records
+   */
+  FormatBlock block;
+  /**
+   * Rendering syntax for the foreign file "JSON" | "YAML" | "XML" | ...
+   */
+  std::string renderer;
+  /**
+   * Label of data type (vertex type), e.g. "datasource", "element" ...
+   */
+  std::string label;
+  /**
+   * Definition of value, line, row, block, comment, end-of-data separators
+   */
+  std::string comment;
+  /**
+   * File name or "console" for export
+   */
+  std::string fname;
+  /**
+   * number of data blocks (records) >=1, 0 if unknown
+   */
+  int32_t Nblocks;
+  /**
+   * total number of text lines in the file, 0 if unknown
+   */
+  int32_t Nlines;
+  /**
+   * direction
+   * 
+   * @see DirectionType
+   */
+  DirectionType::type direction;
+
+  _FormatStructDataFile__isset __isset;
+
+  void __set_block(const FormatBlock& val);
+
+  void __set_renderer(const std::string& val);
+
+  void __set_label(const std::string& val);
+
+  void __set_comment(const std::string& val);
+
+  void __set_fname(const std::string& val);
+
+  void __set_Nblocks(const int32_t val);
+
+  void __set_Nlines(const int32_t val);
+
+  void __set_direction(const DirectionType::type val);
+
+  bool operator == (const FormatStructDataFile & rhs) const
+  {
+    if (!(block == rhs.block))
+      return false;
+    if (!(renderer == rhs.renderer))
+      return false;
+    if (!(label == rhs.label))
+      return false;
+    if (__isset.comment != rhs.__isset.comment)
+      return false;
+    else if (__isset.comment && !(comment == rhs.comment))
+      return false;
+    if (__isset.fname != rhs.__isset.fname)
+      return false;
+    else if (__isset.fname && !(fname == rhs.fname))
+      return false;
+    if (__isset.Nblocks != rhs.__isset.Nblocks)
+      return false;
+    else if (__isset.Nblocks && !(Nblocks == rhs.Nblocks))
+      return false;
+    if (__isset.Nlines != rhs.__isset.Nlines)
+      return false;
+    else if (__isset.Nlines && !(Nlines == rhs.Nlines))
+      return false;
+    if (!(direction == rhs.direction))
+      return false;
+    return true;
+  }
+  bool operator != (const FormatStructDataFile &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const FormatStructDataFile & ) const;
+
+  uint32_t read(::jsonio17::TJSONSerializer* iprot);
+  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(FormatStructDataFile &a, FormatStructDataFile &b);
+
+std::ostream& operator<<(std::ostream& out, const FormatStructDataFile& obj);
+
+typedef struct _FormatImportExportFile__isset {
+  _FormatImportExportFile__isset() : ff_text(false), ff_table(false), ff_keyvalue(false), ff_stdata(false) {}
+  bool ff_text :1;
+  bool ff_table :1;
+  bool ff_keyvalue :1;
+  bool ff_stdata :1;
+} _FormatImportExportFile__isset;
+
+/**
+ * Generalized import-export data file format
+ */
+class FormatImportExportFile : public virtual ::jsonio17::impex::TBase {
+ public:
+
+  FormatImportExportFile(const FormatImportExportFile&);
+  FormatImportExportFile& operator=(const FormatImportExportFile&);
+  FormatImportExportFile() {
+  }
+
+  virtual ~FormatImportExportFile() noexcept;
+  /**
+   * Definition of text data file format
+   */
+  FormatTextFile ff_text;
+  /**
+   * Definition of data table file format
+   */
+  FormatTableFile ff_table;
+  /**
+   * Definition of file format with key-value pair data
+   */
+  FormatKeyValueFile ff_keyvalue;
+  /**
+   * Definition of foreign structured data JSON/YAML/XML file format
+   */
+  FormatStructDataFile ff_stdata;
+
+  _FormatImportExportFile__isset __isset;
+
+  void __set_ff_text(const FormatTextFile& val);
+
+  void __set_ff_table(const FormatTableFile& val);
+
+  void __set_ff_keyvalue(const FormatKeyValueFile& val);
+
+  void __set_ff_stdata(const FormatStructDataFile& val);
+
+  bool operator == (const FormatImportExportFile & rhs) const
+  {
+    if (__isset.ff_text != rhs.__isset.ff_text)
+      return false;
+    else if (__isset.ff_text && !(ff_text == rhs.ff_text))
+      return false;
+    if (__isset.ff_table != rhs.__isset.ff_table)
+      return false;
+    else if (__isset.ff_table && !(ff_table == rhs.ff_table))
+      return false;
+    if (__isset.ff_keyvalue != rhs.__isset.ff_keyvalue)
+      return false;
+    else if (__isset.ff_keyvalue && !(ff_keyvalue == rhs.ff_keyvalue))
+      return false;
+    if (__isset.ff_stdata != rhs.__isset.ff_stdata)
+      return false;
+    else if (__isset.ff_stdata && !(ff_stdata == rhs.ff_stdata))
+      return false;
+    return true;
+  }
+  bool operator != (const FormatImportExportFile &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const FormatImportExportFile & ) const;
+
+  uint32_t read(::jsonio17::TJSONSerializer* iprot);
+  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(FormatImportExportFile &a, FormatImportExportFile &b);
+
+std::ostream& operator<<(std::ostream& out, const FormatImportExportFile& obj);
+
+typedef struct _ImpexFormat__isset {
+  _ImpexFormat__isset() : schema(false), comment(false), direction(false), format(false), extension(false) {}
+  bool schema :1;
+  bool comment :1;
+  bool direction :1;
+  bool format :1;
+  bool extension :1;
+} _ImpexFormat__isset;
+
+/**
+ * description of import/export format record
+ */
+class ImpexFormat : public virtual ::jsonio17::impex::TBase {
+ public:
+
+  ImpexFormat(const ImpexFormat&);
+  ImpexFormat& operator=(const ImpexFormat&);
+  ImpexFormat() : _id(), _key(), _rev(), name(), impexschema(), schema(), comment(), direction((DirectionType::type)0), impex(), format(), extension() {
+  }
+
+  virtual ~ImpexFormat() noexcept;
+  /**
+   * Handle (id) of this record or 0 if unknown
+   */
+  std::string _id;
+  /**
+   * ID of this record within the impex collection (part of _id)
+   */
+  std::string _key;
+  /**
+   * Code of revision (changed by the system at every update)
+   */
+  std::string _rev;
+  /**
+   * short description/keywd (used as key field)
+   */
+  std::string name;
+  /**
+   * impex schema
+   */
+  std::string impexschema;
+  /**
+   * record schema
+   */
+  std::string schema;
+  /**
+   * description of record
+   */
+  std::string comment;
+  /**
+   * direction
+   * 
+   * @see DirectionType
+   */
+  DirectionType::type direction;
+  /**
+   * format structure
+   */
+  std::string impex;
+  /**
+   * Id/description of foreign file format
+   */
+  std::string format;
+  /**
+   * file extension
+   */
+  std::string extension;
+
+  _ImpexFormat__isset __isset;
+
+  void __set__id(const std::string& val);
+
+  void __set__key(const std::string& val);
+
+  void __set__rev(const std::string& val);
+
+  void __set_name(const std::string& val);
+
+  void __set_impexschema(const std::string& val);
+
+  void __set_schema(const std::string& val);
+
+  void __set_comment(const std::string& val);
+
+  void __set_direction(const DirectionType::type val);
+
+  void __set_impex(const std::string& val);
+
+  void __set_format(const std::string& val);
+
+  void __set_extension(const std::string& val);
+
+  bool operator == (const ImpexFormat & rhs) const
+  {
+    if (!(_id == rhs._id))
+      return false;
+    if (!(_key == rhs._key))
+      return false;
+    if (!(_rev == rhs._rev))
+      return false;
+    if (!(name == rhs.name))
+      return false;
+    if (!(impexschema == rhs.impexschema))
+      return false;
+    if (!(schema == rhs.schema))
+      return false;
+    if (!(comment == rhs.comment))
+      return false;
+    if (!(direction == rhs.direction))
+      return false;
+    if (!(impex == rhs.impex))
+      return false;
+    if (__isset.format != rhs.__isset.format)
+      return false;
+    else if (__isset.format && !(format == rhs.format))
+      return false;
+    if (__isset.extension != rhs.__isset.extension)
+      return false;
+    else if (__isset.extension && !(extension == rhs.extension))
+      return false;
+    return true;
+  }
+  bool operator != (const ImpexFormat &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ImpexFormat & ) const;
+
+  uint32_t read(::jsonio17::TJSONSerializer* iprot);
+  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(ImpexFormat &a, ImpexFormat &b);
+
+std::ostream& operator<<(std::ostream& out, const ImpexFormat& obj);
+
+} // namespace
+

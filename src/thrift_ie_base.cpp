@@ -9,11 +9,15 @@ namespace jsonio17 {
 
 
 void writeDataToJsonSchema( JsonBase& object,
-                            const std::string& struct_name, ::apache::thrift::TBase* data )
+                            const std::string& struct_name, impex_struct_t* data )
 {
     //Set the Serializator
-    std::shared_ptr<TMemoryBuffer> buffer(new TMemoryBuffer());
+#ifdef USE_THRIFT
+    std::shared_ptr<::apache::thrift::transport::TMemoryBuffer> buffer(new ::apache::thrift::transport::TMemoryBuffer());
     ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( buffer, &ioSettings().Schema() );
+#else
+    ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( &ioSettings().Schema() );
+#endif
     proto->setDom( object, struct_name );
     // Set json object to  structure
     /*int  i = */data->write(proto.get());
@@ -21,11 +25,15 @@ void writeDataToJsonSchema( JsonBase& object,
 }
 
 void readDataFromJsonSchema( const JsonBase& object,
-                             const std::string& struct_name,  ::apache::thrift::TBase* data )
+                             const std::string& struct_name,  impex_struct_t* data )
 {
     //Set the Serializator
-    std::shared_ptr<TMemoryBuffer> buffer(new TMemoryBuffer());
+#ifdef USE_THRIFT
+    std::shared_ptr<::apache::thrift::transport::TMemoryBuffer> buffer(new ::apache::thrift::transport::TMemoryBuffer());
     ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( buffer, &ioSettings().Schema() );
+#else
+    ::std::shared_ptr<TJSONSerializer> proto = std::make_shared<TJSONSerializer>( &ioSettings().Schema() );
+#endif
     proto->setDom( object, struct_name );
     // Get json object from structure
     /*int  i = */data->read(proto.get());
