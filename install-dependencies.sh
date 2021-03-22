@@ -153,24 +153,24 @@ test -f /usr/local/lib/libyaml-cpp.$EXTN || {
                  rm -rf ~/code
 }
 
-# Thrift
-# if no Thrift installed in /usr/local/lib/libthrift.a (/usr/local/include/thrift)
-test -f /usr/local/lib/libthrift.$EXTN || {
-
-        # Building thrift library
-        mkdir -p ~/code && \
-                cd ~/code && \
-                git clone http://github.com/apache/thrift && \
-                cd thrift && \
-                ./bootstrap.sh && \
-                ./configure  CXXFLAGS='-fPIC' --without-lua --without-qt5 && \
-                make -j $threads && \
-                sudo make install
-
-        # Removing generated build files
-        cd ~ && \
-                 rm -rf ~/code
-}
+## Thrift
+## if no Thrift installed in /usr/local/lib/libthrift.a (/usr/local/include/thrift)
+#test -f /usr/local/lib/libthrift.$EXTN || {
+#
+#        # Building thrift library
+#        mkdir -p ~/code && \
+#                cd ~/code && \
+#                git clone http://github.com/apache/thrift && \
+#                cd thrift && \
+#                ./bootstrap.sh && \
+#                ./configure  CXXFLAGS='-fPIC' --without-lua --without-qt5 && \
+#                make -j $threads && \
+#                sudo make install
+#
+#        # Removing generated build files
+#        cd ~ && \
+#                 rm -rf ~/code
+#}
 
 
 if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then

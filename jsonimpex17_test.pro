@@ -4,7 +4,7 @@ CONFIG -= app_bundle
 CONFIG += thread
 CONFIG -= qt
 
-DEFINES += USE_THRIFT
+#DEFINES += USE_THRIFT
 
 !win32 {
   DEFINES += __unix

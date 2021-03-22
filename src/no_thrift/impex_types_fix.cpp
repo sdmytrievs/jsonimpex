@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <ostream>
 #include "impex_types_fix.h"
-#include "TJSONSerializer.h"
+#include "../TJSONSerializer.h"
 
 namespace impex {
 

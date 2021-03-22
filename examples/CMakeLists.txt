@@ -17,7 +17,7 @@ foreach (exampleName ${Examples})
             PUBLIC jsonarango-static
             PRIVATE velocypack
             PRIVATE libcurl
-            PRIVATE thriftmd
+            #PRIVATE thriftmd
             PRIVATE lua
             PRIVATE yaml-cpp
             PRIVATE pugixml )
@@ -29,8 +29,8 @@ foreach (exampleName ${Examples})
             PUBLIC jsonarango
             PUBLIC velocypack
             PUBLIC curl
-            PRIVATE thrift
-#            PRIVATE lua5.3
+            #PRIVATE thrift
+            #PRIVATE lua5.3
             PRIVATE lua
             PRIVATE yaml-cpp
             PRIVATE pugixml
