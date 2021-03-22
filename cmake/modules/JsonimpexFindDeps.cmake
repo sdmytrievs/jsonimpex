@@ -33,7 +33,7 @@ if(NOT JSONIO_LIB)
 endif()
 
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
-find_library(YAML_LIB yaml-cpp)
+find_library(YAML_LIB NAMES yaml-cpp yaml-cppd)
 else()
 find_library(YAML_LIB yaml-cpp)
 endif()

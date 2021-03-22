@@ -122,7 +122,7 @@ if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
             PUBLIC jsonarango-static
             PRIVATE velocypack
             PRIVATE libcurl
-            PRIVATE lua54
+            PRIVATE lua
             PRIVATE yaml-cppd
             PRIVATE pugixml )
 else()
