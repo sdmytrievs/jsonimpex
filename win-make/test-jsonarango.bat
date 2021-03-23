@@ -45,14 +45,16 @@ rem
 rem set INCLUDE=%LOCALINSTALL%\include;%INCLUDE%
 rem set LIB=%LOCALINSTALL%\lib;%LIB%
 rem set PATH=%LOCALINSTALL%\bin;%PATH%
-echo %INCLUDE%
+rem echo %INCLUDE%
 
 
 mkdir tmp_json
 cd tmp_json
 
-curl -R -O http://www.lua.org/ftp/lua-5.4.2.tar.gz
-tar zxf lua-5.4.2.tar.gz
+tar -xf ../lua-5.4.2_Win64_vc16_lib.zip
+xcopy /a "include"  "%LOCALINSTALL%/include" /E
+copy /y lua54.lib "%LOCALINSTALL%/lib/lua.lib"
+
 
 echo
 echo ******                		 ******
@@ -70,7 +72,6 @@ echo "Building..."
 cmake --build build  --target install
 cd ..\..
 
-msbuild "tmp_json\thrift\lib\cpp\libthrift.vcxproj" /fl /flp:logfile=MyProjectOutput.log;verbosity=diagnostic
 
 REM Housekeeping
 rem rd /s /q tmp_json

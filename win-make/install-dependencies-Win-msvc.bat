@@ -102,6 +102,15 @@ rd /s /q tmp_libcurl
 mkdir tmp_all
 cd tmp_all
 
+echo
+echo ******                		 ******
+echo ****** Unpack lua                   ******
+echo ******                		 ******
+echo
+
+tar -xf ../lua-5.4.2_Win64_vc16_lib.zip
+xcopy "include"  "%LOCALINSTALL%/include" /E
+copy /y lua54.lib "%LOCALINSTALL%/lib/lua.lib"
 
 echo
 echo ******                		 ******

@@ -48,7 +48,7 @@ LIBS +=   -lvelocypack
 win32::LIBS += -lyaml-cppd  -lpugixml
 unix:!macx-clang:LIBS += -llua -ldl
 macx-clang:LIBS += -llua
-win32:LIBS += -llua54
+win32:LIBS += -llua
 
 #macx-clang:LIBS += -llua
 #!macx-clang:LIBS += -llua5.3
