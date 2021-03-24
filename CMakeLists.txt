@@ -39,7 +39,7 @@ option(JSONIMPEX_USE_THRIFT "Build jsonimpex17 with thrift library." OFF)
 
 # Currently is not setup to produce a dynamic library using MSVC, only static
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
-    set(BUILD_SHARED_LIBS OFF)
+    set(BUILD_IMPEX_SHARED_LIBS OFF)
     set(BuildExamples OFF)
     set(BuildTests OFF)
 endif()
