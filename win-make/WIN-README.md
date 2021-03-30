@@ -30,7 +30,7 @@ Select with Qt 5.15.2 MSVC 2019 64-bit with Qt Charts, and Qt WebEngine.
 jsonimpex17/win-make>install-dependencies-Win-msvc.bat
 ```
 
-This script builds curl, velocypack, lua, jsonio17, yaml-cpp and pugixml libraries, copies then in the C:\usr\local folder.
+This script builds curl, velocypack, jsonarango-static, jsonio17-static, lua, yaml-cpp and pugixmlcopies then in the C:\usr\local folder.
 
 ### Compiling and the jsonimpex17 test in Qt Creator
 

@@ -40,8 +40,8 @@ option(JSONIMPEX_USE_THRIFT "Build jsonimpex17 with thrift library." OFF)
 # Currently is not setup to produce a dynamic library using MSVC, only static
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
     set(BUILD_IMPEX_SHARED_LIBS OFF)
-    #set(BuildExamples OFF)
-    #set(BuildTests OFF)
+    set(BuildExamples OFF)
+    set(BuildTests OFF)
 endif()
 
 # Set libraries to be compiled with position independent code mode (i.e., fPIC option in GNU compilers)
