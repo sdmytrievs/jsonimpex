@@ -13,14 +13,14 @@ foreach (exampleName ${Examples})
     if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
           target_link_libraries(${exampleName}
             PUBLIC jsonimpex17-static
-            #PUBLIC jsonio17-static
-            #PUBLIC jsonarango-static
-            #PRIVATE velocypack
+            PUBLIC jsonio17-static
+            PUBLIC jsonarango-static
+            PRIVATE velocypack
             PRIVATE libcurl
             #PRIVATE thriftmd
-            #PRIVATE lua
-            #PRIVATE yaml-cpp
-            #PRIVATE pugixml
+            PRIVATE lua
+            PRIVATE yaml-cpp
+            PRIVATE pugixml
             )
     else()
           target_link_libraries( ${exampleName}
@@ -31,7 +31,6 @@ foreach (exampleName ${Examples})
             PUBLIC velocypack
             PUBLIC curl
             #PRIVATE thrift
-            #PRIVATE lua5.3
             PRIVATE lua
             PRIVATE yaml-cpp
             PRIVATE pugixml
