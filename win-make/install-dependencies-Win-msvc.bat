@@ -137,7 +137,7 @@ echo ******                		 ******
 echo
 
 echo Get jsonarango from git...
-git clone https://svetadmitrieva@bitbucket.org/gems4/jsonarango.git
+git clone https://bitbucket.org/gems4/jsonarango.git
 cd jsonarango
 git checkout test
 
@@ -155,7 +155,7 @@ echo ******                		 ******
 echo
 
 echo Get jsonio17 from git...
-git clone https://svetadmitrieva@bitbucket.org/gems4/jsonio17.git
+git clone https://bitbucket.org/gems4/jsonio17.git
 cd jsonio17
 git checkout origin/tests
 
@@ -202,5 +202,4 @@ cd ..\..
 REM Housekeeping
 rd /s /q tmp_all
 
-
-
+:end
