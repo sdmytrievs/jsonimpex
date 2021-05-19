@@ -157,7 +157,7 @@ echo
 echo Get jsonio17 from git...
 git clone https://bitbucket.org/gems4/jsonio17.git
 cd jsonio17
-git checkout origin/tests
+rem git checkout origin/tests
 
 echo "Configuring..."
 cmake -G%COMPILER_VER_NAME% -DCMAKE_BUILD_TYPE=Release -DBuildExamples=OFF -DBuildTests=OFF -DCMAKE_INSTALL_PREFIX=%LOCALINSTALL% .. -S . -B build
