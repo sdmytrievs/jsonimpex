@@ -6,8 +6,8 @@
 #include "jsonio17/jsondump.h"
 #include "jsonio17/schema_thrift.h"
 #include "jsonio17/io_settings.h"
-#include "thrift_ie_json.h"
-#include "impex_schema.h"
+//#include "thrift_ie_json.h"
+//#include "impex_schema.h"
 #include "lua-run.h"
 
 
@@ -40,6 +40,7 @@ TEST(IMPEX, luaFunc)
     EXPECT_EQ( lua_wrk.run( lua_script, json_data ), "{\"vbool\":false,\"vdouble\":5.2,\"vint\":55,\"vstring\":\"Test string\"}" );
 }
 
+/*
 TEST( IMPEX, DataToFromJsonSchema1 )
 {
     ioSettings().addSchemaFormat( schema_thrift, impex_schema_str );
@@ -84,3 +85,4 @@ TEST( IMPEX, DataToFromJsonSchema3 )
 
     EXPECT_EQ( in_object.dump(), out_object.dump() );
 }
+*/

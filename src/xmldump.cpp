@@ -188,7 +188,7 @@ void add_array( const std::string& key, const std::string& value,  JsonBuilderBa
     childobj.testScalar( std::to_string(ii), str );
 }
 
-inline std::string key_name( const char* node_name )
+std::string key_name( const char* node_name )
 {
   std::string key = node_name;
   if( key.find("iii") == 0 )

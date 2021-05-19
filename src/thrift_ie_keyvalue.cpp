@@ -444,7 +444,7 @@ bool KeyValueIEFile::writeBlockToFile( const key_values_table_t& data_to_write )
     // write head
     std::vector<std::string> tokens = regexp_extract( format.head_regexp, "%head\\d+");
     std::string headstr = format.head_regexp;
-    for( auto token: tokens )
+    for( auto const& token: tokens )
     {
         impexValues = extract_value( token.substr(1), external_data );
         if( impexValues.size() > 0 )
@@ -455,7 +455,7 @@ bool KeyValueIEFile::writeBlockToFile( const key_values_table_t& data_to_write )
     //build order list
     auto orderFields = format.key_order;
     if( orderFields.empty() )
-        for( auto item: external_data )
+        for( auto const& item: external_data )
         {
             auto impexKey = item.first;
             if( impexKey.find("head") == std::string::npos && impexKey.find("end") == std::string::npos)
@@ -463,7 +463,7 @@ bool KeyValueIEFile::writeBlockToFile( const key_values_table_t& data_to_write )
         }
 
     // write matches (use orderFields )
-    for( auto impexKey: orderFields )
+    for( auto const& impexKey: orderFields )
     {
         auto idom = external_data.find(impexKey);
         if( idom == external_data.end() ) //not exist
@@ -494,7 +494,7 @@ bool KeyValueIEFile::writeBlockToFile( const key_values_table_t& data_to_write )
     // write end of block
     tokens = regexp_extract( format.end_regexp, "%end\\d+");
     std::string endstr = format.end_regexp;
-    for( auto token: tokens )
+    for( auto const& token: tokens )
     {
         impexValues = extract_value( token.substr(1), external_data );
         if( impexValues.size() > 0 )

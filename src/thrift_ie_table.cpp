@@ -359,7 +359,7 @@ bool TableIEFile::writeBlockToFile( const key_values_table_t& data_to_write )
         }
     
     size_t ii=0;
-    for( auto colhead: format.headers )
+    for( auto const& colhead: format.headers )
     {
         values = extract_value( colhead, data_to_write );
         if( values.empty() )

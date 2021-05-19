@@ -1,14 +1,19 @@
 #pragma once
 
 #include <stack>
-#include <thrift/protocol/TVirtualProtocol.h>
-#include <thrift/transport/TBufferTransports.h>
+
 #include "jsonio17/jsonschema.h"
 #include "jsonio17/jsonbuilder.h"
 
-using namespace ::apache::thrift;
+#ifdef USE_THRIFT
+#include <thrift/protocol/TVirtualProtocol.h>
+#include <thrift/transport/TBufferTransports.h>
 using namespace ::apache::thrift::protocol;
-using namespace ::apache::thrift::transport;
+#else
+#include "no_thrift/impex_base.h"
+using namespace ::jsonio17::impex;
+#endif
+
 
 namespace jsonio17 {
 
@@ -255,11 +260,18 @@ public:
  *    the first 4 elements.
  *
  */
-class TJSONSerializer : public TVirtualProtocol<TJSONSerializer>
+class TJSONSerializer
+#ifdef USE_THRIFT
+        : public TVirtualProtocol<TJSONSerializer>
+#endif
 {
 public:
 
+#ifdef USE_THRIFT
     TJSONSerializer( std::shared_ptr<TTransport> ptrans, const SchemasData* aschema );
+#else
+    TJSONSerializer( const SchemasData* aschema );
+#endif
     ~TJSONSerializer();
 
 
@@ -337,8 +349,10 @@ public:
 
     uint32_t readBool(bool& value);
 
+#ifdef USE_THRIFT
     // Provide the default readBool() implementation for std::vector<bool>
     using TVirtualProtocol<TJSONSerializer>::readBool;
+#endif
 
     uint32_t readByte(int8_t& byte);
 
@@ -358,7 +372,6 @@ public:
     /// Set up read mode
     void setDom( const JsonBase& object, const std::string& schema_name )
     {
-
         auto top_struct = schema->getStruct(schema_name);
         if( top_struct == nullptr )
             JSONIO_THROW( "TJSONSerializer", 14, " expected struct definition \"" + schema_name + "\"");
@@ -376,6 +389,9 @@ public:
         builders_stack.push( std::make_shared<JsonObjectBuilder>( &object ) );
     }
 
+#ifndef USE_THRIFT
+    uint32_t skip(TType type);
+#endif
 
 private:
 

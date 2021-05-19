@@ -35,10 +35,11 @@ option( BUILD_IMPEX_SHARED_LIBS "Build shared libraries." ON)
 option( BUILD_IMPEX_STATIC_LIBS "Build static libraries." ON)
 option(BuildExamples "Build EXAMPLES" ON)
 option(BuildTests "Build test suite" ON)
+option(JSONIMPEX_USE_THRIFT "Build jsonimpex17 with thrift library." OFF)
 
 # Currently is not setup to produce a dynamic library using MSVC, only static
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
-    set(BUILD_SHARED_LIBS OFF)
+    set(BUILD_IMPEX_SHARED_LIBS OFF)
     set(BuildExamples OFF)
     set(BuildTests OFF)
 endif()
@@ -86,6 +87,10 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}/src/gen-cpp")
 if(${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
     include_directories("/usr/local/include")
     link_directories("/usr/local/lib")
+endif()
+if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
+    include_directories("c:/usr/local/include")
+    link_directories("c:/usr/local/lib")
 endif()
 
 # Find all GEMSReaktoro dependencies

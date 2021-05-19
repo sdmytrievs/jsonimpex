@@ -3,7 +3,11 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#ifdef __APPLE__
+#include <lua5.4/lua.hpp>
+#else
 #include <lua.hpp>
+#endif
 
 namespace jsonio17 {
 

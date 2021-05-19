@@ -13,8 +13,6 @@ dependencies:
   - jsonarango
   - yaml-cpp
   - pugixml
-  - boost-cpp>=1.72.0
-  - thrift-cpp>=0.13.0
   - lua
 
 environment:

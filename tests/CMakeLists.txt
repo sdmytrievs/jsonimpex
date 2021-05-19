@@ -20,10 +20,11 @@ if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
             PUBLIC jsonarango-static
             PRIVATE velocypack
             PRIVATE libcurl
-            PRIVATE thriftmd
+            #PRIVATE thriftmd
             PRIVATE lua
             PRIVATE yaml-cpp
-            PRIVATE pugixml )
+            PRIVATE pugixml
+            )
 else()
       target_link_libraries( test_main
            PUBLIC gtest
@@ -33,8 +34,7 @@ else()
            PUBLIC jsonarango
            PUBLIC velocypack
            PUBLIC curl
-           PRIVATE thrift
-#           PRIVATE lua5.3
+           #PRIVATE thrift
            PRIVATE lua
            PRIVATE yaml-cpp
            PRIVATE pugixml

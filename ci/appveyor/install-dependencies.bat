@@ -6,7 +6,7 @@ if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2015" (
     call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86_amd64
 )
 
-set FART="%CD%\tools\fart\fart.exe"
+rem set FART="%CD%\tools\fart\fart.exe"
 
 mkdir tmp_velo
 cd tmp_velo

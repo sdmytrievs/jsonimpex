@@ -17,10 +17,11 @@ foreach (exampleName ${Examples})
             PUBLIC jsonarango-static
             PRIVATE velocypack
             PRIVATE libcurl
-            PRIVATE thriftmd
+            #PRIVATE thriftmd
             PRIVATE lua
             PRIVATE yaml-cpp
-            PRIVATE pugixml )
+            PRIVATE pugixml
+            )
     else()
           target_link_libraries( ${exampleName}
             PUBLIC stdc++fs
@@ -29,8 +30,7 @@ foreach (exampleName ${Examples})
             PUBLIC jsonarango
             PUBLIC velocypack
             PUBLIC curl
-            PRIVATE thrift
-#            PRIVATE lua5.3
+            #PRIVATE thrift
             PRIVATE lua
             PRIVATE yaml-cpp
             PRIVATE pugixml
