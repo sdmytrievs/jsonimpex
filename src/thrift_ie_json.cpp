@@ -44,7 +44,7 @@ void StructDataIEFile::openFile( const std::string& file_path )
     // read all input array to internal
     ie_stream.reset( new JsonYamlXMLArrayFile( file_path ) );
     ie_stream->set_type( foreign_data_type );
-    TxtFile::OpenModeTypes file_mode = ( mode_use==ImpexFormatFile::modeImport ? TxtFile::ReadOnly : TxtFile::WriteOnly );
+    TxtFile::OpenModeTypes file_mode = ( mode_use!=ImpexFormatFile::modeExport ? TxtFile::ReadOnly : TxtFile::WriteOnly );
     ie_stream->Open( file_mode );
 }
 
@@ -59,7 +59,8 @@ void StructDataIEFile::loadString( const std::string& input_data )
 {
     ie_stream.reset( new JsonYamlXMLArrayFile( "empty" ) );
     ie_stream->set_type( foreign_data_type );
-    if( mode_use==ImpexFormatFile::modeImport  )
+    if( mode_use==ImpexFormatFile::modeImport ||
+        mode_use==ImpexFormatFile::modeUpdate  )
         ie_stream->loadString( input_data );
 }
 
@@ -84,7 +85,7 @@ bool StructDataIEFile::readBlock(  const std::string& inputjson, std::string& sc
     // reset default structure
     dom_node.clear();
     // write data to structNode
-    set_readed_data();
+    set_readed_data( true );
     run_block_script(block.script, dom_node );
 
     // return data to json string

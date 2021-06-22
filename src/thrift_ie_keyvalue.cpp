@@ -45,7 +45,7 @@ void KeyValueIEFile::openFile( const std::string& file_path )
     if (file_stream.is_open())
         file_stream.close();
 
-    if( mode_use == ImpexFormatFile::modeImport )
+    if( mode_use != ImpexFormatFile::modeExport )
         file_stream.open( file_name,  std::fstream::in );
     else
         file_stream.open( file_name,  std::fstream::out|std::fstream::app );
@@ -67,7 +67,7 @@ void KeyValueIEFile::loadString(const std::string &input_data)
     if( file_stream.is_open() )
         file_stream.close();
 
-    if( mode_use == ImpexFormatFile::modeImport )
+    if( mode_use != ImpexFormatFile::modeExport )
         string_stream.str( input_data );
     else
         string_stream.str( "" );

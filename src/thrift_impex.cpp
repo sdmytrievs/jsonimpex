@@ -63,6 +63,11 @@ bool ImpexFormatFile::nextFromFile( std::string& input_json )
     return impex_format->nextFromFile( input_json );
 }
 
+bool ImpexFormatFile::updateBlock(DBVertexDocument *dbdocument, std::string &json_block_data)
+{
+    return impex_format->updateBlock( dbdocument, json_block_data );
+}
+
 bool ImpexFormatFile::writeBlockToFile( const key_values_table_t& data_to_write )
 {
     return impex_format->writeBlockToFile( data_to_write );

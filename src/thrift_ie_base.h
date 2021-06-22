@@ -1,6 +1,7 @@
 #pragma once
 
 #include "jsonio17/jsonschema.h"
+#include "jsonio17/dbedgedoc.h"
 #include "jsonimpex17/thrift_impex.h"
 #include "lua-run.h"
 
@@ -57,7 +58,7 @@ public:
         // reset default structure
         dom_node.clear();
         // write data to structNode
-        set_readed_data();
+        set_readed_data( true );
         // Run script for operation on data values in block
         run_block_script( block.script, dom_node );
 
@@ -71,6 +72,40 @@ public:
 
     /// Read next json object  ( FormatStructDataFile only )
     virtual bool nextFromFile( std::string& inputjson ) = 0;
+
+    // Update part -----------------------------------------------------------------
+
+    /// Read one block to json data
+    bool updateBlock( DBVertexDocument* dbdocument, std::string& json_block_data )
+    {
+        // read data from block to readedData
+        external_data.clear();
+        if( !read_block_from_file() )
+            return false;
+
+        // reset default structure
+        dom_node.clear();
+        // write data to structNode with ignored
+        set_readed_data( false );
+        // Run script for operation on data values in block
+        run_block_script( block.script, dom_node );
+
+        // Define key to update from current Quiery values
+        auto key = dbdocument->getKeyFromValue(dom_node);
+        std::cout << key << std::endl;
+        if( !key.empty() )
+        {
+          dbdocument->readDocument(key);
+          dom_node.loads(dbdocument->getJson());
+          set_matches_data( true ); // not ignored
+          run_block_script( block.script, dom_node ); // ???
+          dbdocument->recFromJson( dom_node.dump(), false );
+          dbdocument->updateDocument(key);
+        }
+        // return data to json string
+        json_block_data = dom_node.dump();
+        return true;
+    }
 
     // Export part -----------------------------------------------------------------
 
@@ -119,8 +154,12 @@ protected:
     /// Read data from one block in file
     virtual bool read_block_from_file() = 0;
 
+    /// Save data to DOM
+    virtual void set_readed_data( bool not_ignored );
+    /// Save default data to DOM
+    virtual void set_predefined_data();
     /// Save readed data to DOM
-    virtual void set_readed_data();
+    virtual void set_matches_data( bool not_ignored );
 
     /// Change number value, using script
     void run_lua_script( const std::string& script, values_t& values, bool isArray );

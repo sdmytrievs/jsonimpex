@@ -4,7 +4,7 @@
 #include <memory>
 #include <functional>
 #include "jsonio17/jsonbase.h"
-#include "jsonio17/dbquerybase.h"
+#include "jsonio17/dbvertexdoc.h"
 
 namespace jsonio17 {
 
@@ -24,7 +24,7 @@ public:
 
     /// Type of mode: import or export
     enum ImpexMode {
-        modeImport = 0, modeExport = 1
+        modeImport = 0, modeExport = 1, modeUpdate = 2
     };
 
     /// Registering new import/export format and Factory Method where instances are actually created
@@ -62,6 +62,11 @@ public:
     bool readBlock(  const std::string& input_json, std::string& schema_json, std::string& key, int ndx=-1 );
     /// Read next json object  ( FormatStructDataFile only )
     bool nextFromFile( std::string& input_json );
+
+    // Update part -----------------------------------------------------------------
+
+    /// Update one block to json data
+    bool updateBlock( DBVertexDocument* dbdocument, std::string& json_block_data );
 
     // Export part -----------------------------------------------------------------
 
