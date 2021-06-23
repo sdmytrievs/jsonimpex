@@ -12,13 +12,13 @@ mkdir tmp_velo
 cd tmp_velo
 
 echo
-echo ******                  ******
-echo ****** Compiling JSONIO ******
-echo ******                  ******
+echo ******                    ******
+echo ****** Compiling JSONIO17 ******
+echo ******                    ******
 echo
 
 echo git clone jsonio17...
-git clone https://bitbucket.org/gems4/jsonio17.git
+git clone https://bitbucket.org/gems4/jsonio17.git -b tests
 cd jsonio17
 
 echo "Configuring..."

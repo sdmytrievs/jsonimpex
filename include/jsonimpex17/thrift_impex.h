@@ -65,7 +65,7 @@ public:
 
     // Update part -----------------------------------------------------------------
 
-    /// Update one block to json data
+    /// Function to update documents, either value in existing fields, or add new fields while leaving the rest of the record unchanged.
     bool updateBlock( DBVertexDocument* dbdocument, std::string& json_block_data );
 
     // Export part -----------------------------------------------------------------
