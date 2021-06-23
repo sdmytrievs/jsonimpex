@@ -21,7 +21,11 @@ int _kDirectionTypeValues[] = {
   /**
    * export
    */
-  DirectionType::EXPORT
+  DirectionType::EXPORT,
+  /**
+   * update
+   */
+  DirectionType::UPDATE
 };
 const char* _kDirectionTypeNames[] = {
   /**
@@ -31,9 +35,13 @@ const char* _kDirectionTypeNames[] = {
   /**
    * export
    */
-  "EXPORT"
+  "EXPORT",
+  /**
+   * update
+   */
+  "UPDATE"
 };
-const std::map<int, const char*> _DirectionType_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(2, _kDirectionTypeValues, _kDirectionTypeNames), ::apache::thrift::TEnumIterator(-1, nullptr, nullptr));
+const std::map<int, const char*> _DirectionType_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(3, _kDirectionTypeValues, _kDirectionTypeNames), ::apache::thrift::TEnumIterator(-1, nullptr, nullptr));
 
 std::ostream& operator<<(std::ostream& out, const DirectionType::type& val) {
   std::map<int, const char*>::const_iterator it = _DirectionType_VALUES_TO_NAMES.find(val);

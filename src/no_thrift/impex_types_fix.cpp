@@ -13,7 +13,11 @@ int _kDirectionTypeValues[] = {
   /**
    * export
    */
-  DirectionType::EXPORT
+  DirectionType::EXPORT,
+    /**
+     * update
+     */
+  DirectionType::UPDATE
 };
 const char* _kDirectionTypeNames[] = {
   /**
@@ -23,7 +27,11 @@ const char* _kDirectionTypeNames[] = {
   /**
    * export
    */
-  "EXPORT"
+  "EXPORT",
+    /**
+     * update
+     */
+    "UPDATE"
 };
 const std::map<int, const char*> _DirectionType_VALUES_TO_NAMES = {
     {T_STOP, "stop" },

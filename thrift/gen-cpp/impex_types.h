@@ -9,11 +9,11 @@
 
 #include <iosfwd>
 
-//#include <thrift/Thrift.h>
-//#include <thrift/TApplicationException.h>
+#include <thrift/Thrift.h>
+#include <thrift/TApplicationException.h>
 #include <thrift/TBase.h>
-//#include <thrift/protocol/TProtocol.h>
-//#include <thrift/transport/TTransport.h>
+#include <thrift/protocol/TProtocol.h>
+#include <thrift/transport/TTransport.h>
 
 #include <functional>
 #include <memory>
@@ -33,7 +33,11 @@ struct DirectionType {
     /**
      * export
      */
-    EXPORT = 1
+    EXPORT = 1,
+    /**
+     * update
+     */
+    UPDATE = 2
   };
 };
 
