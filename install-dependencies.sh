@@ -43,13 +43,13 @@ fi
 # Uncomment what is necessary to reinstall by force
 #sudo rm -f /usr/local/lib/libvelocypack.a
 #sudo rm -f /usr/local/lib/libjsonarango.$EXTN
-sudo rm -f /usr/local/lib/libjsonio17.$EXTN
+#sudo rm -f /usr/local/lib/libjsonio17.$EXTN
 #sudo rm -f /usr/local/lib/libpugixml.$EXTN
 #sudo rm -f /usr/local/lib/libyaml-cpp.$EXTN
 #sudo rm -f /usr/local/lib/libthrift.$EXTN
 
 threads=3
-BRANCH_JSON=tests
+BRANCH_JSON=master
 BuildType=Release
 
 

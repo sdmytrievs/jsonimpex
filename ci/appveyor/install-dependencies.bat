@@ -18,7 +18,7 @@ echo ******                    ******
 echo
 
 echo git clone jsonio17...
-git clone https://bitbucket.org/gems4/jsonio17.git -b tests
+git clone https://bitbucket.org/gems4/jsonio17.git
 cd jsonio17
 
 echo "Configuring..."
