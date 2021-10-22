@@ -41,7 +41,13 @@ void readDataFromJsonSchema( const JsonBase& object,
 }
 
 
-void AbstractIEFile::set_readed_data()
+void AbstractIEFile::set_readed_data(bool not_ignored)
+{
+    set_predefined_data();
+    set_matches_data( not_ignored );
+}
+
+void AbstractIEFile::set_predefined_data()
 {
     // set up predefined data
     auto itr = block.defaults.begin();
@@ -57,7 +63,10 @@ void AbstractIEFile::set_readed_data()
         fld->loads( itr->second );
         itr++;
     }
+}
 
+void AbstractIEFile::set_matches_data( bool not_ignored )
+{
     // set up readed data
     std::string impkey;
     std::vector<std::string> impvalue;
@@ -74,7 +83,8 @@ void AbstractIEFile::set_readed_data()
         if( idom == block.matches.end() ) // not converted
             continue;
         std::string domkey = idom->second.field;
-        if( idom->second.ignore || domkey.empty() )  // skip ignored
+        if( domkey.empty() ||
+            (idom->second.ignore && not_ignored ) )   // skip ignored
             continue;
 
         auto fld =  dom_node.field_add(domkey);

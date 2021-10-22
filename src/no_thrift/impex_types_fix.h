@@ -22,16 +22,20 @@ std::string to_string( const T& value )
  * Classes of direction types
  */
 struct DirectionType {
-  enum type {
-    /**
+    enum type {
+        /**
      * import
      */
-    IMPORT = 0,
-    /**
+        IMPORT = 0,
+        /**
      * export
      */
-    EXPORT = 1
-  };
+        EXPORT = 1,
+        /**
+       * update
+       */
+        UPDATE = 2
+    };
 };
 
 extern const std::map<int, const char*> _DirectionType_VALUES_TO_NAMES;

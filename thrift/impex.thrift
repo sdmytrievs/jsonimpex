@@ -11,6 +11,8 @@ enum DirectionType {
     IMPORT
     /** export */
     EXPORT
+    /** update */
+    UPDATE
 }
 
 // /** Intermediate value to be read from file (import) or to be printed to file (export) */
