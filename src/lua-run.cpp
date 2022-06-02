@@ -1,11 +1,15 @@
 #include "lua-run.h"
+#include <spdlog/sinks/stdout_color_sinks.h>
 
 namespace jsonio17 {
+
+// Thread-safe logger to stdout with colors
+std::shared_ptr<spdlog::logger> impex_logger = spdlog::stdout_color_mt("jsonimpex17");
 
 // Initialization
 LuaRun::LuaRun( const std::string& lib_path ): lua_lib_path( lib_path )
 {
-    // cout << "_lualibPath : " << _lualibPath << endl;
+    impex_logger->info(" LUA lib path: {}", lua_lib_path);
     // Init Lua
     lua_internal = luaL_newstate();
     // Make standard libraries available in the Lua state
@@ -23,7 +27,7 @@ bool LuaRun::run_file_script(const std::string& file_with_lua_script )
     lua_settop( lua_internal, 0 ); //empty the lua stack
     if( luaL_dofile( lua_internal, file_with_lua_script.c_str() ) )
     {
-        fprintf(stderr, "error: %s\n", lua_tostring( lua_internal, -1 ));
+        impex_logger->error(" LUA error: {}", lua_tostring( lua_internal, -1 ));
         lua_pop( lua_internal, 1 );
         return false;
     }
@@ -56,7 +60,7 @@ bool LuaRun::run_string_script(const std::string& string_with_lua_script )
 
     if( luaL_dostring( lua_internal, luascr.c_str() ) )
     {
-        fprintf(stderr, "error: %s\n", lua_tostring( lua_internal, -1 ));
+        impex_logger->error(" LUA error: {}", lua_tostring( lua_internal, -1 ));
         lua_pop( lua_internal, 1 );
         return false;
     }
@@ -88,7 +92,7 @@ std::string LuaRun::run(const std::string& lua_script, const std::string& json_d
     lua_pop( lua_internal, 1 );
 
     // test output
-    // cout << luanew.c_str() << endl;
+    impex_logger->debug(" LUA run: {}", luanew.c_str());
     return luanew;
 }
 
@@ -140,7 +144,7 @@ bool LuaRun::runFunc( const std::string& lua_script, std::string& value )
     lua_settop( lua_internal, 0 ); //empty the lua stack
     if(luaL_dostring( lua_internal, lua_script.c_str() ) )
     {
-        std::cout <<  "error: " << lua_tostring( lua_internal, -1 ) << std::endl;
+        impex_logger->error(" LUA error: {}", lua_tostring( lua_internal, -1 ));
         lua_pop( lua_internal, 1 );
         return false;
     }

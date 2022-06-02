@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include <iostream>
+#include "spdlog/spdlog.h"
 #ifdef __APPLE__
 #include <lua5.4/lua.hpp>
 #else
@@ -10,6 +10,9 @@
 #endif
 
 namespace jsonio17 {
+
+/// Default logger for jsonimpex17 library
+extern std::shared_ptr<spdlog::logger> impex_logger;
 
 /// LUA-C++ Integration Class
 class LuaRun
@@ -43,7 +46,7 @@ public:
         lua_settop( lua_internal,0 ); //empty the lua stack
         if( luaL_dostring( lua_internal, lua_script.c_str() ) )
         {
-            std::cout <<  "error: " << lua_tostring(lua_internal,-1) << std::endl;
+            impex_logger->error(" LUA error: {}", lua_tostring( lua_internal, -1 ));
             lua_pop( lua_internal,1 );
             return false;
         }
@@ -70,7 +73,7 @@ public:
         lua_settop( lua_internal, 0 ); //empty the lua stack
         if( luaL_dostring( lua_internal, lua_script.c_str() ) )
         {
-            std::cout <<  "error: " << lua_tostring(lua_internal,-1) << std::endl;
+            impex_logger->error(" LUA error: {}", lua_tostring( lua_internal, -1 ));
             lua_pop( lua_internal, 1 );
             return false;
         }

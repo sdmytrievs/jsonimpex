@@ -93,7 +93,7 @@ public:
 
         // Define key to update from current Quiery values
         auto key = dbdocument->getKeyFromValue(dom_node);
-        std::cout << key << std::endl;
+        impex_logger->debug("Update documents: {}", key);
         if( !key.empty() )
         {
           dbdocument->readDocument(key);
