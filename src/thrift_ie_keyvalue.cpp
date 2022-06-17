@@ -1,4 +1,5 @@
 #include "thrift_ie_keyvalue.h"
+#include <cstring>
 #include <regex>
 namespace rgx = std;
 
