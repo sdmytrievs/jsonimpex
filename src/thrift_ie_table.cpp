@@ -1,4 +1,5 @@
 #include "thrift_ie_table.h"
+#include <cstring>
 #include <regex>
 namespace rgx = std;
 
