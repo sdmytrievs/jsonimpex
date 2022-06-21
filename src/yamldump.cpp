@@ -3,6 +3,7 @@
 #include <cassert>
 #include <stack>
 #include <memory>
+#include "spdlog/spdlog.h"
 #include "yaml-cpp/yaml.h"
 #include "yaml-cpp/eventhandler.h"
 
