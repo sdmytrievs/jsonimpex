@@ -11,9 +11,11 @@
 #include "jsonio17/jsonbuilder.h"
 #include "jsonio17/service.h"
 #include "jsonimpex17/yamldump.h"
-#include "lua-run.h"
 
 namespace jsonio17 {
+
+/// Default logger for jsonimpex17 library
+extern std::shared_ptr<spdlog::logger> impex_logger;
 
 namespace yaml {
 
