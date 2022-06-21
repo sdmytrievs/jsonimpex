@@ -1,4 +1,5 @@
 #include <iomanip>
+#include <iostream>
 #include <cassert>
 #include <stack>
 #include <memory>
