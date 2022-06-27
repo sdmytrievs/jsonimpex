@@ -3,7 +3,7 @@
 # Uncomment what is necessary to reinstall by force 
 rm -f ${CONDA_PREFIX}/lib/libjsonio17.a
 
-BRANCH_JSON=tests
+BRANCH_JSON=master
 
 # if no JSONIO installed in ${CONDA_PREFIX}/lib/libjsonio17.a (${CONDA_PREFIX}/include/jsonio17)
 test -f ${CONDA_PREFIX}/lib/libjsonio17.a || {
