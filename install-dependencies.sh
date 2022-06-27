@@ -16,7 +16,7 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
     #Needs gcc v.5 or higher and ArangoDB server locally installed
     sudo apt-get update
     sudo apt-get install -y libcurl4-openssl-dev
-    sudo apt install libspdlog-dev
+    sudo apt-get install libspdlog-dev
     EXTN=so
 
     #sudo rm -f /usr/local/lib/liblua.a
@@ -44,8 +44,8 @@ fi
 #sudo rm -f /usr/local/lib/libvelocypack.a
 #sudo rm -f /usr/local/lib/libjsonarango.$EXTN
 #sudo rm -f /usr/local/lib/libjsonio17.$EXTN
-sudo rm -f /usr/local/lib/libpugixml.$EXTN
-sudo rm -f /usr/local/lib/libyaml-cpp.$EXTN
+#sudo rm -f /usr/local/lib/libpugixml.$EXTN
+#sudo rm -f /usr/local/lib/libyaml-cpp.$EXTN
 #sudo rm -f /usr/local/lib/libthrift.$EXTN
 
 threads=3
