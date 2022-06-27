@@ -101,3 +101,4 @@ AbstractIEFile *ImpexFormatFile::create_format_data( ImpexMode amode, const std:
 }
 
 } // namespace jsonio17
+

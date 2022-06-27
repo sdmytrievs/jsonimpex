@@ -1,7 +1,9 @@
 #include <iomanip>
+#include <iostream>
 #include <cassert>
 #include <stack>
 #include <memory>
+#include "spdlog/spdlog.h"
 #include "yaml-cpp/yaml.h"
 #include "yaml-cpp/eventhandler.h"
 
@@ -11,8 +13,10 @@
 #include "jsonio17/service.h"
 #include "jsonimpex17/yamldump.h"
 
-
 namespace jsonio17 {
+
+/// Default logger for jsonimpex17 library
+extern std::shared_ptr<spdlog::logger> impex_logger;
 
 namespace yaml {
 
@@ -468,11 +472,10 @@ void loads(const std::string &yaml_str, JsonBase &object)
         YAML::Parser parser(stream);
         NodeHandler builder(object);
         parser.HandleNextDocument(builder);
-        //cout << builder.to_string() << endl;
     }
     catch(YAML::Exception& e)
     {
-        std::cout << "Yaml2Json " << e.what() << std::endl;
+        impex_logger->error(" Yaml2Json error: {}", e.what());
         JSONIO_THROW( "Yaml2Json", 10, e.what() );
     }
 }
@@ -496,16 +499,15 @@ std::string Yaml2Json(const std::string &yaml_str)
     std::stringstream jsonstream;
 
     try{
-        std::stringstream stream( yaml_str );
-        YAML::Parser parser( stream );
-        JsonHandler1 builder( jsonstream );
-        parser.HandleNextDocument( builder );
-        //cout << builder.to_string() << endl;
+        std::stringstream stream(yaml_str);
+        YAML::Parser parser(stream);
+        JsonHandler1 builder(jsonstream);
+        parser.HandleNextDocument(builder);
     }
     catch(YAML::Exception& e)
     {
-        std::cout << "Yaml2Json " << e.what() << std::endl;
-        JSONIO_THROW( "Yaml2Json", 15, e.what() );
+        impex_logger->error(" Yaml2Json error: {}", e.what());
+        JSONIO_THROW("Yaml2Json", 15, e.what());
     }
     return jsonstream.str();
 }

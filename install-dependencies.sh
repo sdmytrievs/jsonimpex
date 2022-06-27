@@ -8,7 +8,7 @@ if [ "$(uname)" == "Darwin" ]; then
     brew upgrade
     brew install cmake
     brew install lua
-
+    brew install spdlog
     EXTN=dylib
 
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
@@ -16,7 +16,7 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
     #Needs gcc v.5 or higher and ArangoDB server locally installed
     sudo apt-get update
     sudo apt-get install -y libcurl4-openssl-dev
-
+    sudo apt-get install libspdlog-dev
     EXTN=so
 
     #sudo rm -f /usr/local/lib/liblua.a
@@ -60,7 +60,7 @@ test -f /usr/local/lib/libvelocypack.a || {
         # Building velocypack library
         mkdir -p ~/code && \
                 cd ~/code && \
-                git clone https://github.com/arangodb/velocypack.git && \
+                git clone https://github.com/arangodb/velocypack.git -b XYZ1.0 && \
                 cd velocypack && \
                 mkdir -p build && \
                 cd build && \

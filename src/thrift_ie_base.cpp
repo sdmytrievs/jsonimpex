@@ -1,4 +1,3 @@
-#include <iostream>
 #include "jsonio17/io_settings.h"
 #include "jsonio17/jsonschema.h"
 #include "jsonio17/jsondump.h"
@@ -56,7 +55,7 @@ void AbstractIEFile::set_predefined_data()
         auto fld =  dom_node.field_add(itr->first);
         if( fld == nullptr)
         {
-            std::cout << "Not found " <<  itr->first << std::endl;
+            impex_logger->warn(" Not found: {}", itr->first);
             itr++;
             continue;
         }
@@ -111,7 +110,7 @@ void AbstractIEFile::set_matches_data( bool not_ignored )
         else
             run_lua_script( idom->second.script, impvalue, fld->isArray() );
 
-        //std::cout << domkey << " : " << json::dump(impvalue)  << std::endl;
+        impex_logger->trace(" {} : {}", domkey, json::dump(impvalue));
         if( fld->isArray() && !fld->isMap() )
         {
             fld->loads_list_from( impvalue );
@@ -197,7 +196,7 @@ void AbstractIEFile::run_block_script( const std::string& luascript, JsonSchema&
 
     std::string json_data = object.dump( true );
     std::string newjson = lua_run.run( luascript, json_data, false );
-    //std::cout << newjson << std::endl;
+    impex_logger->trace(" run_block_script: {}", newjson);
     if( !newjson.empty() )
     {
         object.loads( newjson );
@@ -363,3 +362,5 @@ void AbstractIEFile::extractDataToWrite( const std::string& json_block_data, key
 
 
 } // namespace jsonio17
+
+

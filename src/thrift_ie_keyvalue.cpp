@@ -112,8 +112,6 @@ bool  KeyValueIEFile::read_next_block_from_file()
     str_buf += std::string(buffer);
     test_start = str_buf.begin();
     test_end = str_buf.end();
-    //cout << endl << "!!!!" << str_buf.c_str() << "\n<<<" << endl;
-
     return true;
 }
 
@@ -173,9 +171,7 @@ bool KeyValueIEFile::read_regexp( const std::string& re_str, std::vector<std::st
                 // what[0] contains the whole string
                 // what[>0] contains the tokens.
 
-                for( size_t ii=1; ii < what.size(); ii++ )
-                {
-                    //cout <<  what[ii] << endl;
+                for( size_t ii=1; ii < what.size(); ii++ ) {
                     mach_str.push_back(what[ii]);
                 }
                 // update search position:
@@ -187,7 +183,7 @@ bool KeyValueIEFile::read_regexp( const std::string& re_str, std::vector<std::st
     }
     catch (rgx::regex_error &e)
     {
-        std::cout << "what: " << e.what() << "; code: " << parseCode(e.code()) << std::endl;
+        impex_logger->error("what: {}; code: {}", e.what(), parseCode(e.code()));
         JSONIO_THROW( "KeyValueIEFile", 14, std::string(" Regular Expression parse error: ") + e.what() + "  " + re_str  );
     }
     return false;
@@ -221,7 +217,7 @@ bool KeyValueIEFile::test_regexp( const std::string& re_str )
     }
     catch (rgx::regex_error &e)
     {
-        std::cout << "what: " << e.what() << "; code: " << parseCode(e.code()) << std::endl;
+        impex_logger->error("what: {}; code: {}", e.what(), parseCode(e.code()));
         JSONIO_THROW( "KeyValueIEFile", 15, std::string(" Regular Expression parse error: ") + e.what() + "  " + re_str  );
     }
     return false;
@@ -422,13 +418,7 @@ bool KeyValueIEFile::read_block_from_file( )
             JSONIO_THROW( "KeyValueIEFile", 16, std::string(" read key value pair error : ")+std::string( test_start, min( test_start+100, test_end )  ));
         ii++;
     }
-    /* test output
-    for( const auto& it: external_data )
-    {
-        std::cout << " key " << it.first ;
-        for(size_t ii=0; ii< it.second.size(); ii++ )
-            std::cout << "         "  << it.second[ii].c_str() << std::endl;
-    }*/
+    impex_logger->debug("KeyValueIEFile::read_block_from_file:\n {}", json::dump(external_data));
     return true;
 }
 
@@ -560,3 +550,5 @@ std::string parseCode(/*regex_constants::error_type*/ int etype)
 
 
 } // namespace jsonio17
+
+

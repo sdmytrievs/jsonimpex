@@ -108,15 +108,7 @@ bool TableIEFile::read_block_from_file( )
         else
             split_delimiter( valuesRow );
     
-    /* test output
-    for( const auto& it: external_data )
-    {
-        std::cout << " key " << it.first << ":" ;
-        for(size_t ii=0; ii< it.second.size(); ii++ )
-            std::cout << " \""  << it.second[ii].c_str() << "\" ";
-    }
-    std::cout << "------------\n";
-    */
+    impex_logger->debug("TableIEFile::read_block_from_file:\n {}", json::dump(external_data));
     return true;
 }
 
@@ -156,7 +148,7 @@ void TableIEFile::skip_comments( std::string& row )
     }
     catch (rgx::regex_error &e)
     {
-        std::cout << "what: " << e.what() << "; code: " << parseCode(e.code()) << std::endl;
+        impex_logger->error("what: {}; code: {}", e.what(), parseCode(e.code()));
         JSONIO_THROW( "TableIEFile", 14, std::string(" Regular Expression parse error: ") + e.what() + "  " + format.comment_regexp  );
     }
 }
@@ -288,7 +280,7 @@ void TableIEFile::split_regexpr( const std::string& readedrow, bool toheader )
     }
     catch (rgx::regex_error &e)
     {
-        std::cout << "what: " << e.what() << "; code: " << parseCode(e.code()) << std::endl;
+        impex_logger->error("what: {}; code: {}", e.what(), parseCode(e.code()));
         JSONIO_THROW( "TableIEFile", 15, std::string(" Regular Expression parse error: ") + e.what() + "  " + rgex[ii] );
     }
     
@@ -383,3 +375,4 @@ bool TableIEFile::writeBlockToFile( const key_values_table_t& data_to_write )
 
 
 } // namespace jsonio17
+

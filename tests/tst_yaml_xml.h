@@ -25,7 +25,6 @@ TEST( JSONYAML, ObjectSimple)
 
     auto json_obj = json::loads( "SimpleSchemaTest", simple_schema_value );
     EXPECT_EQ( yaml::dump(json_obj), simple_yaml_value );
-    //std::cout << " <" << yaml::dump(json_obj) << ">" << std::endl;
 
     auto yaml_obj = yaml::loads( "SimpleSchemaTest", simple_yaml_value );
     EXPECT_EQ( yaml::dump(yaml_obj), simple_yaml_value );
@@ -38,7 +37,6 @@ TEST( JSONYAML, ObjectComplex)
 
     auto json_obj = json::loads( "ComplexSchemaTest", complex_schema_value );
     auto yaml_txt = yaml::dump(json_obj);
-    // std::cout << yaml_txt << std::endl;
 
     auto yaml_obj = yaml::loads( "ComplexSchemaTest", yaml_txt );
     EXPECT_EQ( yaml::dump(yaml_obj), yaml_txt );
@@ -49,7 +47,6 @@ TEST( JSONYAML, ObjectFree)
 {
     auto json_obj = json::loads( test_free_str );
     auto yaml_txt = yaml::dump(json_obj);
-    // std::cout << yaml_txt << std::endl;
 
     auto yaml_arr = JsonFree::array();
     yaml::loads( yaml_txt, yaml_arr  );
@@ -159,7 +156,6 @@ TEST( JSONXML, ObjectSimple)
 
     auto json_obj = json::loads( "SimpleSchemaTest", simple_schema_value );
     auto xml_txt = XML::dump(json_obj);
-    // std::cout << xml_txt << std::endl;
 
     auto xml_obj = XML::loads( "SimpleSchemaTest", xml_txt );
     EXPECT_EQ( XML::dump(xml_obj), xml_txt );
@@ -172,7 +168,6 @@ TEST( JSONXML, ObjectComplex)
 
     auto json_obj = json::loads( "ComplexSchemaTest", complex_schema_value );
     auto xml_txt = XML::dump(json_obj);
-    // std::cout << xml_txt << std::endl;
 
     auto xml_obj = XML::loads( "ComplexSchemaTest", xml_txt );
     EXPECT_EQ( XML::dump(xml_obj), xml_txt );
@@ -183,7 +178,6 @@ TEST( JSONXML, ObjectFree)
 {
     auto json_arr = json::loads( test_free_str );
     auto xml_txt = XML::dump(json_arr);
-    // std::cout << xml_txt << std::endl;
 
     auto xml_arr = JsonFree::object();
     XML::loads( xml_txt, xml_arr  );
