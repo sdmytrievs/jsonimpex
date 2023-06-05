@@ -1,5 +1,5 @@
 TEMPLATE = app
-CONFIG += thread console c++17
+CONFIG += thread console c++2a
 CONFIG -= app_bundle
 CONFIG -= qt
 
@@ -41,12 +41,8 @@ DEPENDPATH   += $$JSONIMPEX17_HEADERS_DIR
 INCLUDEPATH   += $$JSONIMPEX17_DIR
 INCLUDEPATH   += $$JSONIMPEX17_HEADERS_DIR
 
-unix:!macx-clang:LIBS += -lstdc++fs
-win32:LIBS +=  -ljsonio17-static -ljsonarango-static -llibcurl
-!win32:LIBS += -ljsonio17 -ljsonarango -lcurl
-LIBS +=   -lvelocypack
-!win32::LIBS += -lyaml-cpp  -lpugixml
-win32::LIBS += -lyaml-cppd  -lpugixml
+!win32::LIBS += -ljsonio17 -lyaml-cpp  -lpugixml
+win32::LIBS += -ljsonio17-static -lyaml-cppd  -lpugixml
 unix:!macx-clang:LIBS += -llua -ldl
 macx-clang:LIBS += -llua
 win32:LIBS += -llua54

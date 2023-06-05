@@ -21,25 +21,18 @@ source activate jsonimpex17
 ./conda-install-dependencies.sh
 mkdir build
 cd build
-cmake -DCMAKE_BUILD_TYPE=Release \
-      -DCMAKE_INSTALL_PREFIX="$PREFIX" \
-      -DCMAKE_INSTALL_LIBDIR=$PREFIX/lib \
-      ..
+cmake -GNinja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX="$PREFIX" \
+    -DCMAKE_INSTALL_LIBDIR=$PREFIX/lib \
+    ..
+ninja install
 if [ $? -eq 0 ]
 then
-    echo "The cmake step ran OK"
+echo "The make step ran ok"
 else
-    echo "The cmake step failed" >&2
-    exit 1
-fi
-# Build step
-make #-j${CPU_COUNT}
-make install
-if [ $? -eq 0 ]
-then
-    echo "The make step ran OK"
-else
-    echo "The make step failed" >&2
-    exit 1
+echo "The make step failed" >&2
+exit 1
 fi
 conda list
+cd..
