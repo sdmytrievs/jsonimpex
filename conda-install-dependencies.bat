@@ -20,7 +20,7 @@ git clone  --recurse-submodules https://bitbucket.org/gems4/jsonarango.git
 cd jsonarango
 
 echo "Configuring..."
-cmake -G"Visual Studio 16 2019" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH="%CONDA_PREFIX%\Library" -DBUILD_EXAMPLES=OFF  -DBULID_LOCAL_TESTS=OFF -DBULID_REMOTE_TESTS=OFF .. -A x64 -S . -B build
+cmake -G"Visual Studio 16 2019" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH="%CONDA_PREFIX%\Library" -DBUILD_EXAMPLES=OFF  -DBULID_LOCAL_TESTS=OFF -DBULID_REMOTE_TESTS=OFF  .. -A x64 -S . -B build
 echo "Building..."
 cmake --build build --target install
 
