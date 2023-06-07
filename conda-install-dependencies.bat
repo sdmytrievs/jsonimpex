@@ -24,7 +24,7 @@ cmake -G"Visual Studio 16 2019" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFI
 echo "Building..."
 cmake --build build --target install
 
-cd ..\..
+cd ..
 
 echo
 echo ******                    ******
@@ -40,7 +40,6 @@ echo "Configuring..."
 cmake -G"Visual Studio 16 2019" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH="%CONDA_PREFIX%\Library" -DBuildExamples=OFF  -DBuildTests=OFF .. -A x64 -S . -B build
 echo "Building..."
 cmake --build build --target install
-
 
 cd ..\..
 
