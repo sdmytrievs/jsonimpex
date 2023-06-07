@@ -31,7 +31,10 @@ if(JSONIMPEX_USE_THRIFT MATCHES ON)
       ${CMAKE_CURRENT_BINARY_DIR}/gen-cpp/DBServer.h
   )
 
-  add_library( gencpp STATIC ${gencpp_SOURCES} )
+  add_library(gencpp STATIC ${gencpp_SOURCES})
+  target_link_libraries(gencpp PRIVATE thrift)
+  install( TARGETS gencpp
+       EXPORT jsonimpex17Targets DESTINATION "lib" COMPONENT libraries)
 
   # Create the shared library using the collected source files
   #add_library(JSONIMPEX17_OBJECTS OBJECT ${HEADER_FILES_TOP} ${HEADER_FILES} ${SOURCE_FILES} )
