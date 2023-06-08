@@ -31,53 +31,56 @@ if(JSONIMPEX_USE_THRIFT MATCHES ON)
       ${CMAKE_CURRENT_BINARY_DIR}/gen-cpp/DBServer.h
   )
 
-  add_library( gencpp STATIC ${gencpp_SOURCES} )
+  add_library(gencpp STATIC ${gencpp_SOURCES})
+  target_link_libraries(gencpp PRIVATE thrift)
+  install( TARGETS gencpp
+       EXPORT jsonimpex17Targets DESTINATION "lib" COMPONENT libraries)
 
   # Create the shared library using the collected source files
-  add_library(JSONIMPEX17_OBJECTS OBJECT ${HEADER_FILES_TOP} ${HEADER_FILES} ${SOURCE_FILES} )
-  add_dependencies(JSONIMPEX17_OBJECTS gencpp)
+  #add_library(JSONIMPEX17_OBJECTS OBJECT ${HEADER_FILES_TOP} ${HEADER_FILES} ${SOURCE_FILES} )
+  #add_dependencies(JSONIMPEX17_OBJECTS gencpp)
 
-  # Check if a shared library is to be built
-  if( BUILD_IMPEX_SHARED_LIBS )
-      add_library(JSONIMPEX17_SHARED SHARED $<TARGET_OBJECTS:JSONIMPEX17_OBJECTS>)
+# Check if a shared library is to be built
+if(BUILD_IMPEX_SHARED_LIBS)
+  # Enable automatic creation of a module definition (.def) file for a SHARED library on Windows.
+  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
 
-      if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
-         target_link_libraries(JSONIMPEX17_SHARED
-                PUBLIC gencpp
-                PUBLIC jsonio17-static
-                PUBLIC jsonarango-static
-                PRIVATE velocypack
-                PRIVATE libcurl
-                PRIVATE thriftmd
-                PRIVATE lua
-                PRIVATE yaml-cpp
-                PRIVATE pugixml )
-     else()
-        target_link_libraries( JSONIMPEX17_SHARED
-               PUBLIC gencpp
-               PUBLIC stdc++fs
-               PUBLIC jsonio17
-               PUBLIC jsonarango
-               PUBLIC velocypack
-               PUBLIC curl
-               PRIVATE thrift
-               PRIVATE lua
-               PRIVATE yaml-cpp
-               PRIVATE pugixml
-               PUBLIC pthread )
-     endif()
+  add_library(jsonimpex17 SHARED ${HEADER_FILES_TOP} ${HEADER_FILES} ${SOURCE_FILES})
+  add_library(jsonimpex17::jsonimpex17 ALIAS jsonimpex17)
+  target_link_libraries(jsonimpex17
+                        PUBLIC jsonio17::jsonio17
+                        PRIVATE gencpp
+                        PRIVATE lua
+                        PRIVATE yaml-cpp
+                        PRIVATE pugixml )
 
-    set_target_properties(JSONIMPEX17_SHARED PROPERTIES OUTPUT_NAME jsonimpex17)
-    install(TARGETS JSONIMPEX17_SHARED DESTINATION lib)
+  install( TARGETS jsonimpex17
+       EXPORT jsonimpex17Targets DESTINATION "lib" COMPONENT libraries)
+
+  # Install debug symbols
+  if(MSVC)
+     install(
+           FILES $<TARGET_PDB_FILE:jsonimpex17>
+           DESTINATION ${CMAKE_INSTALL_BINDIR}
+           COMPONENT libraries
+           OPTIONAL)
   endif()
+endif()
 
-  # Check if a static library is to be built
-  if( BUILD_IMPEX_STATIC_LIBS )
-      add_library(JSONIMPEX17_STATIC STATIC $<TARGET_OBJECTS:JSONIMPEX17_OBJECTS>)
-      target_link_libraries(JSONIMPEX17_STATIC gencpp )
-      set_target_properties(JSONIMPEX17_STATIC PROPERTIES OUTPUT_NAME jsonimpex17-static)
-      install(TARGETS JSONIMPEX17_STATIC DESTINATION lib)
-   endif()
+# Check if a static library is to be built
+if(BUILD_IMPEX_STATIC_LIBS)
+  add_library(jsonimpex17-static STATIC ${HEADER_FILES_TOP} ${HEADER_FILES} ${SOURCE_FILES})
+  add_library(jsonimpex17::jsonimpex17-static ALIAS jsonimpex17-static)
+  target_link_libraries(jsonimpex17-static
+                        PUBLIC jsonarango::jsonarango-static
+                        PRIVATE gencpp
+                        PRIVATE lua
+                        PRIVATE yaml-cpp
+                        PRIVATE pugixml)
+
+  install( TARGETS jsonimpex17-static
+          EXPORT jsonimpex17Targets DESTINATION "lib" COMPONENT libraries)
+endif()
 
    add_custom_command( OUTPUT  gen-cpp/impex_types.h gen-cpp/impex_types.cpp
                     PRE_BUILD
@@ -107,44 +110,47 @@ else()  # without thrift make
   file(GLOB_RECURSE SOURCE_FILES  *.cpp )
 
   # Create the shared library using the collected source files
-  add_library(JSONIMPEX17_OBJECTS OBJECT ${HEADER_FILES_TOP} ${HEADER_FILES} ${SOURCE_FILES} )
+  #add_library(JSONIMPEX17_OBJECTS OBJECT ${HEADER_FILES_TOP} ${HEADER_FILES} ${SOURCE_FILES} )
 
   # Check if a shared library is to be built
-  if( BUILD_IMPEX_SHARED_LIBS )
-      add_library(JSONIMPEX17_SHARED SHARED $<TARGET_OBJECTS:JSONIMPEX17_OBJECTS>)
+  if(BUILD_IMPEX_SHARED_LIBS)
+    # Enable automatic creation of a module definition (.def) file for a SHARED library on Windows.
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
 
-      if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
-        target_link_libraries(JSONIMPEX17_SHARED
-            PUBLIC jsonio17-static
-            PUBLIC jsonarango-static
-            PRIVATE velocypack
-            PRIVATE libcurl
-            PRIVATE lua
-            PRIVATE yaml-cpp
-            PRIVATE pugixml )
-     else()
-       target_link_libraries( JSONIMPEX17_SHARED
-           PUBLIC stdc++fs
-           PUBLIC jsonio17
-           PUBLIC jsonarango
-           PUBLIC velocypack
-           PUBLIC curl
-           PRIVATE lua
-           PRIVATE yaml-cpp
-           PRIVATE pugixml
-           PUBLIC pthread )
-     endif()
+    add_library(jsonimpex17 SHARED ${HEADER_FILES_TOP} ${HEADER_FILES} ${SOURCE_FILES})
+    add_library(jsonimpex17::jsonimpex17 ALIAS jsonimpex17)
+    target_link_libraries(jsonimpex17
+                          PUBLIC jsonio17::jsonio17
+                          PRIVATE lua
+                          PRIVATE yaml-cpp
+                          PRIVATE pugixml )
 
-     set_target_properties(JSONIMPEX17_SHARED PROPERTIES OUTPUT_NAME jsonimpex17)
-     install(TARGETS JSONIMPEX17_SHARED DESTINATION lib)
-   endif()
+    install( TARGETS jsonimpex17
+         EXPORT jsonimpex17Targets DESTINATION "lib" COMPONENT libraries)
 
-   # Check if a static library is to be built
-   if( BUILD_IMPEX_STATIC_LIBS )
-     add_library(JSONIMPEX17_STATIC STATIC $<TARGET_OBJECTS:JSONIMPEX17_OBJECTS>)
-     set_target_properties(JSONIMPEX17_STATIC PROPERTIES OUTPUT_NAME jsonimpex17-static)
-     install(TARGETS JSONIMPEX17_STATIC DESTINATION lib)
-   endif()
+    # Install debug symbols
+    if(MSVC)
+       install(
+             FILES $<TARGET_PDB_FILE:jsonimpex17>
+             DESTINATION ${CMAKE_INSTALL_BINDIR}
+             COMPONENT libraries
+             OPTIONAL)
+    endif()
+  endif()
+
+  # Check if a static library is to be built
+  if(BUILD_IMPEX_STATIC_LIBS)
+    add_library(jsonimpex17-static STATIC ${HEADER_FILES_TOP} ${HEADER_FILES} ${SOURCE_FILES})
+    add_library(jsonimpex17::jsonimpex17-static ALIAS jsonimpex17-static)
+    target_link_libraries(jsonimpex17-static
+                          PUBLIC jsonarango::jsonarango-static
+                          PRIVATE lua
+                          PRIVATE yaml-cpp
+                          PRIVATE pugixml)
+
+    install( TARGETS jsonimpex17-static
+            EXPORT jsonimpex17Targets DESTINATION "lib" COMPONENT libraries)
+  endif()
 
 endif()
 

@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include "spdlog/spdlog.h"
+#include <spdlog/spdlog.h>
 #ifdef __APPLE__
 #include <lua5.4/lua.hpp>
 #else

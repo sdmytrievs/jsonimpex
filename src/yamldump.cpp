@@ -3,9 +3,8 @@
 #include <cassert>
 #include <stack>
 #include <memory>
-#include "spdlog/spdlog.h"
-#include "yaml-cpp/yaml.h"
-#include "yaml-cpp/eventhandler.h"
+#include <yaml-cpp/yaml.h>
+#include <yaml-cpp/eventhandler.h>
 
 #include "jsonio17/jsonfree.h"
 #include "jsonio17/jsonschema.h"
