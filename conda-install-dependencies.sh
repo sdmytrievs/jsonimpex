@@ -8,7 +8,7 @@ fi
 
 # Uncomment what is necessary to reinstall by force 
 # rm -f ${CONDA_PREFIX}/lib/libjsonarango.$EXTN
-# rm -f ${CONDA_PREFIX}/lib/libjsonio17.a
+# rm -f ${CONDA_PREFIX}/lib/libjsonio17.$EXTN
 
 BRANCH_JSON=master
 
@@ -33,7 +33,7 @@ test -f ${CONDA_PREFIX}/lib/libjsonarango.$EXTN || {
 }
 
 # if no JSONIO installed in ${CONDA_PREFIX}/lib/libjsonio17.a (${CONDA_PREFIX}/include/jsonio17)
-test -f ${CONDA_PREFIX}/lib/libjsonio17.a || {
+test -f ${CONDA_PREFIX}/lib/libjsonio17.$EXTN || {
 
 	# Building jsonio library
 	mkdir -p ~/code && \

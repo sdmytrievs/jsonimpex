@@ -3,7 +3,7 @@ CONFIG += thread console c++2a
 CONFIG -= app_bundle
 CONFIG -= qt
 
-DEFINES += USE_THRIFT
+#DEFINES += USE_THRIFT
 
 !win32 {
   DEFINES += __unix
