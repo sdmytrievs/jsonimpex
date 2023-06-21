@@ -16,7 +16,7 @@ void ImpexFormatFile::initDefaultFormats()
 }
 
 ImpexFormatFile::ImpexFormatFile(ImpexFormatFile::ImpexMode mode_of_use, const std::string &impex_format_name, const JsonBase &object):
-    impex_format( create_format_data( mode_of_use, impex_format_name, object ))
+    impex_format(create_format_data( mode_of_use, impex_format_name, object ))
 { }
 
 

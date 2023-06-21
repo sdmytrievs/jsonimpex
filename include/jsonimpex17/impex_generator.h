@@ -1,0 +1,76 @@
+#pragma once
+
+#include <memory>
+#include "jsonimpex17/thrift_impex.h"
+
+
+namespace jsonio17 {
+
+
+/// \class FormatImpexGenerator - class to work with Foreign Import/Export File Format
+class FormatImpexGenerator
+{
+
+public:
+
+    explicit FormatImpexGenerator(ImpexFormatFile::ImpexMode mode):
+        use_mode(mode)
+    {}
+    virtual ~FormatImpexGenerator()
+    {}
+
+    void link_to_database(std::shared_ptr<jsonio17::DBVertexDocument> document)
+    {
+       dbdocument = document;
+    }
+
+    void link_to_resourse_database(std::shared_ptr<jsonio17::DBVertexDocument> document)
+    {
+       dbimpex = document;
+    }
+
+    void set_impex_rules(std::shared_ptr<jsonio17::ImpexFormatFile> configuration)
+    {
+       impex_configuration = configuration;
+    }
+    void set_impex_from_database(const std::string &format_key, const std::string &impex_format_name)
+    {
+        impex_configuration = read_impex_from_database(format_key, impex_format_name);
+    }
+    void set_impex_from_file(const std::string &format_file, const std::string &impex_format_name)
+    {
+        impex_configuration = read_impex_from_file(format_file, impex_format_name);
+    }
+
+    void file_import(const std::string &foreign_format_file, const std::string &schema_format_file);
+    void file_export(const std::string &foreign_format_file, const std::string &schema_format_file);
+    void database_import(const std::string &foreign_format_file, bool overwrite);
+    void database_update(const std::string &foreign_format_file);
+    void database_export(const std::string &foreign_format_file, const std::vector<std::string> &keys_document);
+
+private:
+
+    /// Type of mode: import or export
+    ImpexFormatFile::ImpexMode use_mode = ImpexFormatFile::modeImport;
+    /// The rules of generation
+    std::shared_ptr<jsonio17::ImpexFormatFile> impex_configuration;
+
+    /// Current schema name
+    std::string document_schema_name;
+    /// Current link to Arango Database
+    std::shared_ptr<jsonio17::DBVertexDocument> dbdocument;
+
+    /// Current link to impex Database
+    std::shared_ptr<jsonio17::DBSchemaDocument> dbimpex;
+
+
+    void check_dbimpex_connect();
+    void check_db_connect();
+    void check_impex_set();
+
+    std::shared_ptr<jsonio17::ImpexFormatFile> read_impex_from_file(const std::string &format_file, const std::string &impex_format_name);
+    std::shared_ptr<jsonio17::ImpexFormatFile> read_impex_from_database(const std::string &format_key, const std::string &impex_format_name);
+};
+
+} // namespace jsonio17
+

@@ -5,6 +5,7 @@ HEADERS += \
     $$JSONIMPEX17_HEADERS_DIR/jsonimpex17/yamldump.h \
     $$JSONIMPEX17_HEADERS_DIR/jsonimpex17/yaml_xml2file.h \
     $$JSONIMPEX17_HEADERS_DIR/jsonimpex17/thrift_impex.h \
+    $$JSONIMPEX17_HEADERS_DIR/jsonimpex17/impex_generator.h \
     $$JSONIMPEX17_DIR/TJSONSerializer.h \
     $$JSONIMPEX17_DIR/thrift_ie_base.h \
     $$JSONIMPEX17_DIR/thrift_ie_json.h \
@@ -22,7 +23,8 @@ SOURCES += \
     $$JSONIMPEX17_DIR/thrift_ie_json.cpp \
     $$JSONIMPEX17_DIR/thrift_ie_keyvalue.cpp \
     $$JSONIMPEX17_DIR/thrift_ie_table.cpp \
-    $$JSONIMPEX17_DIR/thrift_impex.cpp
+    $$JSONIMPEX17_DIR/thrift_impex.cpp \
+    $$JSONIMPEX17_DIR/impex_generator.cpp
 
 
 !contains(DEFINES, USE_THRIFT) {
