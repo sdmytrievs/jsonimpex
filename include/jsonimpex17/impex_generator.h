@@ -13,18 +13,18 @@ class FormatImpexGenerator
 
 public:
 
-    explicit FormatImpexGenerator(ImpexFormatFile::ImpexMode mode):
-        use_mode(mode)
+    explicit FormatImpexGenerator(ImpexFormatFile::ImpexMode mode, const std::string& collection_name=""):
+        use_mode(mode), document_collection_name(collection_name)
     {}
     virtual ~FormatImpexGenerator()
     {}
 
-    void link_to_database(std::shared_ptr<jsonio17::DBVertexDocument> document)
+    void link_to_database(std::shared_ptr<jsonio17::DBSchemaDocument> document)
     {
        dbdocument = document;
     }
 
-    void link_to_resourse_database(std::shared_ptr<jsonio17::DBVertexDocument> document)
+    void link_to_resourse_database(std::shared_ptr<jsonio17::DBSchemaDocument> document)
     {
        dbimpex = document;
     }
@@ -56,13 +56,14 @@ private:
     std::shared_ptr<jsonio17::ImpexFormatFile> impex_configuration;
 
     /// Current schema name
-    std::string document_schema_name;
+    std::string document_collection_name;
+    /// Try connect to datatbase if dbdocument undefined
+    std::shared_ptr<jsonio17::DataBase> work_database;
     /// Current link to Arango Database
-    std::shared_ptr<jsonio17::DBVertexDocument> dbdocument;
+    std::shared_ptr<jsonio17::DBSchemaDocument> dbdocument;
 
     /// Current link to impex Database
     std::shared_ptr<jsonio17::DBSchemaDocument> dbimpex;
-
 
     void check_dbimpex_connect();
     void check_db_connect();

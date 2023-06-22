@@ -1,0 +1,208 @@
+
+
+#include <iostream>
+#include <fstream>
+#include <time.h>
+#include <math.h>
+#include <string>
+#include <iomanip>
+#include <memory>
+#include "jsonio17/io_settings.h"
+#include "jsonimpex17/impex_generator.h"
+
+struct ImpexData
+{
+    /// Type of mode: import, update or export
+    jsonio17::ImpexFormatFile::ImpexMode use_mode = jsonio17::ImpexFormatFile::modeImport;
+
+    /// Path to impex format file
+    std::string impex_format_file;
+    /// Impex format key
+    std::string impex_format_key;
+    /// Impex format type
+    std::string impex_format_type;
+
+    /// Path to other format file
+    std::string foreign_format_file;
+
+    /// Internal schema format file (by default save changes to database)
+    std::string schema_format_file;
+    /// Internal schema format collection
+    std::string schema_collection;
+    /// Overwrite existing records
+    bool overwrite = true;
+
+
+};
+
+void show_usage( const std::string &name );
+int extract_args( int argc, char* argv[], ImpexData& export_data );
+
+
+//The simplest case: data exchange using disk files only
+int main( int argc, char* argv[] )
+{
+    jsonio17::JsonioSettings::settingsFileName = "jsonimpex17-config.json";
+
+    try{
+        ImpexData export_data;
+
+        if( extract_args( argc, argv, export_data ))
+            return 1;
+
+        jsonio17::FormatImpexGenerator worker(export_data.use_mode, export_data.schema_collection);
+
+        if(!export_data.impex_format_file.empty()) {
+            worker.set_impex_from_file(export_data.impex_format_file, export_data.impex_format_type);
+        }
+        // to implement need connect to resource collection
+        //else if(!export_data.impex_format_key.empty()) {
+        //    worker.set_impex_from_database(export_data.impex_format_key, export_data.impex_format_type);
+        //}
+        else {
+            std::cerr << "undefined impex format" << std::endl;
+        }
+
+        switch(export_data.use_mode){
+        case jsonio17::ImpexFormatFile::modeImport:
+            if(!export_data.schema_format_file.empty()) {
+               worker.file_import(export_data.foreign_format_file, export_data.schema_format_file);
+            }
+            else {
+               worker.database_import(export_data.foreign_format_file, export_data.overwrite);
+            }
+            break;
+        case jsonio17::ImpexFormatFile::modeExport:
+            if(!export_data.schema_format_file.empty()) {
+               worker.file_export(export_data.foreign_format_file, export_data.schema_format_file);
+            }
+            else {
+                // need select keys or all
+                worker.database_export(export_data.foreign_format_file, {});
+            }
+            break;
+        case jsonio17::ImpexFormatFile::modeUpdate:
+            worker.database_update(export_data.foreign_format_file);
+            break;
+        }
+        return 0;
+    }
+    catch(jsonio17::jsonio_exception& e)
+    {
+        std::cout  << e.what() <<  std::endl;
+    }
+    catch(std::exception& e)
+    {
+        std::cout  << "std::exception: " << e.what() << std::endl;
+    }
+    catch(...)
+    {
+        std::cout  << "unknown exception" << std::endl;
+    }
+    return -1;
+}
+
+void show_usage( const std::string &name )
+{
+    std::cout << "Usage: " << name << " [ option(s) ]  --config-file PATH --foreign-file PATH "
+              << "\nImport/export tool for thermodynamic data\n"
+              << "Options:\n"
+              << "\t-h,\t--help\t\tshow this help message\n\n"
+
+              << "\t-i,\t--import        \timport thermodynamic data from the foreign format file (default) \n"
+              << "\t-e,\t--export        \texport thermodynamic data to the foreign format file \n"
+              << "\t-u,\t--update        \tupdate thermodynamic data from another format file \n\n"
+
+              << "\t-c,\t--config-file PATH \timpex configuration file \n"
+              // to be implement connections to database
+              //<< "\t-k,\t--config-key  KEY  \timpex configuration record id\n"
+              << "\t-t,\t--format-type NAME  \timpex format (FormatStructDataFile, FormatKeyValueFile,FormatTableFile )\n\n"
+
+              << "\t-o,\t--foreign-file PATH  \tthe foreign format file \n\n"
+              << "\t-sf,\t--schema-file  PATH  \t\tinternal format  file (by default save to the database)\n"
+              << "\t-sc,\t--schema-collection  NAME  \tthe database collection name\n\n"
+              << std::endl;
+}
+
+
+int extract_args( int argc, char* argv[], ImpexData& export_data )
+{
+    int i=0;
+    for( i = 1; i < argc; ++i) {
+        std::string arg = argv[i];
+        if ((arg == "-h") || (arg == "--help")) {
+            show_usage( "impex_tool" );
+            return 1;
+        }
+        else if ((arg == "-i") || (arg == "--import")) {
+            export_data.use_mode = jsonio17::ImpexFormatFile::modeImport;
+        }
+        else if ((arg == "-e") || (arg == "--export"))  {
+            export_data.use_mode = jsonio17::ImpexFormatFile::modeExport;
+        }
+        else if ((arg == "-u") || (arg == "--update"))  {
+            export_data.use_mode = jsonio17::ImpexFormatFile::modeUpdate;
+        }
+        else if ((arg == "-c") || (arg == "--config-file")) {
+            if (i + 1 < argc) {
+                export_data.impex_format_file = argv[++i];
+            } else {
+                std::cerr << "--config-file option requires one argument." << std::endl;
+                return 1;
+            }
+        }
+        else if ((arg == "-k") || (arg == "--config-key")) {
+            if (i + 1 < argc) {
+                export_data.impex_format_key = argv[++i];
+            } else {
+                std::cerr << "--config-key option requires one argument." << std::endl;
+                return 1;
+            }
+        }
+        else if ((arg == "-t") || (arg == "--format-type"))  {
+            if (i + 1 < argc) {
+                export_data.impex_format_type = argv[++i];
+            } else {
+                std::cerr << "--format-type option requires one argument." << std::endl;
+                return 1;
+            }
+        }
+        else if ((arg == "-o") || (arg == "--foreign-file")) {
+            if (i + 1 < argc) {
+                export_data.foreign_format_file = argv[++i];
+            } else {
+                std::cerr << "--foreign-file option requires one argument." << std::endl;
+                return 1;
+            }
+        }
+        else if ((arg == "-sf") || (arg == "--schema-file")) {
+            if (i + 1 < argc) {
+                export_data.schema_format_file = argv[++i];
+            } else {
+                std::cerr << "--schema-file option requires one argument." << std::endl;
+                return 1;
+            }
+        }
+        else if ((arg == "-sc") || (arg == "--schema-collection")) {
+            if (i + 1 < argc) {
+                export_data.schema_collection = argv[++i];
+            } else {
+                std::cerr << "--schema-collection option requires one argument." << std::endl;
+                return 1;
+            }
+        }
+    }
+    if( export_data.foreign_format_file.empty() ) {
+        std::cerr << "undefined foreign file path" << std::endl;
+        return 1;
+    }
+    if( export_data.impex_format_file.empty() && export_data.impex_format_key.empty() ) {
+        std::cerr << "undefined impex format" << std::endl;
+        return 1;
+    }
+    if( export_data.schema_format_file.empty() && export_data.schema_collection.empty() ) {
+        std::cerr << "undefined destination" << std::endl;
+        return 1;
+    }
+    return 0;
+}

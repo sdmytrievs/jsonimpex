@@ -1,5 +1,6 @@
 #include "jsonimpex17/impex_generator.h"
 #include "jsonimpex17/yaml_xml2file.h"
+#include "jsonio17/dbschemadoc.h"
 
 namespace jsonio17 {
 
@@ -109,7 +110,7 @@ void FormatImpexGenerator::database_export(const std::string& foreign_format_fil
         impex_configuration->openFile(foreign_format_file);
         for( const auto& doc_key: keys_document ) {
             dbdocument->readDocument( doc_key );
-            impex_configuration->writeBlock( dbdocument->getJson() );
+            impex_configuration->writeBlock(dbdocument->getJson());
         }
         impex_configuration->closeFile();
     }
@@ -125,7 +126,20 @@ void FormatImpexGenerator::check_dbimpex_connect()
 void FormatImpexGenerator::check_db_connect()
 {
     if(!dbdocument) {
-      JSONIO_THROW( "FormatImpexGenerator", 2, " no connection was set to the database" );
+        // try connect from configuration
+        if(!work_database) {
+            // Connect to Arangodb ( load settings from "config.json" file )
+            work_database.reset(new jsonio17::DataBase());
+        }
+        if(document_collection_name.empty()) {
+            document_collection_name = collectionNameFromSchema(impex_configuration->dataName());
+        }
+        if( impex_configuration ) {
+            dbdocument.reset( DBSchemaDocument::newSchemaDocument(*work_database.get(), impex_configuration->dataName(), document_collection_name));
+        }
+        else {
+            JSONIO_THROW( "FormatImpexGenerator", 2, " no connection was set to the database" );
+        }
     }
 }
 

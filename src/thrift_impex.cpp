@@ -63,7 +63,7 @@ bool ImpexFormatFile::nextFromFile( std::string& input_json )
     return impex_format->nextFromFile( input_json );
 }
 
-bool ImpexFormatFile::updateBlock(DBVertexDocument *dbdocument, std::string &json_block_data)
+bool ImpexFormatFile::updateBlock(DBSchemaDocument *dbdocument, std::string &json_block_data)
 {
     return impex_format->updateBlock( dbdocument, json_block_data );
 }

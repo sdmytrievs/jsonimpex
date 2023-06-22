@@ -6,7 +6,8 @@ find_package(Threads REQUIRED)
 
 set(Examples
         yaml_example
-        xml_example )
+        xml_example
+        impex_tool )
 
 foreach (exampleName ${Examples})
   add_executable(${exampleName} ${exampleName}.cpp)

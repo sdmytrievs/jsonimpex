@@ -69,7 +69,8 @@ include($$THRIFT_DIR/thrift.pri)
 include($$JSONIMPEX17_DIR/jsonimpex17.pri)
 
 SOURCES += \
-       main.cpp
+       examples/impex_tool.cpp
+       #main.cpp
 
 DISTFILES += \
     Resources/docs/source.md \
