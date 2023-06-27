@@ -1,0 +1,86 @@
+{
+     "block" :   {
+          "defaults" :   {
+               "add" :   "0.1"
+          },
+          "pairs" :   {
+
+          },
+          "matches" :   {
+               "int" :   {
+                    "field" :   "vint",
+                    "ignore" :   false,
+                    "script" :   "",
+                    "convert" :   {
+
+                    }
+               },
+               "name" :   {
+                    "field" :   "vstring",
+                    "ignore" :   false,
+                    "script" :   "",
+                    "convert" :   {
+
+                    }
+               },
+               "add" :   {
+                    "field" :   "vlist.0",
+                    "ignore" :   false,
+                    "script" :   "",
+                    "convert" :   {
+
+                    }
+               },
+               "double" :   {
+                    "field" :   "vdouble",
+                    "ignore" :   false,
+                    "script" :   "field = field * 10;",
+                    "convert" :   {
+
+                    }
+               }
+          },
+          "script" :   " if( rintable.vlist ~= 0 ) \n  then rintable.add = rintable.vlist[0] end"
+     },
+     "format" :   {
+          "Nhcols" :   4,
+          "Nhrows" :   1,
+          "headers" :   [
+               "name",
+               "int",
+               "add",
+               "double"
+          ],
+          "rowend" :   "\n",
+          "rows_one_block" :   1,
+          "colends" :   "\t",
+          "usequotes" :   false,
+          "usemore" :   true,
+          "comment_regexp" :   "#.*",
+          "row_size" :   0,
+          "colsizes" :   [
+
+          ],
+          "value_regexp" :   [
+
+          ]
+     },
+     "renderer" :   "",
+     "label" :   "SimpleSchemaTest",
+     "separators" :   {
+          "v_sep" :   "",
+          "l_sep" :   "",
+          "r_sep" :   "",
+          "c_head" :   "",
+          "c_end" :   "",
+          "eod" :   "",
+          "encoding" :   "",
+          "str_delim" :   "",
+          "bod" :   ""
+     },
+     "comment" :   "",
+     "fname" :   "",
+     "Nblocks" :   0,
+     "Nlines" :   0,
+     "direction" :   1
+}

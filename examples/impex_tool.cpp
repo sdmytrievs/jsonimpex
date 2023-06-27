@@ -9,6 +9,10 @@
 #include <memory>
 #include "jsonio17/io_settings.h"
 #include "jsonimpex17/impex_generator.h"
+#include "jsonimpex17/yaml_xml2file.h"
+#include "jsonio17/dbschemadoc.h"
+
+static int documentsInCollection =  10;
 
 struct ImpexData
 {
@@ -37,6 +41,11 @@ struct ImpexData
 
 void show_usage( const std::string &name );
 int extract_args( int argc, char* argv[], ImpexData& export_data );
+void make_simple_schema_file();
+
+
+// -e  -c Resources/files/export.SimpleSchemaTest.FormatTableFile.json -sf Resources/files/simple_schema_input.json -o simple_export_table.txt
+// -e  -c Resources/files/export.SimpleSchemaTest.FormatKeyValueFile.json -sf Resources/files/simple_schema_input.json -o simple_export_keyvalue.txt
 
 
 //The simplest case: data exchange using disk files only
@@ -45,6 +54,10 @@ int main( int argc, char* argv[] )
     jsonio17::JsonioSettings::settingsFileName = "jsonimpex17-config.json";
 
     try{
+
+        // make input data
+        //make_simple_schema_file();
+
         ImpexData export_data;
 
         if( extract_args( argc, argv, export_data ))
@@ -100,6 +113,23 @@ int main( int argc, char* argv[] )
         std::cout  << "unknown exception" << std::endl;
     }
     return -1;
+}
+
+void make_simple_schema_file() {
+
+    jsonio17::JsonYamlXMLArrayFile file("simple_schema_input.json");
+    file.Open( jsonio17::TxtFile::WriteOnly );
+    // Insert documents to file
+    for( int ii=0; ii<documentsInCollection; ii++ ) {
+        auto jsSimple = jsonio17::JsonSchema::object("SimpleSchemaTest");
+        jsSimple["vbool"] = static_cast<bool>(ii%2);
+        jsSimple["vint"] = ii;
+        jsSimple["vdouble"] = 10.01*ii;
+        jsSimple["vstring"] = "input-"+std::to_string(ii);
+        jsSimple["vlist"] = std::vector<double>({1.*ii,2.*ii,3.*ii});
+        file.saveNext(jsSimple);
+    }
+    file.Close();
 }
 
 void show_usage( const std::string &name )

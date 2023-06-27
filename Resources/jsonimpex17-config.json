@@ -1,9 +1,9 @@
 {
      "common" :   {
-          "UserHomeDirectoryPath" :   "~/devJSONIO/newJSONIO14/jsonio17",
+          "UserHomeDirectoryPath" :   "",
           "WorkDirectoryPath" :   ".",
-          "ResourcesDirectory" :   "~/Resources",
-          "SchemasDirectory" :   "~/Resources/schemas"
+          "ResourcesDirectory" :   "Resources",
+          "SchemasDirectory" :   "Resources/schemas"
      },
      "arangodb" :   {
           "UseArangoDBInstance" :   "ArangoDBLocal",
@@ -30,6 +30,23 @@
                "DBRootName" :   "_system",
                "DBRootUser" :   "",
                "DBRootPassword" :   ""
+          }
+     },
+     "log" :   {
+          "modules" :   [
+               "jsonarango",
+               "jsonimpex17",
+               "jsonio17"
+          ],
+          "level" :   "off",
+          "file" :   {
+               "path" :   "log.txt",
+               "size" :   10000000,
+               "count" :   10,
+               "modules" :   [
+                    "jsonarango",
+                    "jsonio17"
+               ]
           }
      }
 }

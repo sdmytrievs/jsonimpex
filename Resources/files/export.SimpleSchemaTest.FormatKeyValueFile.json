@@ -1,0 +1,75 @@
+{
+     "block" :   {
+          "defaults" :   {
+               "add" :   "0.1"
+          },
+          "pairs" :   {
+               "list" :   {
+                    "organization" :   "list"
+               }
+          },
+          "matches" :   {
+               "int" :   {
+                    "field" :   "vint",
+                    "ignore" :   false,
+                    "script" :   "",
+                    "convert" :   {
+
+                    }
+               },
+               "head0" :   {
+                    "field" :   "vstring",
+                    "ignore" :   false,
+                    "script" :   "",
+                    "convert" :   {
+
+                    }
+               },
+               "double" :   {
+                    "field" :   "vdouble",
+                    "ignore" :   false,
+                    "script" :   "",
+                    "convert" :   {
+
+                    }
+               },
+               "list" :   {
+                    "field" :   "vlist",
+                    "ignore" :   false,
+                    "script" :   "",
+                    "convert" :   {
+
+                    }
+               }
+          },
+          "script" :   ""
+     },
+     "format" :   {
+          "head_regexp" :   "\n%head0\n",
+          "end_regexp" :   "",
+          "key_regexp" :   "\t-%key\t",
+          "value_regexp" :   "%value",
+          "value_next" :   "\n",
+          "value_token_regexp" :   " ",
+          "comment_regexp" :   "#",
+          "Ndata" :   0
+     },
+     "renderer" :   " ",
+     "label" :   "SimpleSchemaTest",
+     "separators" :   {
+          "v_sep" :   "",
+          "l_sep" :   "",
+          "r_sep" :   "",
+          "c_head" :   "",
+          "c_end" :   "",
+          "eod" :   "",
+          "encoding" :   "",
+          "str_delim" :   "",
+          "bod" :   ""
+     },
+     "comment" :   "",
+     "fname" :   "",
+     "Nblocks" :   0,
+     "Nlines" :   0,
+     "direction" :   1
+}
