@@ -1,0 +1,75 @@
+{
+     "block" :   {
+          "defaults" :   {
+               "vbool" :   true
+          },
+          "pairs" :   {
+               "list" :   {
+                    "organization" :   "list"
+               }
+          },
+          "matches" :   {
+               "int" :   {
+                    "field" :   "vint",
+                    "ignore" :   false,
+                    "script" :   "",
+                    "convert" :   {
+
+                    }
+               },
+               "head0" :   {
+                    "field" :   "vstring",
+                    "ignore" :   false,
+                    "script" :   "",
+                    "convert" :   {
+
+                    }
+               },
+               "double" :   {
+                    "field" :   "vdouble",
+                    "ignore" :   false,
+                    "script" :   "",
+                    "convert" :   {
+
+                    }
+               },
+               "list" :   {
+                    "field" :   "vlist",
+                    "ignore" :   false,
+                    "script" :   "",
+                    "convert" :   {
+
+                    }
+               }
+          },
+          "script" :   ""
+     },
+     "format" :   {
+          "head_regexp" :   "\\s*([^\\s]+)\\s*\\n",
+          "end_regexp" :   "",
+          "key_regexp" :   "\\s*-([a-zA-Z]\\w*)\\s*",
+          "value_regexp" :   "\\s*([^#\\n]*)",
+          "value_next" :   "",
+          "value_token_regexp" :   "\\s+",
+          "comment_regexp" :   "#([^\\n]*)\\n*",
+          "Ndata" :   0
+     },
+     "renderer" :   " ",
+     "label" :   "SimpleSchemaTest",
+     "separators" :   {
+          "v_sep" :   "",
+          "l_sep" :   "",
+          "r_sep" :   "",
+          "c_head" :   "",
+          "c_end" :   "",
+          "eod" :   "",
+          "encoding" :   "",
+          "str_delim" :   "",
+          "bod" :   ""
+     },
+     "comment" :   "",
+     "fname" :   "",
+     "Nblocks" :   0,
+     "Nlines" :   0,
+     "direction" :   0
+}

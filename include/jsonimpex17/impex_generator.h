@@ -48,6 +48,8 @@ public:
     void database_update(const std::string &foreign_format_file);
     void database_export(const std::string &foreign_format_file, const std::vector<std::string> &keys_document);
 
+    void string_import(const std::string &foreign_format_string, std::string &schema_format_string);
+    void string_export(std::string &foreign_format_string, const std::string &schema_format_string);
 private:
 
     /// Type of mode: import or export

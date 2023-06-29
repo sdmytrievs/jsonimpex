@@ -47,6 +47,9 @@ void make_simple_schema_file();
 // -e  -c Resources/files/export.SimpleSchemaTest.FormatTableFile.json -sf Resources/files/simple_schema_input.json -o simple_export_table.txt
 // -e  -c Resources/files/export.SimpleSchemaTest.FormatKeyValueFile.json -sf Resources/files/simple_schema_input.json -o simple_export_keyvalue.txt
 
+// -i  -c Resources/files/import.SimpleSchemaTest.FormatTableFile.json -sf simple_schema_import_table.json -o Resources/files/simple_export_table.txt
+// -i  -c Resources/files/import.SimpleSchemaTest.FormatKeyValueFile.json -sf simple_schema_import_kv.json -o Resources/files/simple_export_keyvalue.txt
+// -i  -c Resources/files/import.SimpleSchemaTest.FormatStructDataFile.json -sf simple_schema_import_yaml.json -o Resources/files/simple_schema_other.yaml
 
 //The simplest case: data exchange using disk files only
 int main( int argc, char* argv[] )

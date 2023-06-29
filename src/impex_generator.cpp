@@ -1,6 +1,8 @@
 #include "jsonimpex17/impex_generator.h"
 #include "jsonimpex17/yaml_xml2file.h"
 #include "jsonio17/dbschemadoc.h"
+#include "jsonio17/jsondump.h"
+#include "lua-run.h"
 
 namespace jsonio17 {
 
@@ -53,6 +55,7 @@ void  FormatImpexGenerator::file_import(const std::string& foreign_format_file, 
     impex_configuration->openFile(foreign_format_file);
     file.Open( jsonio17::TxtFile::WriteOnly );
     while( impex_configuration->readBlock(record_json) ) {
+        impex_logger->debug("Import record: {}", record_json);
         file.saveNext(record_json);
     }
     file.Close();
@@ -72,6 +75,32 @@ void  FormatImpexGenerator::file_export( const std::string& foreign_format_file,
     }
     impex_configuration->closeFile();
     file.Close();
+}
+
+void  FormatImpexGenerator::string_import(const std::string& foreign_format_string, std::string& schema_format_string )
+{
+    check_impex_set();
+    std::string record_json;
+    auto arr_object = jsonio17::JsonFree::array();
+
+    impex_configuration->loadString(foreign_format_string);
+    while( impex_configuration->readBlock(record_json) ) {
+        arr_object[ arr_object.size() ].loads(record_json);
+    }
+    schema_format_string= arr_object.dump(true);
+}
+
+void  FormatImpexGenerator::string_export( std::string& foreign_format_string, const std::string& schema_format_string )
+{
+    check_impex_set();
+    std::string record_json;
+    auto jsFree = json::loads(schema_format_string);
+    impex_configuration->loadString(foreign_format_string);
+
+    for( const auto& object: jsFree ) {
+       impex_configuration->writeBlock(object->dump(true));
+    }
+    foreign_format_string= impex_configuration->getString();
 }
 
 

@@ -1,0 +1,51 @@
+{
+     "block" :   {
+          "defaults" :   {
+               "vbool" :   true
+          },
+          "pairs" :   {
+
+          },
+          "matches" :   {
+               "yint" :   {
+                    "field" :   "vint",
+                    "ignore" :   false,
+                    "script" :   "",
+                    "convert" :   {
+                        }
+               },
+               "ystring" :   {
+                    "field" :   "vstring",
+                    "ignore" :   false,
+                    "script" :   "",
+                    "convert" :   {
+
+                    }
+               },
+               "ylist" :   {
+                    "field" :   "vlist",
+                    "ignore" :   false,
+                    "script" :   "",
+                    "convert" :   {
+
+                    }
+               },
+               "ydouble" :   {
+                    "field" :   "vdouble",
+                    "ignore" :   false,
+                    "script" :   "field = field / 100",
+                    "convert" :   {
+
+                    }
+               }
+          },
+          "script" :   ""
+     },
+     "renderer" :   "yaml",
+     "label" :   "SimpleSchemaTest",
+     "comment" :   "",
+     "fname" :   "",
+     "Nblocks" :   0,
+     "Nlines" :   0,
+     "direction" :   0
+}

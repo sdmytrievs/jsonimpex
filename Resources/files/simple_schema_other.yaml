@@ -1,0 +1,35 @@
+- yint: 0
+  ydouble: 0
+  ystring: yaml-0
+  ylist:
+    - 0
+    - 0
+    - 0
+- yint: 1
+  ydouble: 3
+  ystring: yaml-1
+  ylist:
+    - 11
+    - 22
+    - 33
+- yint: 2
+  ydouble: 6
+  ystring: yaml-2
+  ylist:
+    - 22
+    - 44
+    - 66
+- yint: 3
+  ydouble: 9
+  ystring: yaml-3
+  ylist:
+    - 33
+    - 66
+    - 99
+- yint: 4
+  ydouble: 12
+  ystring: yaml-4
+  ylist:
+    - 44
+    - 88
+    - 132
