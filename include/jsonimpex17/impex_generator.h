@@ -13,16 +13,23 @@ class FormatImpexGenerator
 
 public:
 
-    explicit FormatImpexGenerator(ImpexFormatFile::ImpexMode mode, const std::string& collection_name=""):
-        use_mode(mode), document_collection_name(collection_name)
+    /// @param db_connection arangodb database
+    /// @param overwrite_existing overwrite if the present existing records
+    /// @param formats_from_db read impex format from "resources" database if true, otherwise from file
+    explicit FormatImpexGenerator(std::shared_ptr<jsonio17::DataBase> db_connection,
+                                  bool overwrite_existing=true,
+                                  bool formats_from_db=false):
+        work_database(db_connection),
+        overwrite(overwrite_existing),
+        use_db(formats_from_db)
     {}
     virtual ~FormatImpexGenerator()
     {}
 
-    void link_to_database(std::shared_ptr<jsonio17::DBSchemaDocument> document)
-    {
-       dbdocument = document;
-    }
+    bool getOverwrite() const;
+    void setOverwrite(bool new_overwrite);
+    bool getUsedb() const;
+    void setUsedb(bool new_use_db);
 
     void link_to_resourse_database(std::shared_ptr<jsonio17::DBSchemaDocument> document)
     {
@@ -33,46 +40,52 @@ public:
     {
        impex_configuration = configuration;
     }
-    void set_impex_from_database(const std::string &format_key, const std::string &impex_format_name)
+    void set_impex_from_database(ImpexFormatFile::ImpexMode mode, const std::string &format_key, const std::string &impex_format_name)
     {
-        impex_configuration = read_impex_from_database(format_key, impex_format_name);
+        impex_configuration = read_impex_from_database(mode, format_key, impex_format_name);
     }
-    void set_impex_from_file(const std::string &format_file, const std::string &impex_format_name)
+    void set_impex_from_file(ImpexFormatFile::ImpexMode mode, const std::string &format_file, const std::string &impex_format_name)
     {
-        impex_configuration = read_impex_from_file(format_file, impex_format_name);
+        impex_configuration = read_impex_from_file(mode, format_file, impex_format_name);
     }
 
     void file_import(const std::string &foreign_format_file, const std::string &schema_format_file);
     void file_export(const std::string &foreign_format_file, const std::string &schema_format_file);
-    void database_import(const std::string &foreign_format_file, bool overwrite);
-    void database_update(const std::string &foreign_format_file);
-    void database_export(const std::string &foreign_format_file, const std::vector<std::string> &keys_document);
+    std::vector<std::string> database_import(const std::string &foreign_format_file, DBSchemaDocument* dbdocument);
+    void database_update(const std::string &foreign_format_file, DBSchemaDocument* dbdocument);
+    void database_export(const std::string &foreign_format_file, DBSchemaDocument* dbdocument, const std::vector<std::string> &keys_document);
 
     void string_import(const std::string &foreign_format_string, std::string &schema_format_string);
     void string_export(std::string &foreign_format_string, const std::string &schema_format_string);
-private:
 
-    /// Type of mode: import or export
-    ImpexFormatFile::ImpexMode use_mode = ImpexFormatFile::modeImport;
+    /// Clear and test file to export data
+    void clear_export_file(const std::string &file_name);
+    std::shared_ptr<jsonio17::DBSchemaDocument> documentConnect(const std::string &collection);
+
+protected:
+
     /// The rules of generation
     std::shared_ptr<jsonio17::ImpexFormatFile> impex_configuration;
 
-    /// Current schema name
-    std::string document_collection_name;
-    /// Try connect to datatbase if dbdocument undefined
+    /// Database connection
     std::shared_ptr<jsonio17::DataBase> work_database;
-    /// Current link to Arango Database
-    std::shared_ptr<jsonio17::DBSchemaDocument> dbdocument;
-
-    /// Current link to impex Database
+    /// Link to impex collection in resource database
     std::shared_ptr<jsonio17::DBSchemaDocument> dbimpex;
 
+    /// Overwrite if the present existing records
+    bool overwrite = true;
+    /// Reads impex format from "resources" database if true, otherwise from file
+    bool use_db = false;
+
     void check_dbimpex_connect();
-    void check_db_connect();
     void check_impex_set();
 
-    std::shared_ptr<jsonio17::ImpexFormatFile> read_impex_from_file(const std::string &format_file, const std::string &impex_format_name);
-    std::shared_ptr<jsonio17::ImpexFormatFile> read_impex_from_database(const std::string &format_key, const std::string &impex_format_name);
+    std::shared_ptr<jsonio17::ImpexFormatFile> read_impex_from_file(ImpexFormatFile::ImpexMode mode,
+                                                                    const std::string &format_file,
+                                                                    const std::string &impex_format_name);
+    std::shared_ptr<jsonio17::ImpexFormatFile> read_impex_from_database(ImpexFormatFile::ImpexMode mode,
+                                                                        const std::string &format_key,
+                                                                        const std::string &impex_format_name);
 };
 
 } // namespace jsonio17

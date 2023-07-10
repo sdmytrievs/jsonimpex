@@ -62,22 +62,28 @@ int main( int argc, char* argv[] )
         //make_simple_schema_file();
 
         ImpexData export_data;
+        // ??? To do (1): Check connection from configuration or nullptr
+        std::shared_ptr<jsonio17::DataBase> database(nullptr); // no real connection
 
         if( extract_args( argc, argv, export_data ))
             return 1;
 
-        jsonio17::FormatImpexGenerator worker(export_data.use_mode, export_data.schema_collection);
+        jsonio17::FormatImpexGenerator worker(database, export_data.overwrite);
+        // ??? To do (2): Add connection to resource database
 
         if(!export_data.impex_format_file.empty()) {
-            worker.set_impex_from_file(export_data.impex_format_file, export_data.impex_format_type);
+            worker.set_impex_from_file(export_data.use_mode, export_data.impex_format_file, export_data.impex_format_type);
         }
         // to implement need connect to resource collection
         //else if(!export_data.impex_format_key.empty()) {
-        //    worker.set_impex_from_database(export_data.impex_format_key, export_data.impex_format_type);
+        //    worker.set_impex_from_database(export_data.use_mode, export_data.impex_format_key, export_data.impex_format_type);
         //}
         else {
             std::cerr << "undefined impex format" << std::endl;
         }
+
+        // ??? To do (3): Need check connection to database or nullptr
+        auto dbdocument = worker.documentConnect(export_data.schema_collection);
 
         switch(export_data.use_mode){
         case jsonio17::ImpexFormatFile::modeImport:
@@ -85,7 +91,7 @@ int main( int argc, char* argv[] )
                worker.file_import(export_data.foreign_format_file, export_data.schema_format_file);
             }
             else {
-               worker.database_import(export_data.foreign_format_file, export_data.overwrite);
+               worker.database_import(export_data.foreign_format_file, dbdocument.get());
             }
             break;
         case jsonio17::ImpexFormatFile::modeExport:
@@ -93,12 +99,12 @@ int main( int argc, char* argv[] )
                worker.file_export(export_data.foreign_format_file, export_data.schema_format_file);
             }
             else {
-                // need select keys or all
-                worker.database_export(export_data.foreign_format_file, {});
+                // ??? To do (3): need select keys by query or all
+                worker.database_export(export_data.foreign_format_file, dbdocument.get(), {});
             }
             break;
         case jsonio17::ImpexFormatFile::modeUpdate:
-            worker.database_update(export_data.foreign_format_file);
+            worker.database_update(export_data.foreign_format_file, dbdocument.get());
             break;
         }
         return 0;

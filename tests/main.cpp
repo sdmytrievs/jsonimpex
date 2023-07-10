@@ -1,7 +1,7 @@
 
 #include <gtest/gtest.h>
 
-//#include "tst_jsonimpex.h"
+#include "tst_jsonimpex.h"
 #include "tst_yaml_xml.h"
 
 
