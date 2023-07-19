@@ -44,6 +44,12 @@ int extract_args( int argc, char* argv[], ImpexData& export_data );
 void make_simple_schema_file();
 
 
+/*
+" if( rintable.properties.valences ~= nill ) \n          then rintable.properties.symbol = rintable.properties.symbol..\'(\'..rintable.properties.valences.values[1]..\')\' end;
+if rintable.properties.formula == \'Zz\' then rintable.properties.formula = \'e-\' rintable.properties.symbol = \'E\' end"
+ * */
+// -e  -c Resources/files/phreeqc_el_export.FormatTableFile.json -sf Resources/files/phreeqc.VertexElement.json -o phreeqc_export_table.txt
+
 // -e  -c Resources/files/export.SimpleSchemaTest.FormatTableFile.json -sf Resources/files/simple_schema_input.json -o simple_export_table.txt
 // -e  -c Resources/files/export.SimpleSchemaTest.FormatKeyValueFile.json -sf Resources/files/simple_schema_input.json -o simple_export_keyvalue.txt
 

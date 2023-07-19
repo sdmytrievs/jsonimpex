@@ -427,6 +427,7 @@ bool KeyValueIEFile::read_block_from_file( )
 
 bool KeyValueIEFile::writeBlockToFile( const key_values_table_t& data_to_write )
 {
+    impex_logger->debug("KeyValueIEFile::writeBlockToFile:\n {}", json::dump(data_to_write));
     external_data = data_to_write;
     assemble_groups( external_data  );
     std::vector<std::string> impexValues;

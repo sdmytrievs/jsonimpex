@@ -41,14 +41,14 @@ void FormatImpexGenerator::clear_export_file(const std::string &file_name)
     jsonio17::JSONIO_THROW_IF(!astream.good() , "FormatImpexGenerator", 4, file_name+" fileopen error...");
 }
 
-void FormatImpexGenerator::check_dbimpex_connect()
+void FormatImpexGenerator::check_dbimpex_connect() const
 {
     if(!dbimpex) {
         JSONIO_THROW( "FormatImpexGenerator", 1, " no connection was set to the resource database" );
     }
 }
 
-void FormatImpexGenerator::check_impex_set()
+void FormatImpexGenerator::check_impex_set() const
 {
     if(!impex_configuration) {
         JSONIO_THROW( "FormatImpexGenerator", 3, " undefined impex configuration" );
@@ -57,7 +57,7 @@ void FormatImpexGenerator::check_impex_set()
 
 std::shared_ptr<jsonio17::ImpexFormatFile> FormatImpexGenerator::read_impex_from_file(ImpexFormatFile::ImpexMode mode,
                                                                                       const std::string& format_file,
-                                                                                      const std::string& impex_format_name)
+                                                                                      const std::string& impex_format_name) const
 {
     auto impex_schema = impex_format_name;
     auto  formatdata = jsonio17::JsonFree::object();
@@ -76,7 +76,7 @@ std::shared_ptr<jsonio17::ImpexFormatFile> FormatImpexGenerator::read_impex_from
 
 std::shared_ptr<jsonio17::ImpexFormatFile> FormatImpexGenerator::read_impex_from_database(ImpexFormatFile::ImpexMode mode,
                                                                                           const std::string& format_key,
-                                                                                          const std::string& impex_format_name)
+                                                                                          const std::string& impex_format_name) const
 {
     check_dbimpex_connect();
     auto impex_schema = impex_format_name;

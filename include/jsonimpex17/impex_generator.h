@@ -77,15 +77,15 @@ protected:
     /// Reads impex format from "resources" database if true, otherwise from file
     bool use_db = false;
 
-    void check_dbimpex_connect();
-    void check_impex_set();
+    void check_dbimpex_connect() const;
+    void check_impex_set() const;
 
     std::shared_ptr<jsonio17::ImpexFormatFile> read_impex_from_file(ImpexFormatFile::ImpexMode mode,
                                                                     const std::string &format_file,
-                                                                    const std::string &impex_format_name);
+                                                                    const std::string &impex_format_name) const;
     std::shared_ptr<jsonio17::ImpexFormatFile> read_impex_from_database(ImpexFormatFile::ImpexMode mode,
                                                                         const std::string &format_key,
-                                                                        const std::string &impex_format_name);
+                                                                        const std::string &impex_format_name) const ;
 };
 
 } // namespace jsonio17

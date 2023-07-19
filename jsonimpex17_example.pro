@@ -34,8 +34,8 @@ win32 {
 }
 
 # Define the directory where jsonimpex17 source code is located
-JSONIMPEX17_DIR =  $$PWD/src
-JSONIMPEX17_HEADERS_DIR =  $$PWD/include
+JSONIMPEX17_DIR =  ./src
+JSONIMPEX17_HEADERS_DIR =  ./include
 DEPENDPATH   += $$JSONIMPEX17_DIR
 DEPENDPATH   += $$JSONIMPEX17_HEADERS_DIR
 INCLUDEPATH   += $$JSONIMPEX17_DIR
@@ -57,7 +57,7 @@ OBJECTS_DIR   = obj
 
 contains(DEFINES, USE_THRIFT) {
 
-THRIFT_DIR    = $$PWD/thrift
+THRIFT_DIR    = ./thrift
 THRIFT_HEADERS_DIR =  $$THRIFT_DIR/gen-cpp
 DEPENDPATH   += $$THRIFT_HEADERS_DIR
 INCLUDEPATH   += $$THRIFT_HEADERS_DIR
