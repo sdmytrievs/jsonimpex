@@ -60,10 +60,11 @@ int main( int argc, char* argv[] )
 
     try{
 
-        // make input data
-        //make_simple_schema_file();
+        // build input data
+        // make_simple_schema_file();
 
         ImpexData export_data;
+
         // ??? To do (1): Check connection from configuration or nullptr
         std::shared_ptr<jsonio17::DataBase> database(nullptr); // no real connection
 
@@ -71,42 +72,35 @@ int main( int argc, char* argv[] )
             return 1;
 
         jsonio17::FormatImpexGenerator worker(database, export_data.overwrite);
+
         // ??? To do (2): Add connection to resource database
-
-        if(!export_data.impex_format_file.empty()) {
-            worker.set_impex_from_file(export_data.use_mode, export_data.impex_format_file, export_data.impex_format_type);
-        }
-        // to implement need connect to resource collection
-        //else if(!export_data.impex_format_key.empty()) {
-        //    worker.set_impex_from_database(export_data.use_mode, export_data.impex_format_key, export_data.impex_format_type);
-        //}
-        else {
-            std::cerr << "undefined impex format" << std::endl;
-        }
-
-        // ??? To do (3): Need check connection to database or nullptr
-        auto dbdocument = worker.documentConnect(export_data.schema_collection);
 
         switch(export_data.use_mode){
         case jsonio17::ImpexFormatFile::modeImport:
             if(!export_data.schema_format_file.empty()) {
-               worker.file_import(export_data.foreign_format_file, export_data.schema_format_file);
+               worker.importFileToFile(export_data.impex_format_type, export_data.impex_format_file,
+                                       export_data.foreign_format_file,export_data.schema_format_file);
             }
             else {
-               worker.database_import(export_data.foreign_format_file, dbdocument.get());
+               worker.importFileToDatabase(export_data.impex_format_type, export_data.impex_format_file,
+                                           export_data.foreign_format_file, export_data.schema_collection);
             }
             break;
         case jsonio17::ImpexFormatFile::modeExport:
             if(!export_data.schema_format_file.empty()) {
-               worker.file_export(export_data.foreign_format_file, export_data.schema_format_file);
+               worker.exportFileFromFile(export_data.impex_format_type, export_data.impex_format_file,
+                                         export_data.foreign_format_file,export_data.schema_format_file);
             }
             else {
                 // ??? To do (3): need select keys by query or all
-                worker.database_export(export_data.foreign_format_file, dbdocument.get(), {});
+                std::vector<std::string> keys_to_unload = {};
+                worker.exportFileFromDatabase( keys_to_unload,export_data.impex_format_type, export_data.impex_format_file,
+                                               export_data.foreign_format_file, export_data.schema_collection);
             }
             break;
         case jsonio17::ImpexFormatFile::modeUpdate:
-            worker.database_update(export_data.foreign_format_file, dbdocument.get());
+            worker.updateFileToDatabase(export_data.impex_format_type, export_data.impex_format_file,
+                                        export_data.foreign_format_file, export_data.schema_collection);
             break;
         }
         return 0;
