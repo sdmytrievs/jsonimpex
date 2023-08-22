@@ -68,13 +68,10 @@ int main( int argc, char* argv[] )
         // ??? To do (1): Check connection from configuration or nullptr
         std::shared_ptr<jsonio17::DataBase> database(nullptr); // no real connection
 
-        if( extract_args( argc, argv, export_data ))
+        if(extract_args( argc, argv, export_data ))
             return 1;
 
         jsonio17::FormatImpexGenerator worker(database, export_data.overwrite);
-
-        // ??? To do (2): Add connection to resource database
-
         switch(export_data.use_mode){
         case jsonio17::ImpexFormatFile::modeImport:
             if(!export_data.schema_format_file.empty()) {

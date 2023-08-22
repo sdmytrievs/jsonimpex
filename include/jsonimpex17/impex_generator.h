@@ -3,7 +3,6 @@
 #include <memory>
 #include "jsonimpex17/thrift_impex.h"
 
-
 namespace jsonio17 {
 
 /// Store import result function
@@ -11,7 +10,8 @@ using StoringImportResults_f = std::function< void(const std::string& json_data,
 /// Load export data function
 using loadingExportData_f = std::function< bool(std::string& json_data) >;
 
-jsonio17::DBSchemaDocument* newDBImpexClient(const DataBase& dbconnect, const jsonio17::DBQueryBase& query= DBQueryBase::emptyQuery());
+jsonio17::DBSchemaDocument* newDBImpexClient(const DataBase& dbconnect,
+                                             const jsonio17::DBQueryBase& query= DBQueryBase::emptyQuery());
 
 /// \class FormatImpexGenerator - class to work with Foreign Import/Export File Format
 class FormatImpexGenerator
@@ -32,7 +32,7 @@ public:
     /// The constructor
     /// @param db_connection arangodb database
     /// @param overwrite_existing overwrite if the present existing records
-    /// @param formats_from_db read impex format from "resources" database, from file, or string
+    /// @param formats_from read impex format from "resources" database, from file, or string
     explicit FormatImpexGenerator(std::shared_ptr<jsonio17::DataBase> db_connection,
                                   bool overwrite_existing=true,
                                   FormatSourceTypes formats_from=File):
@@ -48,7 +48,7 @@ public:
     /// @param user_passwd the user password
     /// @param db_name database name
     /// @param overwrite_existing overwrite if the present existing records
-    /// @param formats_from_db read impex format from "resources" database, from file, or string
+    /// @param formats_from read impex format from "resources" database, from file, or string
     explicit FormatImpexGenerator(const std::string& db_url, const std::string& db_user,
                                   const std::string& user_passwd, const std::string& db_name,
                                   bool overwrite_existing=true, FormatSourceTypes formats_from=File);
@@ -57,9 +57,8 @@ public:
     /// Set db connection data from configuration file
     /// @param db_connection arangodb database
     /// @param overwrite_existing overwrite if the present existing records
-    /// @param formats_from_db read impex format from "resources" database, from file, or string
+    /// @param formats_from read impex format from "resources" database, from file, or string
     explicit FormatImpexGenerator(bool overwrite_existing=true, FormatSourceTypes formats_from=File);
-
 
     virtual ~FormatImpexGenerator()
     {}
@@ -72,6 +71,7 @@ public:
     {
         overwrite = new_overwrite;
     }
+
     FormatSourceTypes getFormatSource() const
     {
         return format_source;
@@ -125,7 +125,6 @@ public:
     std::vector<std::string> importFileToDatabase(
             const std::string &format_type, const std::string &format_script,
             const std::string &foreign_format_file, const std::string &collection_name);
-
 
     /// Export to other format files
     /// @param format_type export schema format name ("FormatStructDataFile", "FormatKeyValueFile", "FormatTableFile")
@@ -188,7 +187,6 @@ public:
     void updateFileToDatabase(const std::string &format_type, const std::string &format_script,
                               const std::string &foreign_format_file, const std::string& collection_name);
 
-
     /// Import from other format string
     /// @param format_type import schema format name ("FormatStructDataFile", "FormatKeyValueFile", "FormatTableFile")
     /// @param format_script path to the import rules file or database key with rules
@@ -225,7 +223,8 @@ public:
                                    const std::string &format_type, const std::string &format_script,
                                    std::string &foreign_format_string, DBSchemaDocument* dbdocument);
 
-
+    /// Link to external resource database to read impex rules script
+    /// (by default settings to be got from work_database)
     void linkToResourseDatabase(std::shared_ptr<jsonio17::DataBase> resourse_db)
     {
         resourse_database = resourse_db;
@@ -244,7 +243,7 @@ protected:
     /// Overwrite if the present existing records
     bool overwrite = true;
 
-    /// Reads impex format from "resources" database if true, otherwise from file
+    /// Reads impex scripts from "resources" database, from file, or string
     FormatSourceTypes format_source;
 
     std::shared_ptr<jsonio17::ImpexFormatFile> read_impex_from_file(ImpexFormatFile::ImpexMode mode,
@@ -258,7 +257,7 @@ protected:
                                                                       const std::string &impex_format_name) const;
     std::shared_ptr<jsonio17::ImpexFormatFile> read_impex_format( ImpexFormatFile::ImpexMode mode,
                                                                   const std::string &impex_format_name,
-                                                                  const std::string &impex_format_file);
+                                                                  const std::string &impex_format_source);
     // Clear and test file to export data
     void clear_export_file(const std::string &file_name);
 

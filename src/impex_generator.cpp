@@ -1,12 +1,11 @@
 #include <fstream>
-
-#include "jsonimpex17/impex_generator.h"
-#include "jsonimpex17/yaml_xml2file.h"
-#include "jsonio17/dbschemadoc.h"
-#include "jsonio17/jsondump.h"
-#include "lua-run.h"
 #include "jsonarango/arangocollection.h"
 #include "jsonio17/dbdriverarango.h"
+#include "jsonio17/dbschemadoc.h"
+#include "jsonio17/jsondump.h"
+#include "jsonimpex17/impex_generator.h"
+#include "jsonimpex17/yaml_xml2file.h"
+#include "lua-run.h"
 
 namespace jsonio17 {
 
@@ -15,8 +14,8 @@ std::string FormatImpexGenerator::impex_collection_name = "impexdefs";
 
 jsonio17::DBSchemaDocument* newDBImpexClient(const DataBase& dbconnect, const jsonio17::DBQueryBase& query)
 {
-    return jsonio17::DBSchemaDocument::newSchemaDocumentQuery(dbconnect,
-                   "ImpexFormat", FormatImpexGenerator::impex_collection_name, query );
+    return jsonio17::DBSchemaDocument::newSchemaDocumentQuery(dbconnect,  "ImpexFormat",
+                                                              FormatImpexGenerator::impex_collection_name, query );
 }
 
 FormatImpexGenerator::FormatImpexGenerator(const std::string &db_url,
@@ -114,7 +113,7 @@ std::vector<std::string> FormatImpexGenerator::importFileToDatabase(const std::s
     // get schema from format
     auto impex_configuration = read_impex_format(jsonio17::ImpexFormatFile::modeImport, format_type, format_script);
     auto dbdocument  = documentConnect(impex_configuration->dataName(), collection_name);
-    return importFileToDatabase(format_type, format_script, foreign_format_file, dbdocument.get() );
+    return importFileToDatabase(format_type, format_script, foreign_format_file, dbdocument.get());
 }
 
 void FormatImpexGenerator::exportFileFrom(const std::string &format_type,
@@ -208,7 +207,7 @@ void FormatImpexGenerator::updateFileToDatabase(const std::string &format_type,
         auto impex_configuration = read_impex_format(jsonio17::ImpexFormatFile::modeUpdate, format_type, format_script);
         std::string record_json;
         impex_configuration->openFile(foreign_format_file);
-        while( impex_configuration->updateBlock( dbdocument, record_json ) )
+        while( impex_configuration->updateBlock(dbdocument, record_json) )
         {}
         impex_configuration->closeFile();
     }
@@ -223,7 +222,7 @@ void FormatImpexGenerator::updateFileToDatabase(const std::string &format_type,
     auto dbdocument  = documentConnect(impex_configuration->dataName(), collection_name);
     std::string record_json;
     impex_configuration->openFile(foreign_format_file);
-    while( impex_configuration->updateBlock( dbdocument.get(), record_json ) )
+    while( impex_configuration->updateBlock(dbdocument.get(), record_json) )
     {}
     impex_configuration->closeFile();
 }
@@ -296,9 +295,7 @@ void FormatImpexGenerator::exportStringFromDatabase(const std::vector<std::strin
     }
 }
 
-
 //--------------------------------------------------------------------------
-
 
 void FormatImpexGenerator::clear_export_file(const std::string &file_name)
 {
@@ -382,13 +379,13 @@ std::shared_ptr<jsonio17::DBSchemaDocument> FormatImpexGenerator::documentConnec
         // Connect to Arangodb ( load settings from "config.json" file )
         work_database.reset(new jsonio17::DataBase());
     }
-    if(work_database ) {
+    if(work_database) {
         if(collection_name.empty()) {
             collection_name = collectionNameFromSchema(schema_name);
         }
         dbdocument.reset(DBSchemaDocument::newSchemaDocument(*work_database.get(), schema_name, collection_name));
     }
-    else {
+    if(!dbdocument) {
         JSONIO_THROW("FormatImpexGenerator", 2, " no connection was set to the database");
     }
     return dbdocument;
@@ -396,25 +393,24 @@ std::shared_ptr<jsonio17::DBSchemaDocument> FormatImpexGenerator::documentConnec
 
 void FormatImpexGenerator::resourse_database_from_work()
 {
-   jsonio17::ArangoDBClient* client = dynamic_cast<jsonio17::ArangoDBClient*>(work_database->theDriver());
-   auto connection_data = client->connect_data();
-   connection_data.databaseName = resources_database_name;
-   arangocpp::ArangoDBConnection data(connection_data);
-   std::shared_ptr<jsonio17::AbstractDBDriver> db_driver(new jsonio17::ArangoDBClient(data));
-   resourse_database = std::make_shared<jsonio17::DataBase>(db_driver);
+    jsonio17::ArangoDBClient* client = dynamic_cast<jsonio17::ArangoDBClient*>(work_database->theDriver());
+    auto connection_data = client->connect_data();
+    connection_data.databaseName = resources_database_name;
+    arangocpp::ArangoDBConnection data(connection_data);
+    std::shared_ptr<jsonio17::AbstractDBDriver> db_driver(new jsonio17::ArangoDBClient(data));
+    resourse_database = std::make_shared<jsonio17::DataBase>(db_driver);
 }
 
 void FormatImpexGenerator::check_dbimpex_connect()
 {
     if(!dbimpex && work_database) {
-      resourse_database_from_work();
-      dbimpex.reset(jsonio17::newDBImpexClient(*resourse_database.get()));
+        resourse_database_from_work();
+        dbimpex.reset(jsonio17::newDBImpexClient(*resourse_database.get()));
     }
     if(!dbimpex) {
         JSONIO_THROW( "FormatImpexGenerator", 1, " no connection was set to the resource database" );
     }
 }
-
 
 } // namespace jsonio17
 
