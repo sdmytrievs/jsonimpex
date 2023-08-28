@@ -1,7 +1,6 @@
 #pragma once
 
 #include <gtest/gtest.h>
-//#include <gmock/gmock-matchers.h>
 #include "jsonio17/jsonschema.h"
 #include "jsonio17/jsondump.h"
 #include "jsonio17/schema_thrift.h"
@@ -17,7 +16,7 @@ using namespace jsonio17;
 
 TEST(IMPEX, luaFunc)
 {
-    LuaRun lua_wrk( "lua/" );
+    LuaRun lua_wrk( "Resources/lua/" );
 
     double dval = 2.3;
     int ival = 10;

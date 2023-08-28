@@ -36,7 +36,8 @@ public:
     static void initDefaultFormats();
 
     /// The constructor
-    explicit ImpexFormatFile( ImpexMode mode_of_use, const std::string& impex_format_name, const JsonBase& object );
+    explicit ImpexFormatFile( ImpexMode mode_of_use, const std::string& impex_format_name,
+                              const JsonBase& object, const std::string& path_to_scripts = "" );
 
     virtual ~ImpexFormatFile();
 
@@ -82,8 +83,12 @@ protected:
     /// Dictionary of import/export formats  for Factory Method
     static std::map<std::string, IEFileFactory_f> formats;
 
+    /// Path to lua scripts
+    std::string lua_lib_path;
+
     /// Implementation of the current import/export format
     std::shared_ptr<AbstractIEFile> impex_format;
+
 
     AbstractIEFile* create_format_data( ImpexMode amode, const std::string& impex_format_name, const JsonBase& object );
 

@@ -38,6 +38,17 @@ FormatImpexGenerator::FormatImpexGenerator(bool overwrite_existing, FormatSource
     format_source(formats_from)
 {}
 
+void FormatImpexGenerator::setResourcesDirectory(const std::string &path)
+{
+    ioSettings().setValue( jsonio17::common_section( "ResourcesDirectory" ), path );
+}
+
+void FormatImpexGenerator::setSchemasDirectory(const std::string &path)
+{
+    ioSettings().setValue( jsonio17::common_section( "SchemasDirectory" ), path);
+    ioSettings().updateSchemaDir();
+}
+
 void FormatImpexGenerator::importFileTo(const std::string &format_type,
                                         const std::string &format_script,
                                         const std::string &foreign_format_file,
@@ -149,7 +160,7 @@ void FormatImpexGenerator::exportFileFromFile(const std::string &format_type,
 void FormatImpexGenerator::exportFileFromString(const std::string &format_type,
                                                 const std::string &format_script,
                                                 const std::string &foreign_format_file,
-                                                std::string &schema_format_string)
+                                                const std::string &schema_format_string)
 {
     size_t ndx_record = 0;
     auto js_free = json::loads(schema_format_string);
@@ -259,6 +270,23 @@ std::vector<std::string> FormatImpexGenerator::importStringToDatabase(const std:
     return new_ids;
 }
 
+void FormatImpexGenerator::importStringToString(const std::string &format_type,
+                                                const std::string &format_script,
+                                                const std::string &foreign_format_string,
+                                                std::string &schema_format_string)
+{
+    auto arr_object = jsonio17::JsonFree::array();
+
+    StoringImportResults_f file_funct = [&](const std::string& json_data, bool) {
+        impex_logger->trace("Import record: {}", json_data);
+        arr_object[arr_object.size()].loads(json_data);
+    };
+
+    importStringTo(format_type, format_script, foreign_format_string, file_funct);
+    schema_format_string = arr_object.dump(true);
+}
+
+
 void FormatImpexGenerator::exportStringFrom(const std::string &format_type,
                                             const std::string &format_script,
                                             std::string &foreign_format_string,
@@ -295,6 +323,25 @@ void FormatImpexGenerator::exportStringFromDatabase(const std::vector<std::strin
     }
 }
 
+void FormatImpexGenerator::exportStringFromString(const std::string &format_type,
+                                                  const std::string &format_script,
+                                                  std::string &foreign_format_string,
+                                                  const std::string &schema_format_string)
+{
+    size_t ndx_record = 0;
+    auto js_free = json::loads(schema_format_string);
+
+    loadingExportData_f file_funct = [&](std::string& json_data) {
+        if( ndx_record < js_free.size() ) {
+            json_data =  js_free[ndx_record++].dump(true);
+            return true;
+        }
+        return false;
+    };
+    exportStringFrom(format_type, format_script, foreign_format_string, file_funct);
+}
+
+
 //--------------------------------------------------------------------------
 
 void FormatImpexGenerator::clear_export_file(const std::string &file_name)
@@ -320,7 +367,7 @@ FormatImpexGenerator::read_impex_from_file(ImpexFormatFile::ImpexMode mode,
             impex_schema = impex_schema.substr(pos+1);
         }
     }
-    return std::make_shared<jsonio17::ImpexFormatFile>(mode, impex_schema, formatdata);
+    return std::make_shared<jsonio17::ImpexFormatFile>(mode, impex_schema, formatdata, lua_lib_directory);
 }
 
 std::shared_ptr<jsonio17::ImpexFormatFile>
@@ -338,7 +385,7 @@ FormatImpexGenerator::read_impex_from_database(ImpexFormatFile::ImpexMode mode,
     if(impex_schema.empty()) {
         dbimpex->getValueViaPath<std::string>("impexschema", impex_schema, "");
     }
-    return std::make_shared<jsonio17::ImpexFormatFile>(mode, impex_schema, formatdata);
+    return std::make_shared<jsonio17::ImpexFormatFile>(mode, impex_schema, formatdata, lua_lib_directory);
 }
 
 std::shared_ptr<jsonio17::ImpexFormatFile>
@@ -348,7 +395,7 @@ FormatImpexGenerator::read_impex_from_string(ImpexFormatFile::ImpexMode mode,
 {
     auto  formatdata = jsonio17::JsonFree::object();
     formatdata.loads(format_string);
-    return std::make_shared<jsonio17::ImpexFormatFile>(mode, impex_format_name, formatdata);
+    return std::make_shared<jsonio17::ImpexFormatFile>(mode, impex_format_name, formatdata, lua_lib_directory);
 }
 
 std::shared_ptr<ImpexFormatFile> FormatImpexGenerator::read_impex_format(ImpexFormatFile::ImpexMode mode,

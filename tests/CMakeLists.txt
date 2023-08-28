@@ -1,5 +1,4 @@
 message(STATUS "Building test suite: ${BuildTests}")
-file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/lua" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/")
 file(COPY "${CMAKE_SOURCE_DIR}/Resources" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/")
 file(COPY "${CMAKE_SOURCE_DIR}/Resources/jsonimpex17-config.json" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/")
 

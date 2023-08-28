@@ -81,6 +81,14 @@ public:
         format_source = new_source;
     }
 
+    void setResourcesDirectory(const std::string &path);
+    void setSchemasDirectory(const std::string &path);
+    void setLuaScriptsDirectory(const std::string &path)
+    {
+        // by default into ResourcesDirectory
+        lua_lib_directory = path;
+    }
+
     /// Import from other format files
     /// @param format_type import schema format name ("FormatStructDataFile", "FormatKeyValueFile", "FormatTableFile")
     /// @param format_script path to the import rules file or database key with rules
@@ -151,7 +159,7 @@ public:
     /// @param schema_format_string  string with collecting exporting data
     void exportFileFromString(
             const std::string &format_type, const std::string &format_script,
-            const std::string &foreign_format_file, std::string &schema_format_string);
+            const std::string &foreign_format_file, const std::string &schema_format_string);
 
     /// Export to other format files
     /// @param format_type export schema format name ("FormatStructDataFile", "FormatKeyValueFile", "FormatTableFile")
@@ -196,6 +204,15 @@ public:
             const std::string &format_type, const std::string &format_script,
             const std::string &foreign_format_string, StoringImportResults_f store_funct);
 
+    /// Import from other format string
+    /// @param format_type import schema format name ("FormatStructDataFile", "FormatKeyValueFile", "FormatTableFile")
+    /// @param format_script path to the import rules file or database key with rules
+    /// @param foreign_format_string foreign format data
+    /// @param schema_format_string  string with collecting exporting data
+    void importStringToString(
+            const std::string &format_type, const std::string &format_script,
+            const std::string &foreign_format_string, std::string &schema_format_string);
+
     /// Import from other format string to database document
     /// @param format_type import schema format name ("FormatStructDataFile", "FormatKeyValueFile", "FormatTableFile")
     /// @param format_script path to the import rules file or database key with rules
@@ -217,6 +234,15 @@ public:
     /// Export to other format string bufer
     /// @param format_type export schema format name ("FormatStructDataFile", "FormatKeyValueFile", "FormatTableFile")
     /// @param format_script path to the export rules file or database key with rules
+    /// @param foreign_format_string foreign format data
+    /// @param schema_format_string  string with collecting exporting data
+    void exportStringFromString(
+            const std::string &format_type, const std::string &format_script,
+            std::string &foreign_format_string, const std::string &schema_format_string);
+
+    /// Export to other format string bufer
+    /// @param format_type export schema format name ("FormatStructDataFile", "FormatKeyValueFile", "FormatTableFile")
+    /// @param format_script path to the export rules file or database key with rules
     /// @param foreign_format_string result string
     /// @param dbdocument  database document to load data
     void exportStringFromDatabase( const std::vector<std::string>& keys_to_unload,
@@ -232,6 +258,9 @@ public:
     }
 
 protected:
+
+    /// Path to lua scripts
+    std::string lua_lib_directory;
 
     /// Database connection
     std::shared_ptr<jsonio17::DataBase> work_database;
