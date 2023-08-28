@@ -337,6 +337,7 @@ void TableIEFile::split_delimiter( const std::string& readedrow, bool toheader )
 
 bool TableIEFile::writeBlockToFile( const key_values_table_t& data_to_write )
 {
+    impex_logger->debug("TableIEFile::writeBlockToFile:\n {}", json::dump(data_to_write));
     std::vector<std::string> values;
     auto colsizes = format.colsizes;
     auto rgex = format.value_regexp;

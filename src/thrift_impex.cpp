@@ -15,8 +15,9 @@ void ImpexFormatFile::initDefaultFormats()
     ImpexFormatFile::formats["FormatTableFile"] = connectFormatTableFile;
 }
 
-ImpexFormatFile::ImpexFormatFile(ImpexFormatFile::ImpexMode mode_of_use, const std::string &impex_format_name, const JsonBase &object):
-    impex_format( create_format_data( mode_of_use, impex_format_name, object ))
+ImpexFormatFile::ImpexFormatFile(ImpexFormatFile::ImpexMode mode_of_use, const std::string &impex_format_name,
+                                 const JsonBase &object):
+    impex_format(create_format_data( mode_of_use, impex_format_name, object ))
 { }
 
 
@@ -63,7 +64,7 @@ bool ImpexFormatFile::nextFromFile( std::string& input_json )
     return impex_format->nextFromFile( input_json );
 }
 
-bool ImpexFormatFile::updateBlock(DBVertexDocument *dbdocument, std::string &json_block_data)
+bool ImpexFormatFile::updateBlock(DBSchemaDocument *dbdocument, std::string &json_block_data)
 {
     return impex_format->updateBlock( dbdocument, json_block_data );
 }
@@ -85,7 +86,7 @@ bool ImpexFormatFile::writeBlock( const std::string& data_to_write )
 
 AbstractIEFile *ImpexFormatFile::create_format_data( ImpexMode amode, const std::string &impex_format_name, const JsonBase &object)
 {
-    std::string lua_lib_path =  ioSettings().resourcesDir()+"/lua/";
+    std::string    lua_lib_path =  ioSettings().resourcesDir()+"/lua/";
     //ioSettings().directoryPath("common.LuaScriptsDirectory", std::string("/lua"))+"/";
     if( impex_format_name.empty() )
         return nullptr;

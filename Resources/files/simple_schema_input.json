@@ -1,0 +1,107 @@
+[
+     {
+          "vbool" :   false,
+          "vint" :   0,
+          "vdouble" :   0,
+          "vstring" :   "input-0"
+     },
+     {
+          "vbool" :   true,
+          "vint" :   1,
+          "vdouble" :   10.01,
+          "vstring" :   "input-1",
+          "vlist" :   [
+               1,
+               2,
+               3
+          ]
+     },
+     {
+          "vbool" :   false,
+          "vint" :   2,
+          "vdouble" :   20.02,
+          "vstring" :   "input-2",
+          "vlist" :   [
+               2,
+               4,
+               6
+          ]
+     },
+     {
+          "vbool" :   true,
+          "vint" :   3,
+          "vdouble" :   30.03,
+          "vstring" :   "input-3",
+          "vlist" :   [
+               3,
+               6,
+               9
+          ]
+     },
+     {
+          "vbool" :   false,
+          "vint" :   4,
+          "vdouble" :   40.04,
+          "vstring" :   "input-4",
+          "vlist" :   [
+               4,
+               8,
+               12
+          ]
+     },
+     {
+          "vbool" :   true,
+          "vint" :   5,
+          "vdouble" :   50.05,
+          "vstring" :   "input-5",
+          "vlist" :   [
+               5,
+               10,
+               15
+          ]
+     },
+     {
+          "vbool" :   false,
+          "vint" :   6,
+          "vdouble" :   60.06,
+          "vstring" :   "input-6",
+          "vlist" :   [
+               6,
+               12,
+               18
+          ]
+     },
+     {
+          "vbool" :   true,
+          "vint" :   7,
+          "vdouble" :   70.07,
+          "vstring" :   "input-7",
+          "vlist" :   [
+               7,
+               14,
+               21
+          ]
+     },
+     {
+          "vbool" :   false,
+          "vint" :   8,
+          "vdouble" :   80.08,
+          "vstring" :   "input-8",
+          "vlist" :   [
+               8,
+               16,
+               24
+          ]
+     },
+     {
+          "vbool" :   true,
+          "vint" :   9,
+          "vdouble" :   90.09,
+          "vstring" :   "input-9",
+          "vlist" :   [
+               9,
+               18,
+               27
+          ]
+     }
+]

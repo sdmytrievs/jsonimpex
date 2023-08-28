@@ -1,12 +1,16 @@
 # options
 message(STATUS "Building jsonimpex17 examples: ${BuildExamples}")
+file(COPY "${CMAKE_SOURCE_DIR}/Resources" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/")
+file(COPY "${CMAKE_SOURCE_DIR}/Resources/jsonimpex17-config.json" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/")
+
 
 include_directories(${CMAKE_SOURCE_DIR})
 find_package(Threads REQUIRED)
 
 set(Examples
         yaml_example
-        xml_example )
+        xml_example
+        impex_tool )
 
 foreach (exampleName ${Examples})
   add_executable(${exampleName} ${exampleName}.cpp)

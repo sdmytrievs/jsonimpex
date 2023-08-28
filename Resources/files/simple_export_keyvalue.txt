@@ -1,0 +1,59 @@
+
+input-0
+	-add	0.1 
+	-double	0 
+	-int	0 
+
+input-1
+	-add	0.1 
+	-double	10.01 
+	-int	1 
+	-list	1 2 3 
+
+input-2
+	-add	0.1 
+	-double	20.02 
+	-int	2 
+	-list	2 4 6 
+
+input-3
+	-add	0.1 
+	-double	30.03 
+	-int	3 
+	-list	3 6 9 
+
+input-4
+	-add	0.1 
+	-double	40.04 
+	-int	4 
+	-list	4 8 12 
+
+input-5
+	-add	0.1 
+	-double	50.05 
+	-int	5 
+	-list	5 10 15 
+
+input-6
+	-add	0.1 
+	-double	60.06 
+	-int	6 
+	-list	6 12 18 
+
+input-7
+	-add	0.1 
+	-double	70.07 
+	-int	7 
+	-list	7 14 21 
+
+input-8
+	-add	0.1 
+	-double	80.08 
+	-int	8 
+	-list	8 16 24 
+
+input-9
+	-add	0.1 
+	-double	90.09 
+	-int	9 
+	-list	9 18 27 

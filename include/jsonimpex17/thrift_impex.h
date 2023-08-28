@@ -36,7 +36,7 @@ public:
     static void initDefaultFormats();
 
     /// The constructor
-    explicit ImpexFormatFile( ImpexMode mode_of_use, const std::string& impex_format_name, const JsonBase& object );
+    explicit ImpexFormatFile( ImpexMode mode_of_use, const std::string& impex_format_name, const JsonBase& object);
 
     virtual ~ImpexFormatFile();
 
@@ -66,7 +66,7 @@ public:
     // Update part -----------------------------------------------------------------
 
     /// Function to update documents, either value in existing fields, or add new fields while leaving the rest of the record unchanged.
-    bool updateBlock( DBVertexDocument* dbdocument, std::string& json_block_data );
+    bool updateBlock( DBSchemaDocument* dbdocument, std::string& json_block_data );
 
     // Export part -----------------------------------------------------------------
 
@@ -85,7 +85,8 @@ protected:
     /// Implementation of the current import/export format
     std::shared_ptr<AbstractIEFile> impex_format;
 
-    AbstractIEFile* create_format_data( ImpexMode amode, const std::string& impex_format_name, const JsonBase& object );
+
+    AbstractIEFile* create_format_data(ImpexMode amode, const std::string& impex_format_name, const JsonBase& object);
 
 };
 

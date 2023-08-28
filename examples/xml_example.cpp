@@ -16,10 +16,10 @@ void ComplexSchema();
 
 int main()
 {
+    jsonio17::JsonioSettings::settingsFileName = "jsonimpex17-config.json";
+
     try{
-
         ioSettings().addSchemaFormat( schema_thrift, schema_str );
-
         FreeSchema();
         SimpleSchema();
         ComplexSchema();

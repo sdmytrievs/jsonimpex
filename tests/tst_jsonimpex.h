@@ -1,13 +1,12 @@
 #pragma once
 
 #include <gtest/gtest.h>
-//#include <gmock/gmock-matchers.h>
 #include "jsonio17/jsonschema.h"
 #include "jsonio17/jsondump.h"
 #include "jsonio17/schema_thrift.h"
 #include "jsonio17/io_settings.h"
-//#include "thrift_ie_json.h"
-//#include "impex_schema.h"
+#include "thrift_ie_json.h"
+#include "impex_schema.h"
 #include "lua-run.h"
 
 
@@ -17,7 +16,7 @@ using namespace jsonio17;
 
 TEST(IMPEX, luaFunc)
 {
-    LuaRun lua_wrk( "lua/" );
+    LuaRun lua_wrk( "Resources/lua/" );
 
     double dval = 2.3;
     int ival = 10;
@@ -40,10 +39,10 @@ TEST(IMPEX, luaFunc)
     EXPECT_EQ( lua_wrk.run( lua_script, json_data ), "{\"vbool\":false,\"vdouble\":5.2,\"vint\":55,\"vstring\":\"Test string\"}" );
 }
 
-/*
+
 TEST( IMPEX, DataToFromJsonSchema1 )
 {
-    ioSettings().addSchemaFormat( schema_thrift, impex_schema_str );
+    //ioSettings().addSchemaFormat( schema_thrift, impex_schema_str );
 
     auto in_object = json::loads( "FormatStructDataFile", FormatStructDataFile_value );
     FormatStructDataFile fformatdata;
@@ -58,7 +57,7 @@ TEST( IMPEX, DataToFromJsonSchema1 )
 
 TEST( IMPEX, DataToFromJsonSchema2 )
 {
-    ioSettings().addSchemaFormat( schema_thrift, impex_schema_str );
+    //ioSettings().addSchemaFormat( schema_thrift, impex_schema_str );
 
     auto in_object = json::loads( "FormatKeyValueFile", FormatKeyValueFile_value );
     FormatKeyValueFile fformatdata;
@@ -73,7 +72,7 @@ TEST( IMPEX, DataToFromJsonSchema2 )
 
 TEST( IMPEX, DataToFromJsonSchema3 )
 {
-    ioSettings().addSchemaFormat( schema_thrift, impex_schema_str );
+    //ioSettings().addSchemaFormat( schema_thrift, impex_schema_str );
 
     auto in_object = json::loads( "FormatTableFile", FormatTableFile_value );
     FormatTableFile fformatdata;
@@ -85,4 +84,4 @@ TEST( IMPEX, DataToFromJsonSchema3 )
 
     EXPECT_EQ( in_object.dump(), out_object.dump() );
 }
-*/
+
