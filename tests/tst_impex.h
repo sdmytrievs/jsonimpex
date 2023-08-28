@@ -143,8 +143,6 @@ TEST( EXPORT_IMPORT, FormatTableFile )
     // no database connection
     std::shared_ptr<jsonio17::DataBase> database(nullptr);
     jsonio17::FormatImpexGenerator worker(database, true, jsonio17::FormatImpexGenerator::String);
-    worker.setResourcesDirectory("Resources");
-    worker.setSchemasDirectory("Resources/schemas");
 
     std::string other_format_string;
     worker.exportStringFromString( "FormatTableFile", export_simple_FormatTableFile_script,
@@ -178,8 +176,6 @@ TEST( EXPORT_IMPORT, FormatKeyValueFile )
 
     std::shared_ptr<jsonio17::DataBase> database(nullptr);
     jsonio17::FormatImpexGenerator worker(database, true, jsonio17::FormatImpexGenerator::String);
-    worker.setResourcesDirectory("Resources");
-    worker.setSchemasDirectory("Resources/schemas");
 
     std::string other_format_string;
     worker.exportStringFromString( "FormatKeyValueFile", export_simple_FormatKeyValueFile_script,
@@ -208,8 +204,6 @@ TEST( IMPORT, FormatStructDataFile )
 
     std::shared_ptr<jsonio17::DataBase> database(nullptr);
     jsonio17::FormatImpexGenerator worker(database, true, jsonio17::FormatImpexGenerator::String);
-    worker.setResourcesDirectory("Resources");
-    worker.setSchemasDirectory("Resources/schemas");
 
     std::string schema_format_string;
     worker.importStringToString( "FormatStructDataFile", import_simple_FormatStructDataFile_script,

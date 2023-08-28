@@ -42,7 +42,7 @@ TEST(IMPEX, luaFunc)
 
 TEST( IMPEX, DataToFromJsonSchema1 )
 {
-    ioSettings().addSchemaFormat( schema_thrift, impex_schema_str );
+    //ioSettings().addSchemaFormat( schema_thrift, impex_schema_str );
 
     auto in_object = json::loads( "FormatStructDataFile", FormatStructDataFile_value );
     FormatStructDataFile fformatdata;
@@ -57,7 +57,7 @@ TEST( IMPEX, DataToFromJsonSchema1 )
 
 TEST( IMPEX, DataToFromJsonSchema2 )
 {
-    ioSettings().addSchemaFormat( schema_thrift, impex_schema_str );
+    //ioSettings().addSchemaFormat( schema_thrift, impex_schema_str );
 
     auto in_object = json::loads( "FormatKeyValueFile", FormatKeyValueFile_value );
     FormatKeyValueFile fformatdata;
@@ -72,7 +72,7 @@ TEST( IMPEX, DataToFromJsonSchema2 )
 
 TEST( IMPEX, DataToFromJsonSchema3 )
 {
-    ioSettings().addSchemaFormat( schema_thrift, impex_schema_str );
+    //ioSettings().addSchemaFormat( schema_thrift, impex_schema_str );
 
     auto in_object = json::loads( "FormatTableFile", FormatTableFile_value );
     FormatTableFile fformatdata;

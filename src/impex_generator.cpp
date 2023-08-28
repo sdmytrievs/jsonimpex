@@ -41,11 +41,7 @@ FormatImpexGenerator::FormatImpexGenerator(bool overwrite_existing, FormatSource
 void FormatImpexGenerator::setResourcesDirectory(const std::string &path)
 {
     ioSettings().setValue( jsonio17::common_section( "ResourcesDirectory" ), path );
-}
-
-void FormatImpexGenerator::setSchemasDirectory(const std::string &path)
-{
-    ioSettings().setValue( jsonio17::common_section( "SchemasDirectory" ), path);
+    ioSettings().setValue( jsonio17::common_section( "SchemasDirectory" ), path+"/schemas/");
     ioSettings().updateSchemaDir();
 }
 
@@ -367,7 +363,7 @@ FormatImpexGenerator::read_impex_from_file(ImpexFormatFile::ImpexMode mode,
             impex_schema = impex_schema.substr(pos+1);
         }
     }
-    return std::make_shared<jsonio17::ImpexFormatFile>(mode, impex_schema, formatdata, lua_lib_directory);
+    return std::make_shared<jsonio17::ImpexFormatFile>(mode, impex_schema, formatdata);
 }
 
 std::shared_ptr<jsonio17::ImpexFormatFile>
@@ -385,7 +381,7 @@ FormatImpexGenerator::read_impex_from_database(ImpexFormatFile::ImpexMode mode,
     if(impex_schema.empty()) {
         dbimpex->getValueViaPath<std::string>("impexschema", impex_schema, "");
     }
-    return std::make_shared<jsonio17::ImpexFormatFile>(mode, impex_schema, formatdata, lua_lib_directory);
+    return std::make_shared<jsonio17::ImpexFormatFile>(mode, impex_schema, formatdata);
 }
 
 std::shared_ptr<jsonio17::ImpexFormatFile>
@@ -395,7 +391,7 @@ FormatImpexGenerator::read_impex_from_string(ImpexFormatFile::ImpexMode mode,
 {
     auto  formatdata = jsonio17::JsonFree::object();
     formatdata.loads(format_string);
-    return std::make_shared<jsonio17::ImpexFormatFile>(mode, impex_format_name, formatdata, lua_lib_directory);
+    return std::make_shared<jsonio17::ImpexFormatFile>(mode, impex_format_name, formatdata);
 }
 
 std::shared_ptr<ImpexFormatFile> FormatImpexGenerator::read_impex_format(ImpexFormatFile::ImpexMode mode,

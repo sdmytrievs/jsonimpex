@@ -29,6 +29,10 @@ public:
     static std::string resources_database_name;
     static std::string impex_collection_name;
 
+    /// Set the path to the resource directory to update/reread the schema descriptions.
+    /// The resource directory must contain "schemas" and "lua" subdirectories.
+    static void setResourcesDirectory(const std::string &path);
+
     /// The constructor
     /// @param db_connection arangodb database
     /// @param overwrite_existing overwrite if the present existing records
@@ -79,14 +83,6 @@ public:
     void setFormatSource(FormatSourceTypes new_source)
     {
         format_source = new_source;
-    }
-
-    void setResourcesDirectory(const std::string &path);
-    void setSchemasDirectory(const std::string &path);
-    void setLuaScriptsDirectory(const std::string &path)
-    {
-        // by default into ResourcesDirectory
-        lua_lib_directory = path;
     }
 
     /// Import from other format files
@@ -258,9 +254,6 @@ public:
     }
 
 protected:
-
-    /// Path to lua scripts
-    std::string lua_lib_directory;
 
     /// Database connection
     std::shared_ptr<jsonio17::DataBase> work_database;

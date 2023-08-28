@@ -18,7 +18,7 @@ using namespace jsonio17;
 
 TEST( JSONYAML, ObjectSimple)
 {
-    ioSettings().addSchemaFormat(schema_thrift, schema_str);
+    //ioSettings().addSchemaFormat(schema_thrift, schema_str);
 
     auto empty_obj = JsonSchema( JsonSchema::object("SimpleSchemaTest") );
     EXPECT_EQ( yaml::dump(empty_obj), "{}" );
@@ -33,7 +33,7 @@ TEST( JSONYAML, ObjectSimple)
 
 TEST( JSONYAML, ObjectComplex)
 {
-    ioSettings().addSchemaFormat(schema_thrift, schema_str);
+    //ioSettings().addSchemaFormat(schema_thrift, schema_str);
 
     auto json_obj = json::loads( "ComplexSchemaTest", complex_schema_value );
     auto yaml_txt = yaml::dump(json_obj);
@@ -149,7 +149,7 @@ TEST( JSONYAML, TestYamlArrayFileLoad )
 
 TEST( JSONXML, ObjectSimple)
 {
-    ioSettings().addSchemaFormat(schema_thrift, schema_str);
+    //ioSettings().addSchemaFormat(schema_thrift, schema_str);
 
     auto empty_obj = JsonSchema( JsonSchema::object("SimpleSchemaTest") );
     EXPECT_EQ( XML::dump(empty_obj), "<?xml version=\"1.0\" encoding=\"UTF-16\" standalone=\"yes\"?>\n<node />\n" );
@@ -164,7 +164,7 @@ TEST( JSONXML, ObjectSimple)
 
 TEST( JSONXML, ObjectComplex)
 {
-    ioSettings().addSchemaFormat(schema_thrift, schema_str);
+    //ioSettings().addSchemaFormat(schema_thrift, schema_str);
 
     auto json_obj = json::loads( "ComplexSchemaTest", complex_schema_value );
     auto xml_txt = XML::dump(json_obj);

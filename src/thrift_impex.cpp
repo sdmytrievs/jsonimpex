@@ -16,8 +16,8 @@ void ImpexFormatFile::initDefaultFormats()
 }
 
 ImpexFormatFile::ImpexFormatFile(ImpexFormatFile::ImpexMode mode_of_use, const std::string &impex_format_name,
-                                 const JsonBase &object, const std::string& path_to_scripts):
-    lua_lib_path(path_to_scripts), impex_format(create_format_data( mode_of_use, impex_format_name, object ))
+                                 const JsonBase &object):
+    impex_format(create_format_data( mode_of_use, impex_format_name, object ))
 { }
 
 
@@ -86,10 +86,8 @@ bool ImpexFormatFile::writeBlock( const std::string& data_to_write )
 
 AbstractIEFile *ImpexFormatFile::create_format_data( ImpexMode amode, const std::string &impex_format_name, const JsonBase &object)
 {
-    if(lua_lib_path.empty()) {
-        lua_lib_path =  ioSettings().resourcesDir()+"/lua/";
-        //ioSettings().directoryPath("common.LuaScriptsDirectory", std::string("/lua"))+"/";
-    }
+    std::string    lua_lib_path =  ioSettings().resourcesDir()+"/lua/";
+    //ioSettings().directoryPath("common.LuaScriptsDirectory", std::string("/lua"))+"/";
     if( impex_format_name.empty() )
         return nullptr;
 
