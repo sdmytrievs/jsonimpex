@@ -30,7 +30,7 @@ public:
     static std::string impex_collection_name;
 
     /// Set the path to the resource directory to update/reread the schema descriptions.
-    /// The resource directory must contain "schemas" and "lua" subdirectories.
+    /// The resource directory must contain "data/schemas" and "lua" subdirectories.
     static void setResourcesDirectory(const std::string &path);
 
     /// The constructor

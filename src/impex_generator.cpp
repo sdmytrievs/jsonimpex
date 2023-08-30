@@ -41,7 +41,7 @@ FormatImpexGenerator::FormatImpexGenerator(bool overwrite_existing, FormatSource
 void FormatImpexGenerator::setResourcesDirectory(const std::string &path)
 {
     ioSettings().setValue( jsonio17::common_section( "ResourcesDirectory" ), path );
-    ioSettings().setValue( jsonio17::common_section( "SchemasDirectory" ), path+"/schemas/");
+    ioSettings().setValue( jsonio17::common_section( "SchemasDirectory" ), path+"/data/schemas/");
     ioSettings().updateSchemaDir();
 }
 
