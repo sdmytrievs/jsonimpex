@@ -9,7 +9,7 @@ std::shared_ptr<spdlog::logger> impex_logger = spdlog::stdout_color_mt("jsonimpe
 // Initialization
 LuaRun::LuaRun( const std::string& lib_path ): lua_lib_path( lib_path )
 {
-    impex_logger->info(" LUA lib path: {}", lua_lib_path);
+    impex_logger->debug(" LUA lib path: {}", lua_lib_path);
     // Init Lua
     lua_internal = luaL_newstate();
     // Make standard libraries available in the Lua state

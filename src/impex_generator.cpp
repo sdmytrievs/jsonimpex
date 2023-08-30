@@ -41,7 +41,7 @@ FormatImpexGenerator::FormatImpexGenerator(bool overwrite_existing, FormatSource
 void FormatImpexGenerator::setResourcesDirectory(const std::string &path)
 {
     ioSettings().setValue( jsonio17::common_section( "ResourcesDirectory" ), path );
-    ioSettings().setValue( jsonio17::common_section( "SchemasDirectory" ), path+"/schemas/");
+    ioSettings().setValue( jsonio17::common_section( "SchemasDirectory" ), path+"/data/schemas/");
     ioSettings().updateSchemaDir();
 }
 
@@ -223,10 +223,12 @@ void FormatImpexGenerator::updateFileToDatabase(const std::string &format_type,
 void FormatImpexGenerator::updateFileToDatabase(const std::string &format_type,
                                                 const std::string &format_script,
                                                 const std::string &foreign_format_file,
-                                                const std::string &collection_name)
+                                                const std::string &collection_name,
+                                                const jsonio17::DBQueryBase& query,
+                                                const std::vector<std::string>& fields_list)
 {
     auto impex_configuration = read_impex_format(jsonio17::ImpexFormatFile::modeUpdate, format_type, format_script);
-    auto dbdocument  = documentConnect(impex_configuration->dataName(), collection_name);
+    auto dbdocument  = documentConnect(impex_configuration->dataName(), collection_name, query, fields_list);
     std::string record_json;
     impex_configuration->openFile(foreign_format_file);
     while( impex_configuration->updateBlock(dbdocument.get(), record_json) )
@@ -414,7 +416,9 @@ std::shared_ptr<ImpexFormatFile> FormatImpexGenerator::read_impex_format(ImpexFo
 
 
 std::shared_ptr<jsonio17::DBSchemaDocument> FormatImpexGenerator::documentConnect(const std::string &schema_name,
-                                                                                  std::string collection_name)
+                                                                                  std::string collection_name,
+                                                                                  const DBQueryBase& query,
+                                                                                  const std::vector<std::string>& fields_list)
 {
     std::shared_ptr<jsonio17::DBSchemaDocument> dbdocument;
     // try connect from configuration
@@ -426,7 +430,8 @@ std::shared_ptr<jsonio17::DBSchemaDocument> FormatImpexGenerator::documentConnec
         if(collection_name.empty()) {
             collection_name = collectionNameFromSchema(schema_name);
         }
-        dbdocument.reset(DBSchemaDocument::newSchemaDocument(*work_database.get(), schema_name, collection_name));
+        impex_logger->debug("Connect to document: {} {}", schema_name, collection_name);
+        dbdocument.reset(DBSchemaDocument::newSchemaDocumentQuery(*work_database.get(), schema_name, collection_name, query, fields_list));
     }
     if(!dbdocument) {
         JSONIO_THROW("FormatImpexGenerator", 2, " no connection was set to the database");

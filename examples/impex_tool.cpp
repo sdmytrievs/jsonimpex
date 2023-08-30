@@ -1,12 +1,4 @@
-
-
 #include <iostream>
-#include <fstream>
-#include <time.h>
-#include <math.h>
-#include <string>
-#include <iomanip>
-#include <memory>
 #include "jsonio17/io_settings.h"
 #include "jsonimpex17/impex_generator.h"
 #include "jsonimpex17/yaml_xml2file.h"
@@ -36,13 +28,11 @@ struct ImpexData
     /// Overwrite existing records
     bool overwrite = true;
 
-
 };
 
 void show_usage( const std::string &name );
 int extract_args( int argc, char* argv[], ImpexData& export_data );
 void make_simple_schema_file();
-
 
 // -e  -c Resources/files/phreeqc_el_export.FormatTableFile.json -sf Resources/files/phreeqc.VertexElement.json -o phreeqc_export_table.txt
 
@@ -59,7 +49,6 @@ int main( int argc, char* argv[] )
     jsonio17::JsonioSettings::settingsFileName = "jsonimpex17-config.json";
 
     try{
-
         // build input data
         // make_simple_schema_file();
 
@@ -238,3 +227,4 @@ int extract_args( int argc, char* argv[], ImpexData& export_data )
     }
     return 0;
 }
+

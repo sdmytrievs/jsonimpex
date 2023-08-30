@@ -30,7 +30,7 @@ public:
     static std::string impex_collection_name;
 
     /// Set the path to the resource directory to update/reread the schema descriptions.
-    /// The resource directory must contain "schemas" and "lua" subdirectories.
+    /// The resource directory must contain "data/schemas" and "lua" subdirectories.
     static void setResourcesDirectory(const std::string &path);
 
     /// The constructor
@@ -188,8 +188,12 @@ public:
     /// @param format_script path to the import rules file or database key with rules
     /// @param foreign_format_file the path the  to be imported foreign format file
     /// @param collection_name  database collection to be load records
+    /// @param query is required to select records to be updated (by default all)
+    /// @param fields_list the list of fields to used in comparing (if empty used default list)
     void updateFileToDatabase(const std::string &format_type, const std::string &format_script,
-                              const std::string &foreign_format_file, const std::string& collection_name);
+                              const std::string &foreign_format_file, const std::string& collection_name,
+                              const DBQueryBase& query = DBQueryBase::emptyQuery(),
+                              const std::vector<std::string>& fields_list = {} );
 
     /// Import from other format string
     /// @param format_type import schema format name ("FormatStructDataFile", "FormatKeyValueFile", "FormatTableFile")
@@ -283,8 +287,9 @@ protected:
     // Clear and test file to export data
     void clear_export_file(const std::string &file_name);
 
-    virtual std::shared_ptr<jsonio17::DBSchemaDocument> documentConnect(const std::string &schema_name,
-                                                                        std::string collection);
+    virtual std::shared_ptr<jsonio17::DBSchemaDocument> documentConnect(const std::string &schema_name, std::string collection,
+                                                                        const DBQueryBase& query = DBQueryBase::emptyQuery(),
+                                                                        const std::vector<std::string>& fields_list = {});
 
     void resourse_database_from_work();
     void check_dbimpex_connect();
