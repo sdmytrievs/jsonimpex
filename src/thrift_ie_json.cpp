@@ -101,21 +101,29 @@ bool StructDataIEFile::writeBlockToFile( const key_values_table_t& )
 
 
 // Read data from one block in file
-bool StructDataIEFile::extract_values( const std::string &key, const JsonFree& foreign_node, values_t& values ) const
+bool StructDataIEFile::extract_values( const std::string &key, const JsonFree& foreign_node, values_t& values )
 {
     auto fld = foreign_node.field( key );
-    if( fld && !fld->isNull() )
-    {
-        if( fld->isArray() )
-        {
-            if(  fld->get_to_list( values ) )
+    if( fld && !fld->isNull() ) {
+        if( fld->isArray() )  {
+            auto impexOrganization = impex_field_organization( key );
+            if( impexOrganization=="table" ) {
+                values.clear();
+                for (auto it = fld->cbegin(); it != fld->cend(); ++it) {
+                    values_t vals;
+                    if(  (*it)->get_to_list( vals ) ) {
+                        values.insert(values.end(), vals.begin(), vals.end());
+                    }
+                }
                 return true;
+            }
+            else if(  fld->get_to_list( values ) ) {
+                return true;
+            }
         }
-        else
-        {
+        else  {
             std::string  value;
-            if( fld->get_to( value  ) )
-            {
+            if( fld->get_to( value  ) )  {
                 values = {value};
                 return true;
             }
@@ -142,6 +150,7 @@ bool StructDataIEFile::read_block_from_file()
         if( extract_values( key, foreign_node, values ) )
             external_data[key] = values;
     }
+    impex_logger->debug("StructDataIEFile::read_block_from_file:\n {}", json::dump(external_data));
     return true;
 }
 

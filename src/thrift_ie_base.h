@@ -174,9 +174,9 @@ protected:
     void run_block_script( const std::string& script, JsonSchema& object );
 
     /// Get Organization of object from the imported or exported file
-    std::string impex_field_organization( const std::string& impex_field_key );
+    std::string impex_field_organization( const std::string& impex_field_key ) const;
     /// Get Type of object from the imported or exported file
-    std::string impex_field_type( const std::string& impex_field_key );
+    std::string impex_field_type( const std::string& impex_field_key ) const;
 
     /// Inser key value paies to extern data list
     void add_map_key_value( const std::string& key, const  std::vector<std::string>& values );
