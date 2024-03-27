@@ -43,6 +43,14 @@ void make_simple_schema_file();
 // -i  -c Resources/files/import.SimpleSchemaTest.FormatKeyValueFile.json -sf simple_schema_import_kv.json -o Resources/files/simple_export_keyvalue.txt
 // -i  -c Resources/files/import.SimpleSchemaTest.FormatStructDataFile.json -sf simple_schema_import_yaml.json -o Resources/files/simple_schema_other.yaml
 
+// -i -c is230/old_script/Element.GEMS3k.old.FormatStructDataFile.json -sf is230/elements.old.json -o is230/old_script/source/IComp.Kaolinite.json
+//-i -c is230/import_script/Substance.GEMS3k.FormatStructDataFile.json -sf is230/import_script/substances.json -o is230/import_script/source/DComp.Kaolinite.json
+//-i -c is230/old_script/Substance.GEMS3k.old.FormatStructDataFile.json -sf is230/old_script/substances.json -o is230/old_script/source/DComp.Kaolinite.json
+//-i -c is230/import_script/ReactionSubstance.GEMS3k.FormatStructDataFile.json -sf is230/import_script/reac_substances.json -o is230/import_script/source/ReacDC.Kaolinite.json
+//-i -c is230/old_script/ReactionSubstance.GEMS3k.old.FormatStructDataFile.json -sf is230/old_script/reac_substances.json -o is230/old_script/source/ReacDC.Kaolinite.json
+//-i -c is230/import_script/Reaction.GEMS3k.FormatStructDataFile.json -sf is230/import_script/reaction.json -o is230/import_script/source/ReacDC.Kaolinite.json
+//-i -c is230/old_script/Reaction.GEMS3k.old.FormatStructDataFile.json -sf is230/old_script/reaction.json -o is230/old_script/source/ReacDC.Kaolinite.json
+
 //The simplest case: data exchange using disk files only
 int main( int argc, char* argv[] )
 {

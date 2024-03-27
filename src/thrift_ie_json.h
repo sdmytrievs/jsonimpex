@@ -63,7 +63,7 @@ protected:
     /// Read data one block from json data
     bool read_block_from_json( const std::string& inputjson, std::string& key, int ndx=-1 );
 
-    bool extract_values(const std::string &key, const JsonFree &foreign_node, values_t &values) const;
+    bool extract_values(const std::string &key, const JsonFree &foreign_node, values_t &values);
 };
 
 StructDataIEFile* connectFormatStructDataFile( int amode, const JsonBase& object, const std::string& lua_lib_path );

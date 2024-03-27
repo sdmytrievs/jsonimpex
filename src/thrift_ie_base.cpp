@@ -203,7 +203,7 @@ void AbstractIEFile::run_block_script( const std::string& luascript, JsonSchema&
     }
 }
 
-std::string AbstractIEFile::impex_field_organization( const std::string& impex_field_key )
+std::string AbstractIEFile::impex_field_organization( const std::string& impex_field_key ) const
 {
     auto itPair = block.pairs.find( impex_field_key );
     if( itPair != block.pairs.end() )
@@ -211,7 +211,7 @@ std::string AbstractIEFile::impex_field_organization( const std::string& impex_f
     return "";
 }
 
-std::string AbstractIEFile::impex_field_type( const std::string& impex_field_key )
+std::string AbstractIEFile::impex_field_type( const std::string& impex_field_key ) const
 {
     auto itPair = block.pairs.find(impex_field_key);
     if( itPair != block.pairs.end() )
