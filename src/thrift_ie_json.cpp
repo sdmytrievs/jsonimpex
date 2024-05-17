@@ -117,6 +117,11 @@ bool StructDataIEFile::extract_values( const std::string &key, const JsonFree& f
                 }
                 return true;
             }
+            else if( impexOrganization=="string" ) {
+                values.clear();
+                values.push_back( fld->dump(true));
+                return true;
+            }
             else if(  fld->get_to_list( values ) ) {
                 return true;
             }
