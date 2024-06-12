@@ -1,4 +1,5 @@
 #include "lua-run.h"
+#include "jsonio17/service.h"
 #include <spdlog/sinks/stdout_color_sinks.h>
 
 namespace jsonio17 {
@@ -50,13 +51,31 @@ bool LuaRun::run_string_script(const std::string& string_with_lua_script )
                      "   ojsdata = json.encode(rintable);\n";
     --*/
 
+    std::string lua_dump =
+            "function dump(o) "
+            "  if type(o) == 'table' then "
+            "     local s = '{ ' "
+            "     for k,v in pairs(o) do "
+            "         if type(k) ~= 'number' then k = '\"'..k..'\"' end "
+            "         s = s .. '['..k..'] = ' .. dump(v) .. ',' "
+            "      end "
+            "      return s .. '} ' "
+            "  else "
+            "      return tostring(o) "
+            "  end  "
+            "end \n";
+
     std::string luascr = "JSON =( loadfile \"";
     luascr+=  lua_lib_path+"JSON.lua\")()\n";
     luascr+= "-- Now JSON decode the json string\n"
-             "   rintable = JSON:decode( ijsdata );\n";
+             "   rintable = JSON:decode(ijsdata);\n"
+             "-- print( dump(rintable) ) \n";
     luascr += string_with_lua_script;
     luascr += "-- Encodes a table\n"
-              "   ojsdata = JSON:encode(rintable);\n";
+              "   NullPlaceholder = \"---\"   \n"
+              "   encode_options = { null = NullPlaceholder }"
+              "   ojsdata = JSON:encode(rintable, nil, encode_options);\n";
+    luascr = lua_dump + luascr;
 
     if( luaL_dostring( lua_internal, luascr.c_str() ) )
     {
@@ -68,11 +87,17 @@ bool LuaRun::run_string_script(const std::string& string_with_lua_script )
 }
 
 
-std::string LuaRun::run(const std::string& lua_script, const std::string& json_data, bool is_file )
+std::string LuaRun::run(const std::string& lua_script, const std::string& json_data_1, bool is_file )
 {
     //  Make a insert a global var into Lua from C++"
     //--lua_pushstring( _L, _lualibPath.c_str());
     //--lua_setglobal( _L, "lib_path");
+
+    // null in lua lost
+    // the solution is to use a placeholder instead of null
+    // and serializing the table structure to a json string using designated encode options
+    auto json_data = regexp_replace(json_data_1, "[\"]*null[\"]*", "\"---\"");
+
     lua_pushstring( lua_internal, json_data.c_str() );
     lua_setglobal( lua_internal, "ijsdata" );
 
