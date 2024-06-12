@@ -198,7 +198,7 @@ void AbstractIEFile::run_block_script( const std::string& luascript, JsonSchema&
     std::string json_data = object.dump( true );
     impex_logger->trace("before run lua script: {}", json_data);
     std::string newjson = lua_run.run( luascript, json_data, false );
-    impex_logger->info("after run lua script: {}", newjson);
+    impex_logger->trace("after run lua script: {}", newjson);
     if( !newjson.empty() )
     {
         object.loads( newjson );
