@@ -1,5 +1,7 @@
 #include "lua-run.h"
 #include "jsonio17/service.h"
+#include "jsonio17/jsonfree.h"
+#include "jsonio17/jsondump.h"
 #include <spdlog/sinks/stdout_color_sinks.h>
 
 namespace jsonio17 {
@@ -51,31 +53,31 @@ bool LuaRun::run_string_script(const std::string& string_with_lua_script )
                      "   ojsdata = json.encode(rintable);\n";
     --*/
 
-    std::string lua_dump =
-            "function dump(o) "
-            "  if type(o) == 'table' then "
-            "     local s = '{ ' "
-            "     for k,v in pairs(o) do "
-            "         if type(k) ~= 'number' then k = '\"'..k..'\"' end "
-            "         s = s .. '['..k..'] = ' .. dump(v) .. ',' "
-            "      end "
-            "      return s .. '} ' "
-            "  else "
-            "      return tostring(o) "
-            "  end  "
-            "end \n";
+//    std::string lua_dump =
+//            "function dump(o) "
+//            "  if type(o) == 'table' then "
+//            "     local s = '{ ' "
+//            "     for k,v in pairs(o) do "
+//            "         if type(k) ~= 'number' then k = '\"'..k..'\"' end "
+//            "         s = s .. '['..k..'] = ' .. dump(v) .. ',' "
+//            "      end "
+//            "      return s .. '} ' "
+//            "  else "
+//            "      return tostring(o) "
+//            "  end  "
+//            "end \n";
 
     std::string luascr = "JSON =( loadfile \"";
     luascr+=  lua_lib_path+"JSON.lua\")()\n";
     luascr+= "-- Now JSON decode the json string\n"
-             "   rintable = JSON:decode(ijsdata);\n"
-             "-- print( dump(rintable) ) \n";
+             "   rintable = JSON:decode(ijsdata);\n";
+//             "-- print( dump(rintable) ) \n";
     luascr += string_with_lua_script;
     luascr += "-- Encodes a table\n"
               "   NullPlaceholder = \"---\"   \n"
               "   encode_options = { null = NullPlaceholder }"
               "   ojsdata = JSON:encode(rintable, nil, encode_options);\n";
-    luascr = lua_dump + luascr;
+//    luascr = lua_dump + luascr;
 
     if( luaL_dostring( lua_internal, luascr.c_str() ) )
     {
@@ -96,9 +98,12 @@ std::string LuaRun::run(const std::string& lua_script, const std::string& json_d
     // null in lua lost
     // the solution is to use a placeholder instead of null
     // and serializing the table structure to a json string using designated encode options
-    auto json_data = regexp_replace(json_data_1, "[\"]*null[\"]*", "\"---\"");
+    auto jsFree = json::loads( json_data_1 );
+    jsFree.placehold_null();
+    //auto json_data = regexp_replace(json_data_1, "null", "\"---\"");
 
-    lua_pushstring( lua_internal, json_data.c_str() );
+    impex_logger->debug(" LUA before: {}", jsFree.dump(true).c_str());
+    lua_pushstring( lua_internal, jsFree.dump(true).c_str() );
     lua_setglobal( lua_internal, "ijsdata" );
 
     // Run lua script
@@ -117,7 +122,7 @@ std::string LuaRun::run(const std::string& lua_script, const std::string& json_d
     lua_pop( lua_internal, 1 );
 
     // test output
-    impex_logger->debug(" LUA run: {}", luanew.c_str());
+    impex_logger->debug(" LUA after: {}", luanew.c_str());
     return luanew;
 }
 
