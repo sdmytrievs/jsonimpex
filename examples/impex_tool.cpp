@@ -50,6 +50,7 @@ void make_simple_schema_file();
 //-i -c is230/old_script/ReactionSubstance.GEMS3k.old.FormatStructDataFile.json -sf is230/old_script/reac_substances.json -o is230/old_script/source/ReacDC.Kaolinite.json
 //-i -c is230/import_script/Reaction.GEMS3k.FormatStructDataFile.json -sf is230/import_script/reaction.json -o is230/import_script/source/ReacDC.Kaolinite.json
 //-i -c is230/old_script/Reaction.GEMS3k.old.FormatStructDataFile.json -sf is230/old_script/reaction.json -o is230/old_script/source/ReacDC.Kaolinite.json
+//-i -c is230/csv/phase-solids.FormatTableFile.json -o is230/csv/reacdc-solids.aux.csv -sf is230/csv/phase.json
 
 //The simplest case: data exchange using disk files only
 int main( int argc, char* argv[] )
