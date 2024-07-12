@@ -1,5 +1,4 @@
 #include <fstream>
-#include "jsonarango/arangocollection.h"
 #include "jsonio17/dbdriverarango.h"
 #include "jsonio17/dbschemadoc.h"
 #include "jsonio17/jsondump.h"
@@ -11,6 +10,7 @@ namespace jsonio17 {
 
 std::string FormatImpexGenerator::resources_database_name = "resources";
 std::string FormatImpexGenerator::impex_collection_name = "impexdefs";
+bool FormatImpexGenerator::create_local_database_if_no_exist = false;
 
 jsonio17::DBSchemaDocument* newDBImpexClient(const DataBase& dbconnect, const jsonio17::DBQueryBase& query)
 {
@@ -27,9 +27,12 @@ FormatImpexGenerator::FormatImpexGenerator(const std::string &db_url,
     overwrite(overwrite_existing),
     format_source(formats_from)
 {
-    arangocpp::ArangoDBConnection data(db_url, db_user, user_passwd, db_name);
-    std::shared_ptr<jsonio17::AbstractDBDriver> db_driver( new jsonio17::ArangoDBClient(data) );
-    work_database = std::make_shared<jsonio17::DataBase>(db_driver);
+    if(create_local_database_if_no_exist) {
+        create_ArangoDB_local_database_if_no_exist(db_url, db_user, user_passwd, db_name);
+    }
+    //arangocpp::ArangoDBConnection data(db_url, db_user, user_passwd, db_name);
+    //std::shared_ptr<jsonio17::AbstractDBDriver> db_driver( new jsonio17::ArangoDBClient(data) );
+    work_database = std::make_shared<jsonio17::DataBase>(db_url, db_user, user_passwd, db_name);
 }
 
 FormatImpexGenerator::FormatImpexGenerator(bool overwrite_existing, FormatSourceTypes formats_from):
@@ -439,20 +442,10 @@ std::shared_ptr<jsonio17::DBSchemaDocument> FormatImpexGenerator::documentConnec
     return dbdocument;
 }
 
-void FormatImpexGenerator::resourse_database_from_work()
-{
-    jsonio17::ArangoDBClient* client = dynamic_cast<jsonio17::ArangoDBClient*>(work_database->theDriver());
-    auto connection_data = client->connect_data();
-    connection_data.databaseName = resources_database_name;
-    arangocpp::ArangoDBConnection data(connection_data);
-    std::shared_ptr<jsonio17::AbstractDBDriver> db_driver(new jsonio17::ArangoDBClient(data));
-    resourse_database = std::make_shared<jsonio17::DataBase>(db_driver);
-}
-
 void FormatImpexGenerator::check_dbimpex_connect()
 {
     if(!dbimpex && work_database) {
-        resourse_database_from_work();
+        resourse_database = work_database->clone(resources_database_name);
         dbimpex.reset(jsonio17::newDBImpexClient(*resourse_database.get()));
     }
     if(!dbimpex) {
