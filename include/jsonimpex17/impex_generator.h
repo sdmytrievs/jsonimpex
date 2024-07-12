@@ -28,6 +28,7 @@ public:
 
     static std::string resources_database_name;
     static std::string impex_collection_name;
+    static bool create_local_database_if_no_exist;
 
     /// Set the path to the resource directory to update/reread the schema descriptions.
     /// The resource directory must contain "data/schemas" and "lua" subdirectories.
@@ -290,8 +291,6 @@ protected:
     virtual std::shared_ptr<jsonio17::DBSchemaDocument> documentConnect(const std::string &schema_name, std::string collection,
                                                                         const DBQueryBase& query = DBQueryBase::emptyQuery(),
                                                                         const std::vector<std::string>& fields_list = {});
-
-    void resourse_database_from_work();
     void check_dbimpex_connect();
 
 };
