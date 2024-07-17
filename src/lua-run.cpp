@@ -100,10 +100,12 @@ std::string LuaRun::run(const std::string& lua_script, const std::string& json_d
     // and serializing the table structure to a json string using designated encode options
     auto jsFree = json::loads( json_data_1 );
     jsFree.placehold_null();
-    //auto json_data = regexp_replace(json_data_1, "null", "\"---\"");
+    // lua error: empty object returns as empty array
+    auto json_data = jsFree.dump(true);
+    json_data = string_replace_all(json_data, "{}", "{\"_\":1}");
 
-    impex_logger->debug(" LUA before: {}", jsFree.dump(true).c_str());
-    lua_pushstring( lua_internal, jsFree.dump(true).c_str() );
+    impex_logger->debug(" LUA before: {}", json_data);
+    lua_pushstring( lua_internal, json_data.c_str() );
     lua_setglobal( lua_internal, "ijsdata" );
 
     // Run lua script
@@ -122,7 +124,8 @@ std::string LuaRun::run(const std::string& lua_script, const std::string& json_d
     lua_pop( lua_internal, 1 );
 
     // test output
-    impex_logger->debug(" LUA after: {}", luanew.c_str());
+    impex_logger->debug(" LUA after: {}", luanew);
+    luanew = string_replace_all(luanew, "{\"_\":1}", "{}");
     return luanew;
 }
 
