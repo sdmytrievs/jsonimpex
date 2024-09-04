@@ -10,7 +10,7 @@ namespace jsonio17 {
 
 std::string FormatImpexGenerator::resources_database_name = "resources";
 std::string FormatImpexGenerator::impex_collection_name = "impexdefs";
-bool FormatImpexGenerator::create_local_database_if_no_exist = false;
+bool FormatImpexGenerator::create_local_database_if_not_existent = false;
 
 jsonio17::DBSchemaDocument* newDBImpexClient(const DataBase& dbconnect, const jsonio17::DBQueryBase& query)
 {
@@ -27,7 +27,7 @@ FormatImpexGenerator::FormatImpexGenerator(const std::string &db_url,
     overwrite(overwrite_existing),
     format_source(formats_from)
 {
-    if(create_local_database_if_no_exist) {
+    if(create_local_database_if_not_existent) {
         create_ArangoDB_local_database_if_no_exist(db_url, db_user, user_passwd, db_name);
     }
     //arangocpp::ArangoDBConnection data(db_url, db_user, user_passwd, db_name);
