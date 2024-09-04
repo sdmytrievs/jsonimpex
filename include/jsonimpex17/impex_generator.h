@@ -28,7 +28,7 @@ public:
 
     static std::string resources_database_name;
     static std::string impex_collection_name;
-    static bool create_local_database_if_no_exist;
+    static bool create_local_database_if_not_existent;
 
     /// Set the path to the resource directory to update/reread the schema descriptions.
     /// The resource directory must contain "data/schemas" and "lua" subdirectories.
