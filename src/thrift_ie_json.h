@@ -1,10 +1,10 @@
 #pragma once
 
-#include "jsonimpex17/yaml_xml2file.h"
+#include "jsonimpex/yaml_xml2file.h"
 #include "thrift_ie_base.h"
 
 
-namespace jsonio17 {
+namespace jsonio {
 
 
 /// Class StructDataIEFile - export/import of data records to/from text file in legacy JSON/YAML/XML (foreign keywords).
@@ -71,5 +71,5 @@ StructDataIEFile* connectFormatStructDataFile( int amode, const JsonBase& object
 // ImpexFormatFile::addFormat("FormatStructDataFile", connectFormatStructDataFile);
 
 
-} // namespace jsonio17
+} // namespace jsonio
 

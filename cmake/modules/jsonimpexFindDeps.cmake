@@ -1,6 +1,6 @@
-find_package(jsonarango REQUIRED)
-if(NOT jsonarango_FOUND)
-    message(FATAL_ERROR "jsonarango library not found")
+find_package(arango-cpp REQUIRED)
+if(NOT arango-cpp_FOUND)
+    message(FATAL_ERROR "arango-cpp library not found")
 endif()
 
 if(USE_SPDLOG_PRECOMPILED)
@@ -12,9 +12,9 @@ if(USE_SPDLOG_PRECOMPILED)
    endif()
 endif()
 
-find_package(jsonio17 REQUIRED)
-if(NOT jsonio17_FOUND)
-    message(FATAL_ERROR "jsonio17 library not found")
+find_package(jsonio REQUIRED)
+if(NOT jsonio_FOUND)
+    message(FATAL_ERROR "jsonio library not found")
 endif()
 
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)

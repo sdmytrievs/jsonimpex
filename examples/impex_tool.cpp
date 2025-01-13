@@ -1,15 +1,15 @@
 #include <iostream>
-#include "jsonio17/io_settings.h"
-#include "jsonimpex17/impex_generator.h"
-#include "jsonimpex17/yaml_xml2file.h"
-#include "jsonio17/dbschemadoc.h"
+#include "jsonio/io_settings.h"
+#include "jsonimpex/impex_generator.h"
+#include "jsonimpex/yaml_xml2file.h"
+#include "jsonio/dbschemadoc.h"
 
 static int documentsInCollection =  10;
 
 struct ImpexData
 {
     /// Type of mode: import, update or export
-    jsonio17::ImpexFormatFile::ImpexMode use_mode = jsonio17::ImpexFormatFile::modeImport;
+    jsonio::ImpexFormatFile::ImpexMode use_mode = jsonio::ImpexFormatFile::modeImport;
 
     /// Path to impex format file
     std::string impex_format_file;
@@ -55,7 +55,7 @@ void make_simple_schema_file();
 //The simplest case: data exchange using disk files only
 int main( int argc, char* argv[] )
 {
-    jsonio17::JsonioSettings::settingsFileName = "jsonimpex17-config.json";
+    jsonio::JsonioSettings::settingsFileName = "jsonimpex-config.json";
 
     try{
         // build input data
@@ -64,14 +64,14 @@ int main( int argc, char* argv[] )
         ImpexData export_data;
 
         // ??? To do (1): Check connection from configuration or nullptr
-        std::shared_ptr<jsonio17::DataBase> database(nullptr); // no real connection
+        std::shared_ptr<jsonio::DataBase> database(nullptr); // no real connection
 
         if(extract_args( argc, argv, export_data ))
             return 1;
 
-        jsonio17::FormatImpexGenerator worker(database, export_data.overwrite);
+        jsonio::FormatImpexGenerator worker(database, export_data.overwrite);
         switch(export_data.use_mode){
-        case jsonio17::ImpexFormatFile::modeImport:
+        case jsonio::ImpexFormatFile::modeImport:
             if(!export_data.schema_format_file.empty()) {
                worker.importFileToFile(export_data.impex_format_type, export_data.impex_format_file,
                                        export_data.foreign_format_file,export_data.schema_format_file);
@@ -81,7 +81,7 @@ int main( int argc, char* argv[] )
                                            export_data.foreign_format_file, export_data.schema_collection);
             }
             break;
-        case jsonio17::ImpexFormatFile::modeExport:
+        case jsonio::ImpexFormatFile::modeExport:
             if(!export_data.schema_format_file.empty()) {
                worker.exportFileFromFile(export_data.impex_format_type, export_data.impex_format_file,
                                          export_data.foreign_format_file,export_data.schema_format_file);
@@ -93,14 +93,14 @@ int main( int argc, char* argv[] )
                                                export_data.foreign_format_file, export_data.schema_collection);
             }
             break;
-        case jsonio17::ImpexFormatFile::modeUpdate:
+        case jsonio::ImpexFormatFile::modeUpdate:
             worker.updateFileToDatabase(export_data.impex_format_type, export_data.impex_format_file,
                                         export_data.foreign_format_file, export_data.schema_collection);
             break;
         }
         return 0;
     }
-    catch(jsonio17::jsonio_exception& e)
+    catch(jsonio::jsonio_exception& e)
     {
         std::cout  << e.what() <<  std::endl;
     }
@@ -117,11 +117,11 @@ int main( int argc, char* argv[] )
 
 void make_simple_schema_file() {
 
-    jsonio17::JsonYamlXMLArrayFile file("simple_schema_input.json");
-    file.Open( jsonio17::TxtFile::WriteOnly );
+    jsonio::JsonYamlXMLArrayFile file("simple_schema_input.json");
+    file.Open( jsonio::TxtFile::WriteOnly );
     // Insert documents to file
     for( int ii=0; ii<documentsInCollection; ii++ ) {
-        auto jsSimple = jsonio17::JsonSchema::object("SimpleSchemaTest");
+        auto jsSimple = jsonio::JsonSchema::object("SimpleSchemaTest");
         jsSimple["vbool"] = static_cast<bool>(ii%2);
         jsSimple["vint"] = ii;
         jsSimple["vdouble"] = 10.01*ii;
@@ -165,13 +165,13 @@ int extract_args( int argc, char* argv[], ImpexData& export_data )
             return 1;
         }
         else if ((arg == "-i") || (arg == "--import")) {
-            export_data.use_mode = jsonio17::ImpexFormatFile::modeImport;
+            export_data.use_mode = jsonio::ImpexFormatFile::modeImport;
         }
         else if ((arg == "-e") || (arg == "--export"))  {
-            export_data.use_mode = jsonio17::ImpexFormatFile::modeExport;
+            export_data.use_mode = jsonio::ImpexFormatFile::modeExport;
         }
         else if ((arg == "-u") || (arg == "--update"))  {
-            export_data.use_mode = jsonio17::ImpexFormatFile::modeUpdate;
+            export_data.use_mode = jsonio::ImpexFormatFile::modeUpdate;
         }
         else if ((arg == "-c") || (arg == "--config-file")) {
             if (i + 1 < argc) {

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "jsonio17/jsonbase.h"
+#include "jsonio/jsonbase.h"
 
-namespace jsonio17 {
+namespace jsonio {
 
 class JsonFree;
 class JsonSchema;
@@ -26,5 +26,5 @@ JsonSchema loads( const std::string& aschema_name, const std::string& xml_str );
 
 } // namespace XML
 
-} // namespace jsonio17
+} // namespace jsonio
 

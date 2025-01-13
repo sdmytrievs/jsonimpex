@@ -2,7 +2,7 @@
 
 #include <memory>
 
-namespace jsonio17 {
+namespace jsonio {
 
 class TJSONSerializer;
 
@@ -56,6 +56,6 @@ public:
 
 }
 
-} // jsonio17
+} // jsonio
 
 

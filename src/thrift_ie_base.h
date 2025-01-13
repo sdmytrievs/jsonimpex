@@ -1,8 +1,8 @@
 #pragma once
 
-#include "jsonio17/jsonschema.h"
-#include "jsonio17/dbedgedoc.h"
-#include "jsonimpex17/thrift_impex.h"
+#include "jsonio/jsonschema.h"
+#include "jsonio/dbedgedoc.h"
+#include "jsonimpex/thrift_impex.h"
 #include "lua-run.h"
 
 
@@ -12,11 +12,11 @@ using  impex_struct_t = ::apache::thrift::TBase;
 using namespace  ::impex;
 #else
 #include "no_thrift/impex_types_fix.h"
-using  impex_struct_t = ::jsonio17::impex::TBase;
+using  impex_struct_t = ::jsonio::impex::TBase;
 using namespace  ::impex;
 #endif
 
-namespace jsonio17 {
+namespace jsonio {
 
 /// Class AbstractIEFile - abstract interface of import/export to/from foreign format files.
 class AbstractIEFile
@@ -201,5 +201,5 @@ void writeDataToJsonSchema( JsonBase& object, const std::string& structName, imp
 void readDataFromJsonSchema( const JsonBase& object, const std::string& structName,  impex_struct_t* data );
 std::string parseCode(/*regex_constants::error_type*/ int etype);
 
-} // namespace jsonio17
+} // namespace jsonio
 

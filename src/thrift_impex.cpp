@@ -1,10 +1,10 @@
-#include "jsonio17/io_settings.h"
-#include "jsonimpex17/thrift_impex.h"
+#include "jsonio/io_settings.h"
+#include "jsonimpex/thrift_impex.h"
 #include "thrift_ie_json.h"
 #include "thrift_ie_keyvalue.h"
 #include "thrift_ie_table.h"
 
-namespace jsonio17 {
+namespace jsonio {
 
 std::map<std::string, IEFileFactory_f> ImpexFormatFile::formats = {};
 
@@ -101,5 +101,5 @@ AbstractIEFile *ImpexFormatFile::create_format_data( ImpexMode amode, const std:
     return nullptr;
 }
 
-} // namespace jsonio17
+} // namespace jsonio
 

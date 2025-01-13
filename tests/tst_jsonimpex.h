@@ -1,17 +1,17 @@
 #pragma once
 
 #include <gtest/gtest.h>
-#include "jsonio17/jsonschema.h"
-#include "jsonio17/jsondump.h"
-#include "jsonio17/schema_thrift.h"
-#include "jsonio17/io_settings.h"
+#include "jsonio/jsonschema.h"
+#include "jsonio/jsondump.h"
+#include "jsonio/schema_thrift.h"
+#include "jsonio/io_settings.h"
 #include "thrift_ie_json.h"
 #include "impex_schema.h"
 #include "lua-run.h"
 
 
 using namespace testing;
-using namespace jsonio17;
+using namespace jsonio;
 
 
 TEST(IMPEX, luaFunc)

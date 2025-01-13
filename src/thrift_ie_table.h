@@ -3,7 +3,7 @@
 #include <fstream>
 #include "thrift_ie_base.h"
 
-namespace jsonio17 {
+namespace jsonio {
 
 /// Class TableIEFile - export / import data records to / from a text file with table data.
 /// Using a generated JSON schema of that input file format
@@ -95,5 +95,5 @@ TableIEFile* connectFormatTableFile( int amode, const JsonBase& object, const st
 // ImpexFormatFile::formats["FormatTableFile"] = connectFormatTableFile;
 // ImpexFormatFile::addFormat("FormatTableFile", connectFormatTableFile);
 
-} // namespace jsonio17
+} // namespace jsonio
 

@@ -3,10 +3,10 @@
 
 #include <memory>
 #include <functional>
-#include "jsonio17/jsonbase.h"
-#include "jsonio17/dbvertexdoc.h"
+#include "jsonio/jsonbase.h"
+#include "jsonio/dbvertexdoc.h"
 
-namespace jsonio17 {
+namespace jsonio {
 
 class AbstractIEFile;
 
@@ -91,5 +91,5 @@ protected:
 };
 
 
-} // namespace jsonio17
+} // namespace jsonio
 

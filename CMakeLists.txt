@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.9)
 
 # Set the name of the project
-project(jsonimpex17 VERSION 0.2.0 LANGUAGES CXX C)
+project(jsonimpex VERSION 0.2.0 LANGUAGES CXX C)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 20)
@@ -27,7 +27,7 @@ option(BUILD_IMPEX_STATIC_LIBS "Build static libraries" ON)
 
 option(BuildExamples "Build EXAMPLES" ON)
 option(BuildTests "Build test suite" ON)
-option(JSONIMPEX_USE_THRIFT "Build jsonimpex17 with thrift library" OFF)
+option(JSONIMPEX_USE_THRIFT "Build jsonimpex with thrift library" OFF)
 
 # Used into conda only
 if(DEFINED ENV{CONDA_PREFIX})
@@ -54,7 +54,7 @@ endif()
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # Find all dependencies
-include(jsonimpex17FindDeps)
+include(jsonimpexFindDeps)
 
 # Set the list of compiler flags for GNU compiler
 if(${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
@@ -97,14 +97,14 @@ if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
     link_directories("c:/usr/local/lib")
 endif()
 
-# Set the jsonimpex17 source directory path
-set(JSONIMPEX17_SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
-set(JSONIMPEX17_HEADER_DIR ${CMAKE_SOURCE_DIR}/include)
+# Set the jsonimpex source directory path
+set(JSONIMPEX_SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
+set(JSONIMPEX_HEADER_DIR ${CMAKE_SOURCE_DIR}/include)
 
 
 # Set the include directories
-include_directories(${JSONIMPEX17_SOURCE_DIR})
-include_directories(${JSONIMPEX17_HEADER_DIR})
+include_directories(${JSONIMPEX_SOURCE_DIR})
+include_directories(${JSONIMPEX_HEADER_DIR})
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/src/gen-cpp")
 
 # Build jsonio library
@@ -121,6 +121,6 @@ if(BuildTests)
     add_subdirectory(tests)
 endif()
 
-# Install the cmake config files that permit users to use find_package(jsonio17)
-include(jsonimpex17InstallCMakeConfigFiles)
+# Install the cmake config files that permit users to use find_package(jsonimpex)
+include(jsonimpexInstallCMakeConfigFiles)
 

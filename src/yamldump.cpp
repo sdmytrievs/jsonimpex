@@ -6,15 +6,15 @@
 #include <yaml-cpp/yaml.h>
 #include <yaml-cpp/eventhandler.h>
 
-#include "jsonio17/jsonfree.h"
-#include "jsonio17/jsonschema.h"
-#include "jsonio17/jsonbuilder.h"
-#include "jsonio17/service.h"
-#include "jsonimpex17/yamldump.h"
+#include "jsonio/jsonfree.h"
+#include "jsonio/jsonschema.h"
+#include "jsonio/jsonbuilder.h"
+#include "jsonio/service.h"
+#include "jsonimpex/yamldump.h"
 
-namespace jsonio17 {
+namespace jsonio {
 
-/// Default logger for jsonimpex17 library
+/// Default logger for jsonimpex library
 extern std::shared_ptr<spdlog::logger> impex_logger;
 
 namespace yaml {
@@ -514,5 +514,5 @@ std::string Yaml2Json(const std::string &yaml_str)
 
 } // yaml namespace
 
-} // namespace jsonio17
+} // namespace jsonio
 

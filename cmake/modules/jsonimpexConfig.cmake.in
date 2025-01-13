@@ -5,9 +5,9 @@
 list(APPEND CMAKE_PREFIX_PATH $ENV{CONDA_PREFIX})
 
 # Include the cmake targets of the project if they have not been yet.
-if(NOT TARGET jsonimpex17::jsonimpex17)
-    include("@PACKAGE_JSONIMPEX_INSTALL_CONFIGDIR@/jsonimpex17Targets.cmake")
+if(NOT TARGET jsonimpex::jsonimpex)
+    include("@PACKAGE_JSONIMPEX_INSTALL_CONFIGDIR@/jsonimpexTargets.cmake")
 endif()
 
 # Recommended check at the end of a cmake config file.
-check_required_components(jsonimpex17)
+check_required_components(jsonimpex)

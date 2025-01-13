@@ -1,10 +1,10 @@
 #include <cstring>
 #include <regex>
-#include "jsonio17/jsondump.h"
+#include "jsonio/jsondump.h"
 #include "thrift_ie_table.h"
 namespace rgx = std;
 
-namespace jsonio17 {
+namespace jsonio {
 
 
 TableIEFile* connectFormatTableFile( int amode, const JsonBase& object, const std::string& lua_lib_path )
@@ -376,5 +376,5 @@ bool TableIEFile::writeBlockToFile( const key_values_table_t& data_to_write )
 }
 
 
-} // namespace jsonio17
+} // namespace jsonio
 

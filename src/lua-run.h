@@ -9,9 +9,9 @@
 #include <lua.hpp>
 #endif
 
-namespace jsonio17 {
+namespace jsonio {
 
-/// Default logger for jsonimpex17 library
+/// Default logger for jsonimpex library
 extern std::shared_ptr<spdlog::logger> impex_logger;
 
 /// LUA-C++ Integration Class
@@ -146,6 +146,6 @@ template <> bool LuaRun::set_vector(const std::string& valname, const std::vecto
 template <> bool LuaRun::get_vector(const std::string& valname, std::vector<std::string>& v);
 template <> bool LuaRun::runFunc( const std::string& luascript, std::string& value );
 
-} // namespace jsonio17
+} // namespace jsonio
 
 
