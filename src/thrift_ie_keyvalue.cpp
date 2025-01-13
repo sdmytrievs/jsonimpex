@@ -1,10 +1,10 @@
 #include <cstring>
 #include <regex>
-#include "jsonio17/jsondump.h"
+#include "jsonio/jsondump.h"
 #include "thrift_ie_keyvalue.h"
 namespace rgx = std;
 
-namespace jsonio17 {
+namespace jsonio {
 
 KeyValueIEFile* connectFormatKeyValueFile( int amode, const JsonBase& object, const std::string& lua_lib_path )
 {
@@ -551,6 +551,6 @@ std::string parseCode(/*regex_constants::error_type*/ int etype)
 // Match a "quoted std::string"  : ^"(?:[^\\"]|\\.)*"$
 
 
-} // namespace jsonio17
+} // namespace jsonio
 
 

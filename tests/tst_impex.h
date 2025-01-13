@@ -1,15 +1,15 @@
 #pragma once
 
 #include <gtest/gtest.h>
-#include "jsonio17/schema_thrift.h"
-#include "jsonio17/io_settings.h"
-#include "jsonimpex17/impex_generator.h"
+#include "jsonio/schema_thrift.h"
+#include "jsonio/io_settings.h"
+#include "jsonimpex/impex_generator.h"
 #include "impex_schema.h"
 #include "example_schema.h"
 #include "impex_schema_example.h"
 
 using namespace testing;
-using namespace jsonio17;
+using namespace jsonio;
 
 // Testing import and export external data implementation
 
@@ -141,8 +141,8 @@ TEST( EXPORT_IMPORT, FormatTableFile )
     //ioSettings().addSchemaFormat(schema_thrift, impex_schema_str);
 
     // no database connection
-    std::shared_ptr<jsonio17::DataBase> database(nullptr);
-    jsonio17::FormatImpexGenerator worker(database, true, jsonio17::FormatImpexGenerator::String);
+    std::shared_ptr<jsonio::DataBase> database(nullptr);
+    jsonio::FormatImpexGenerator worker(database, true, jsonio::FormatImpexGenerator::String);
 
     std::string other_format_string;
     worker.exportStringFromString( "FormatTableFile", export_simple_FormatTableFile_script,
@@ -174,8 +174,8 @@ TEST( EXPORT_IMPORT, FormatKeyValueFile )
     //ioSettings().addSchemaFormat(schema_thrift, schema_str);
     //ioSettings().addSchemaFormat(schema_thrift, impex_schema_str);
 
-    std::shared_ptr<jsonio17::DataBase> database(nullptr);
-    jsonio17::FormatImpexGenerator worker(database, true, jsonio17::FormatImpexGenerator::String);
+    std::shared_ptr<jsonio::DataBase> database(nullptr);
+    jsonio::FormatImpexGenerator worker(database, true, jsonio::FormatImpexGenerator::String);
 
     std::string other_format_string;
     worker.exportStringFromString( "FormatKeyValueFile", export_simple_FormatKeyValueFile_script,
@@ -202,8 +202,8 @@ TEST( IMPORT, FormatStructDataFile )
     //ioSettings().addSchemaFormat(schema_thrift, schema_str);
     //ioSettings().addSchemaFormat(schema_thrift, impex_schema_str);
 
-    std::shared_ptr<jsonio17::DataBase> database(nullptr);
-    jsonio17::FormatImpexGenerator worker(database, true, jsonio17::FormatImpexGenerator::String);
+    std::shared_ptr<jsonio::DataBase> database(nullptr);
+    jsonio::FormatImpexGenerator worker(database, true, jsonio::FormatImpexGenerator::String);
 
     std::string schema_format_string;
     worker.importStringToString( "FormatStructDataFile", import_simple_FormatStructDataFile_script,

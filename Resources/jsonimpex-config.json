@@ -34,9 +34,9 @@
      },
      "log" :   {
           "modules" :   [
-               "jsonarango",
-               "jsonimpex17",
-               "jsonio17"
+               "arango-cpp",
+               "jsonimpex",
+               "jsonio"
           ],
           "level" :   "off",
           "file" :   {
@@ -44,8 +44,8 @@
                "size" :   10000000,
                "count" :   10,
                "modules" :   [
-                    "jsonarango",
-                    "jsonio17"
+                    "arango-cpp",
+                    "jsonio"
                ]
           }
      }

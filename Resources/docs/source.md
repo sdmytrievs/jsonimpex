@@ -1,7 +1,7 @@
 ### Dependent
 
-- jsonArango
-- jsonio17
+- arango-cpp
+- jsonio
 
 ## Files descriptions
 

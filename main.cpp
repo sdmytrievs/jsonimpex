@@ -1,15 +1,15 @@
 #include <iostream>
-#include "jsonio17/jsonfree.h"
-#include "jsonio17/jsonschema.h"
-#include "jsonio17/jsondump.h"
-#include "jsonio17/schema_thrift.h"
-#include "jsonio17/io_settings.h"
-#include "jsonimpex17/xmldump.h"
+#include "jsonio/jsonfree.h"
+#include "jsonio/jsonschema.h"
+#include "jsonio/jsondump.h"
+#include "jsonio/schema_thrift.h"
+#include "jsonio/io_settings.h"
+#include "jsonimpex/xmldump.h"
 #include "thrift_ie_json.h"
 #include "tests/impex_schema.h"
 
 
-using namespace jsonio17;
+using namespace jsonio;
 
 void FreeSchema();
 
@@ -23,7 +23,7 @@ int main()
         FreeSchema();
 
     }
-    catch(jsonio17::jsonio_exception& e)
+    catch(jsonio::jsonio_exception& e)
     {
         std::cout <<   e.what() <<  std::endl;
     }

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Installing dependencies needed to build jsonimpex17
+# Installing dependencies needed to build jsonimpex
 
 if [ "$(uname)" == "Darwin" ]; then
     # Do under Mac OS X platform
@@ -38,8 +38,8 @@ fi
 # Uncomment what is necessary to reinstall by force
 #sudo rm -rf /usr/local/include/spdlog
 #sudo rm -f /usr/local/lib/libvelocypack.a
-#sudo rm -f /usr/local/lib/libjsonarango.$EXTN
-#sudo rm -f /usr/local/lib/libjsonio17.$EXTN
+#sudo rm -f /usr/local/lib/libarango-cpp.$EXTN
+#sudo rm -f /usr/local/lib/libjsonio.$EXTN
 #sudo rm -f /usr/local/lib/libpugixml.$EXTN
 #sudo rm -f /usr/local/lib/libyaml-cpp.$EXTN
 #sudo rm -f /usr/local/lib/libthrift.$EXTN
@@ -64,17 +64,17 @@ test -d /usr/local/include/spdlog || {
                  rm -rf ~/code
 }
 
-# Velocypack from ArangoDB (added for installing jsonArango database client)
-# Installed as part jsonArango
-# jsonArango database client
-# if no jsonArango installed in /usr/local/lib/libjsonarango.a
-test -f /usr/local/lib/libjsonarango.$EXTN || {
+# Velocypack from arango-cpp (added for installing arango-cpp database client)
+# Installed as part arango-cpp
+# arango-cpp database client
+# if no arango-cpp installed in /usr/local/lib/libarango-cpp.a
+test -f /usr/local/lib/libarango-cpp.$EXTN || {
 
-        # Building jsonio library
+        # Building arango-cpp library
         mkdir -p ~/code && \
                 cd ~/code && \
-                git clone  --recurse-submodules https://bitbucket.org/gems4/jsonarango.git && \
-                cd jsonarango && \
+                git clone  --recurse-submodules https://github.com/sdmytrievs/arango-cpp.git && \
+                cd arango-cpp && \
                 mkdir -p build && \
                 cd build && \
                 cmake .. -DCMAKE_CXX_FLAGS=-fPIC -DCMAKE_BUILD_TYPE=Release && \
@@ -86,15 +86,15 @@ test -f /usr/local/lib/libjsonarango.$EXTN || {
                  rm -rf ~/code
 }
 
-# JSONIO17 database client
-# if no JSONIO installed in /usr/local/lib/libjsonio17.$EXTN (/usr/local/include/jsonio17)
-test -f /usr/local/lib/libjsonio17.$EXTN || {
+# JSONIO database client
+# if no JSONIO installed in /usr/local/lib/libjsonio.$EXTN (/usr/local/include/jsonio)
+test -f /usr/local/lib/libjsonio.$EXTN || {
 
         # Building jsonio library
         mkdir -p ~/code && \
                 cd ~/code && \
-                git clone https://bitbucket.org/gems4/jsonio17.git -b $BRANCH_JSON && \
-                cd jsonio17 && \
+                git clone https://github.com/sdmytrievs/jsonio.git -b $BRANCH_JSON && \
+                cd jsonio && \
                 mkdir -p build && \
                 cd build && \
                 cmake .. -DCMAKE_CXX_FLAGS=-fPIC -DCMAKE_BUILD_TYPE=$BuildType && \

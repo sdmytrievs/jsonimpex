@@ -1,4 +1,4 @@
-name: jsonimpex17
+name: jsonimpex
 
 dependencies:
   - gxx_linux-64>=9.4.0  # [linux]
@@ -9,9 +9,7 @@ dependencies:
   - ccache  # [unix]
   - curl
   - nlohmann_json
-#  - velocypack
   - spdlog
-#  - jsonarango
   - yaml-cpp
   - pugixml
   - lua

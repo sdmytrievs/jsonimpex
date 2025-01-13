@@ -1,8 +1,8 @@
 #pragma once
 
-#include "jsonio17/txt2file.h"
+#include "jsonio/txt2file.h"
 
-namespace jsonio17 {
+namespace jsonio {
 
 
 /// Class for read/write json/yaml/xml files
@@ -102,5 +102,5 @@ protected:
 };
 
 
-} // namespace jsonio17
+} // namespace jsonio
 

@@ -1,7 +1,7 @@
 #include "TJSONSerializer.h"
 using namespace std;
 
-namespace jsonio17 {
+namespace jsonio {
 
 #ifdef USE_THRIFT
 TJSONSerializer::TJSONSerializer( std::shared_ptr<TTransport> ptrans, const SchemasData* aschema ):
@@ -499,5 +499,5 @@ uint32_t TJSONSerializer::skip( TType type) {
 
 #endif
 
-} // namespace jsonio17
+} // namespace jsonio
 

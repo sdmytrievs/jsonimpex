@@ -114,31 +114,13 @@ copy /y lua54.lib "%LOCALINSTALL%/lib/lua.lib"
 
 echo
 echo ******                		 ******
-echo ****** Compiling Velocypack ******
+echo ****** Compiling arango-cpp         ******
 echo ******                		 ******
 echo
 
-
-echo Get velocypack from git...
-git clone https://github.com/arangodb/velocypack.git
-cd velocypack
-
-echo "Configuring..."
-REM cmake -G"Visual Studio 16 2019" .. -DCMAKE_BUILD_TYPE=Release  -DBuildVelocyPackExamples=OFF -DCMAKE_INSTALL_PREFIX=%LOCALINSTALL% .. -A x64 -S . -B build
-cmake -G%COMPILER_VER_NAME% -DCMAKE_BUILD_TYPE=Release -DBuildVelocyPackExamples=OFF -DCMAKE_INSTALL_PREFIX=%LOCALINSTALL% .. -S . -B build
-echo "Building..."
-cmake --build build  --target install
-cd ..
-
-echo
-echo ******                		 ******
-echo ****** Compiling jsonArango         ******
-echo ******                		 ******
-echo
-
-echo Get jsonarango from git...
-git clone https://bitbucket.org/gems4/jsonarango.git
-cd jsonarango
+echo Get arango-cpp from git...
+git clone https://github.com/sdmytrievs/arango-cpp.git
+cd arango-cpp
 rem git checkout test
 
 echo "Configuring..."
@@ -150,13 +132,13 @@ cd ..
 
 echo
 echo ******                		 ******
-echo ****** Compiling jsonio17         ******
+echo ****** Compiling jsonio         ******
 echo ******                		 ******
 echo
 
-echo Get jsonio17 from git...
-git clone https://bitbucket.org/gems4/jsonio17.git
-cd jsonio17
+echo Get jsonio from git...
+git clone https://github.com/sdmytrievs/jsonio.git
+cd jsonio
 rem git checkout origin/tests
 
 echo "Configuring..."

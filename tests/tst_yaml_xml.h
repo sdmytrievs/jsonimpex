@@ -3,17 +3,17 @@
 #include <gtest/gtest.h>
 
 #include <fstream>
-#include "jsonio17/jsondump.h"
-#include "jsonio17/jsonschema.h"
-#include "jsonio17/io_settings.h"
-#include "jsonio17/schema_thrift.h"
-#include "jsonimpex17/yamldump.h"
-#include "jsonimpex17/xmldump.h"
-#include "jsonimpex17/yaml_xml2file.h"
+#include "jsonio/jsondump.h"
+#include "jsonio/jsonschema.h"
+#include "jsonio/io_settings.h"
+#include "jsonio/schema_thrift.h"
+#include "jsonimpex/yamldump.h"
+#include "jsonimpex/xmldump.h"
+#include "jsonimpex/yaml_xml2file.h"
 #include "example_schema.h"
 
 using namespace testing;
-using namespace jsonio17;
+using namespace jsonio;
 
 
 TEST( JSONYAML, ObjectSimple)

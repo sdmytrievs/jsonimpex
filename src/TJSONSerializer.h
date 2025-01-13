@@ -2,8 +2,8 @@
 
 #include <stack>
 
-#include "jsonio17/jsonschema.h"
-#include "jsonio17/jsonbuilder.h"
+#include "jsonio/jsonschema.h"
+#include "jsonio/jsonbuilder.h"
 
 #ifdef USE_THRIFT
 #include <thrift/protocol/TVirtualProtocol.h>
@@ -11,11 +11,11 @@
 using namespace ::apache::thrift::protocol;
 #else
 #include "no_thrift/impex_base.h"
-using namespace ::jsonio17::impex;
+using namespace ::jsonio::impex;
 #endif
 
 
-namespace jsonio17 {
+namespace jsonio {
 
 const std::string ismapkey2("-");
 
@@ -442,6 +442,6 @@ private:
 
 };
 
-} // namespace jsonio17
+} // namespace jsonio
 
 

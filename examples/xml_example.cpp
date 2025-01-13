@@ -1,13 +1,13 @@
 #include <iostream>
-#include "jsonio17/jsonfree.h"
-#include "jsonio17/jsonschema.h"
-#include "jsonio17/jsondump.h"
-#include "jsonio17/schema_thrift.h"
-#include "jsonio17/io_settings.h"
-#include "jsonimpex17/xmldump.h"
+#include "jsonio/jsonfree.h"
+#include "jsonio/jsonschema.h"
+#include "jsonio/jsondump.h"
+#include "jsonio/schema_thrift.h"
+#include "jsonio/io_settings.h"
+#include "jsonimpex/xmldump.h"
 #include "tests/example_schema.h"
 
-using namespace jsonio17;
+using namespace jsonio;
 
 void FreeSchema();
 void SimpleSchema();
@@ -16,7 +16,7 @@ void ComplexSchema();
 
 int main()
 {
-    jsonio17::JsonioSettings::settingsFileName = "jsonimpex17-config.json";
+    jsonio::JsonioSettings::settingsFileName = "jsonimpex-config.json";
 
     try{
         ioSettings().addSchemaFormat( schema_thrift, schema_str );
@@ -25,7 +25,7 @@ int main()
         ComplexSchema();
 
     }
-    catch(jsonio17::jsonio_exception& e)
+    catch(jsonio::jsonio_exception& e)
     {
         std::cout <<   e.what() <<  std::endl;
     }

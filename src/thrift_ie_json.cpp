@@ -1,9 +1,9 @@
 
-#include "jsonio17/jsonfree.h"
-#include "jsonio17/jsondump.h"
+#include "jsonio/jsonfree.h"
+#include "jsonio/jsondump.h"
 #include "thrift_ie_json.h"
 
-namespace jsonio17 {
+namespace jsonio {
 
 
 StructDataIEFile* connectFormatStructDataFile( int amode, const JsonBase& object, const std::string& lua_lib_path )
@@ -197,5 +197,5 @@ bool StructDataIEFile::read_block_from_json( const std::string& inputjson, std::
 }
 
 
-} // namespace jsonio17
+} // namespace jsonio
 

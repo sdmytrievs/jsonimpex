@@ -33,16 +33,16 @@ win32 {
   LIBPATH += "C:\usr\local\lib"
 }
 
-# Define the directory where jsonimpex17 source code is located
-JSONIMPEX17_DIR =  ./src
-JSONIMPEX17_HEADERS_DIR =  ./include
-DEPENDPATH   += $$JSONIMPEX17_DIR
-DEPENDPATH   += $$JSONIMPEX17_HEADERS_DIR
-INCLUDEPATH   += $$JSONIMPEX17_DIR
-INCLUDEPATH   += $$JSONIMPEX17_HEADERS_DIR
+# Define the directory where jsonimpex source code is located
+JSONIMPEX_DIR =  ./src
+JSONIMPEX_HEADERS_DIR =  ./include
+DEPENDPATH   += $$JSONIMPEX_DIR
+DEPENDPATH   += $$JSONIMPEX_HEADERS_DIR
+INCLUDEPATH   += $$JSONIMPEX_DIR
+INCLUDEPATH   += $$JSONIMPEX_HEADERS_DIR
 
-!win32::LIBS += -ljsonio17 -lyaml-cpp  -lpugixml
-win32::LIBS += -ljsonio17-static -lyaml-cppd  -lpugixml
+!win32::LIBS += -ljsonio -lyaml-cpp  -lpugixml
+win32::LIBS += -ljsonio-static -lyaml-cppd  -lpugixml
 unix:!macx-clang:LIBS += -llua -ldl
 macx-clang:LIBS += -llua
 win32:LIBS += -llua54
@@ -66,7 +66,7 @@ LIBS += -lthrift
 include($$THRIFT_DIR/thrift.pri)
 }
 
-include($$JSONIMPEX17_DIR/jsonimpex17.pri)
+include($$JSONIMPEX_DIR/jsonimpex.pri)
 
 SOURCES += \
        examples/impex_tool.cpp

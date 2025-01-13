@@ -1,10 +1,10 @@
-#include "jsonio17/io_settings.h"
-#include "jsonio17/jsonschema.h"
-#include "jsonio17/jsondump.h"
+#include "jsonio/io_settings.h"
+#include "jsonio/jsonschema.h"
+#include "jsonio/jsondump.h"
 #include "thrift_ie_base.h"
 #include "TJSONSerializer.h"
 
-namespace jsonio17 {
+namespace jsonio {
 
 
 void writeDataToJsonSchema( JsonBase& object,
@@ -362,6 +362,6 @@ void AbstractIEFile::extractDataToWrite( const std::string& json_block_data, key
 }
 
 
-} // namespace jsonio17
+} // namespace jsonio
 
 

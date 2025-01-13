@@ -7,7 +7,7 @@
 #include <string>
 
 #include "impex_base.h"
-#include "jsonio17/jsondump.h"
+#include "jsonio/jsondump.h"
 
 
 namespace impex {
@@ -15,7 +15,7 @@ namespace impex {
 template <class T>
 std::string to_string( const T& value )
 {
-   return  ::jsonio17::json::dump(value);
+   return  ::jsonio::json::dump(value);
 }
 
 /**
@@ -82,7 +82,7 @@ typedef struct _FormatValue__isset {
 /**
  * Definition of the data value format in imported/exported file
  */
-class FormatValue : public virtual ::jsonio17::impex::TBase {
+class FormatValue : public virtual ::jsonio::impex::TBase {
  public:
 
   FormatValue(const FormatValue&);
@@ -132,8 +132,8 @@ class FormatValue : public virtual ::jsonio17::impex::TBase {
 
   bool operator < (const FormatValue & ) const;
 
-  uint32_t read(::jsonio17::TJSONSerializer* iprot);
-  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+  uint32_t read(::jsonio::TJSONSerializer* iprot);
+  uint32_t write(::jsonio::TJSONSerializer* oprot) const;
 
   virtual void printTo(std::ostream& out) const;
 };
@@ -152,7 +152,7 @@ typedef struct _FormatKeyword__isset {
 /**
  * Format to read/print keywords in key-value pair file
  */
-class FormatKeyword : public virtual ::jsonio17::impex::TBase {
+class FormatKeyword : public virtual ::jsonio::impex::TBase {
  public:
 
   FormatKeyword(const FormatKeyword&);
@@ -202,8 +202,8 @@ class FormatKeyword : public virtual ::jsonio17::impex::TBase {
 
   bool operator < (const FormatKeyword & ) const;
 
-  uint32_t read(::jsonio17::TJSONSerializer* iprot);
-  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+  uint32_t read(::jsonio::TJSONSerializer* iprot);
+  uint32_t write(::jsonio::TJSONSerializer* oprot) const;
 
   virtual void printTo(std::ostream& out) const;
 };
@@ -221,7 +221,7 @@ typedef struct _DataType__isset {
 /**
  * Type of object from the imported or exported file (for use in keyword lookup list or map)
  */
-class DataType : public virtual ::jsonio17::impex::TBase {
+class DataType : public virtual ::jsonio::impex::TBase {
  public:
 
   DataType(const DataType&);
@@ -259,8 +259,8 @@ class DataType : public virtual ::jsonio17::impex::TBase {
 
   bool operator < (const DataType & ) const;
 
-  uint32_t read(::jsonio17::TJSONSerializer* iprot);
-  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+  uint32_t read(::jsonio::TJSONSerializer* iprot);
+  uint32_t write(::jsonio::TJSONSerializer* oprot) const;
 
   virtual void printTo(std::ostream& out) const;
 };
@@ -280,7 +280,7 @@ typedef struct _DataObject__isset {
 /**
  * Thrift key of data object "8" or "3.8" or "2.3.8" or "" to ignore (import); any string not starting from a digit as comment (export)
  */
-class DataObject : public virtual ::jsonio17::impex::TBase {
+class DataObject : public virtual ::jsonio::impex::TBase {
  public:
 
   DataObject(const DataObject&);
@@ -340,8 +340,8 @@ class DataObject : public virtual ::jsonio17::impex::TBase {
 
   bool operator < (const DataObject & ) const;
 
-  uint32_t read(::jsonio17::TJSONSerializer* iprot);
-  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+  uint32_t read(::jsonio::TJSONSerializer* iprot);
+  uint32_t write(::jsonio::TJSONSerializer* oprot) const;
 
   virtual void printTo(std::ostream& out) const;
 };
@@ -366,7 +366,7 @@ typedef struct _Separators__isset {
 /**
  * Definition of value, line, row, block, comment, end-of-data separators
  */
-class Separators : public virtual ::jsonio17::impex::TBase {
+class Separators : public virtual ::jsonio::impex::TBase {
  public:
 
   Separators(const Separators&);
@@ -474,8 +474,8 @@ class Separators : public virtual ::jsonio17::impex::TBase {
 
   bool operator < (const Separators & ) const;
 
-  uint32_t read(::jsonio17::TJSONSerializer* iprot);
-  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+  uint32_t read(::jsonio::TJSONSerializer* iprot);
+  uint32_t write(::jsonio::TJSONSerializer* oprot) const;
 
   virtual void printTo(std::ostream& out) const;
 };
@@ -494,7 +494,7 @@ typedef struct _FormatBlock__isset {
 /**
  * Text block format in file corresponding to one database document (record)
  */
-class FormatBlock : public virtual ::jsonio17::impex::TBase {
+class FormatBlock : public virtual ::jsonio::impex::TBase {
  public:
 
   FormatBlock(const FormatBlock&);
@@ -550,8 +550,8 @@ class FormatBlock : public virtual ::jsonio17::impex::TBase {
 
   bool operator < (const FormatBlock & ) const;
 
-  uint32_t read(::jsonio17::TJSONSerializer* iprot);
-  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+  uint32_t read(::jsonio::TJSONSerializer* iprot);
+  uint32_t write(::jsonio::TJSONSerializer* oprot) const;
 
   virtual void printTo(std::ostream& out) const;
 };
@@ -574,7 +574,7 @@ typedef struct _FormatTextFile__isset {
 /**
  * Definition of text data file format
  */
-class FormatTextFile : public virtual ::jsonio17::impex::TBase {
+class FormatTextFile : public virtual ::jsonio::impex::TBase {
  public:
 
   FormatTextFile(const FormatTextFile&);
@@ -688,8 +688,8 @@ class FormatTextFile : public virtual ::jsonio17::impex::TBase {
 
   bool operator < (const FormatTextFile & ) const;
 
-  uint32_t read(::jsonio17::TJSONSerializer* iprot);
-  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+  uint32_t read(::jsonio::TJSONSerializer* iprot);
+  uint32_t write(::jsonio::TJSONSerializer* oprot) const;
 
   virtual void printTo(std::ostream& out) const;
 };
@@ -714,7 +714,7 @@ typedef struct _FormatKeyValue__isset {
  * We use Regular Expression in case of import and Print Format in case of export.
  * Use names "head0", ..., "headN", "end0", ..., "endN" to import/export data from/to head and end part
  */
-class FormatKeyValue : public virtual ::jsonio17::impex::TBase {
+class FormatKeyValue : public virtual ::jsonio::impex::TBase {
  public:
 
   FormatKeyValue(const FormatKeyValue&);
@@ -825,8 +825,8 @@ class FormatKeyValue : public virtual ::jsonio17::impex::TBase {
 
   bool operator < (const FormatKeyValue & ) const;
 
-  uint32_t read(::jsonio17::TJSONSerializer* iprot);
-  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+  uint32_t read(::jsonio::TJSONSerializer* iprot);
+  uint32_t write(::jsonio::TJSONSerializer* oprot) const;
 
   virtual void printTo(std::ostream& out) const;
 };
@@ -848,7 +848,7 @@ typedef struct _FormatKeyValueFile__isset {
 /**
  * Definition of text file with key-value pair data
  */
-class FormatKeyValueFile : public virtual ::jsonio17::impex::TBase {
+class FormatKeyValueFile : public virtual ::jsonio::impex::TBase {
  public:
 
   FormatKeyValueFile(const FormatKeyValueFile&);
@@ -960,8 +960,8 @@ class FormatKeyValueFile : public virtual ::jsonio17::impex::TBase {
 
   bool operator < (const FormatKeyValueFile & ) const;
 
-  uint32_t read(::jsonio17::TJSONSerializer* iprot);
-  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+  uint32_t read(::jsonio::TJSONSerializer* iprot);
+  uint32_t write(::jsonio::TJSONSerializer* oprot) const;
 
   virtual void printTo(std::ostream& out) const;
 };
@@ -993,7 +993,7 @@ typedef struct _FormatTable__isset {
  * if defined  value_regexp, split used regexpr
  * otherwise split by  columns delimiter
  */
-class FormatTable : public virtual ::jsonio17::impex::TBase {
+class FormatTable : public virtual ::jsonio::impex::TBase {
  public:
 
   FormatTable(const FormatTable&);
@@ -1127,8 +1127,8 @@ class FormatTable : public virtual ::jsonio17::impex::TBase {
 
   bool operator < (const FormatTable & ) const;
 
-  uint32_t read(::jsonio17::TJSONSerializer* iprot);
-  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+  uint32_t read(::jsonio::TJSONSerializer* iprot);
+  uint32_t write(::jsonio::TJSONSerializer* oprot) const;
 
   virtual void printTo(std::ostream& out) const;
 };
@@ -1150,7 +1150,7 @@ typedef struct _FormatTableFile__isset {
 /**
  * Definition of table text file format
  */
-class FormatTableFile : public virtual ::jsonio17::impex::TBase {
+class FormatTableFile : public virtual ::jsonio::impex::TBase {
  public:
 
   FormatTableFile(const FormatTableFile&);
@@ -1262,8 +1262,8 @@ class FormatTableFile : public virtual ::jsonio17::impex::TBase {
 
   bool operator < (const FormatTableFile & ) const;
 
-  uint32_t read(::jsonio17::TJSONSerializer* iprot);
-  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+  uint32_t read(::jsonio::TJSONSerializer* iprot);
+  uint32_t write(::jsonio::TJSONSerializer* oprot) const;
 
   virtual void printTo(std::ostream& out) const;
 };
@@ -1284,7 +1284,7 @@ typedef struct _FormatStructDataFile__isset {
 /**
  * Definition of foreign structured data JSON/YAML/XML text file
  */
-class FormatStructDataFile : public virtual ::jsonio17::impex::TBase {
+class FormatStructDataFile : public virtual ::jsonio::impex::TBase {
  public:
 
   FormatStructDataFile(const FormatStructDataFile&);
@@ -1380,8 +1380,8 @@ class FormatStructDataFile : public virtual ::jsonio17::impex::TBase {
 
   bool operator < (const FormatStructDataFile & ) const;
 
-  uint32_t read(::jsonio17::TJSONSerializer* iprot);
-  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+  uint32_t read(::jsonio::TJSONSerializer* iprot);
+  uint32_t write(::jsonio::TJSONSerializer* oprot) const;
 
   virtual void printTo(std::ostream& out) const;
 };
@@ -1401,7 +1401,7 @@ typedef struct _FormatImportExportFile__isset {
 /**
  * Generalized import-export data file format
  */
-class FormatImportExportFile : public virtual ::jsonio17::impex::TBase {
+class FormatImportExportFile : public virtual ::jsonio::impex::TBase {
  public:
 
   FormatImportExportFile(const FormatImportExportFile&);
@@ -1463,8 +1463,8 @@ class FormatImportExportFile : public virtual ::jsonio17::impex::TBase {
 
   bool operator < (const FormatImportExportFile & ) const;
 
-  uint32_t read(::jsonio17::TJSONSerializer* iprot);
-  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+  uint32_t read(::jsonio::TJSONSerializer* iprot);
+  uint32_t write(::jsonio::TJSONSerializer* oprot) const;
 
   virtual void printTo(std::ostream& out) const;
 };
@@ -1485,7 +1485,7 @@ typedef struct _ImpexFormat__isset {
 /**
  * description of import/export format record
  */
-class ImpexFormat : public virtual ::jsonio17::impex::TBase {
+class ImpexFormat : public virtual ::jsonio::impex::TBase {
  public:
 
   ImpexFormat(const ImpexFormat&);
@@ -1601,8 +1601,8 @@ class ImpexFormat : public virtual ::jsonio17::impex::TBase {
 
   bool operator < (const ImpexFormat & ) const;
 
-  uint32_t read(::jsonio17::TJSONSerializer* iprot);
-  uint32_t write(::jsonio17::TJSONSerializer* oprot) const;
+  uint32_t read(::jsonio::TJSONSerializer* iprot);
+  uint32_t write(::jsonio::TJSONSerializer* oprot) const;
 
   virtual void printTo(std::ostream& out) const;
 };

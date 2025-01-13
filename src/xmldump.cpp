@@ -1,14 +1,14 @@
 #include <iomanip>
 #include "pugixml.hpp"
 
-#include "jsonio17/jsonfree.h"
-#include "jsonio17/jsonschema.h"
-#include "jsonio17/jsonbuilder.h"
-#include "jsonio17/service.h"
-#include "jsonimpex17/xmldump.h"
+#include "jsonio/jsonfree.h"
+#include "jsonio/jsonschema.h"
+#include "jsonio/jsonbuilder.h"
+#include "jsonio/service.h"
+#include "jsonimpex/xmldump.h"
 
 
-namespace jsonio17 {
+namespace jsonio {
 
 namespace XML {
 
@@ -269,5 +269,5 @@ void parse( const pugi::xml_node& node,  JsonBuilderBase& builder  )
 
 } // XML namespace
 
-} // namespace jsonio17
+} // namespace jsonio
 

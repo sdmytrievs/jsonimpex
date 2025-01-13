@@ -1,11 +1,11 @@
 #include <fstream>
-#include "jsonio17/jsondump.h"
-#include "jsonimpex17/yaml_xml2file.h"
-#include "jsonimpex17/yamldump.h"
-#include "jsonimpex17/xmldump.h"
+#include "jsonio/jsondump.h"
+#include "jsonimpex/yaml_xml2file.h"
+#include "jsonimpex/yamldump.h"
+#include "jsonimpex/xmldump.h"
 
 
-namespace jsonio17 {
+namespace jsonio {
 
 //  JsonYamlXMLFile   --------------------------------------------------------------
 
@@ -207,5 +207,5 @@ void JsonYamlXMLArrayFile::save_to_stream( std::ostream& os )
 }
 
 
-} // namespace jsonio17
+} // namespace jsonio
 

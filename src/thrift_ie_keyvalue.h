@@ -3,7 +3,7 @@
 #include <fstream>
 #include "thrift_ie_base.h"
 
-namespace jsonio17 {
+namespace jsonio {
 
 
 /// Class KeyValueIEFile - export/import of data records to/from text file with key-value pair data.
@@ -97,6 +97,6 @@ KeyValueIEFile* connectFormatKeyValueFile( int amode, const JsonBase& object, co
 // ImpexFormatFile::addFormat("FormatKeyValueFile", connectFormatKeyValueFile);
 
 
-} // namespace jsonio17
+} // namespace jsonio
 
 

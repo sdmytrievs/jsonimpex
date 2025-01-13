@@ -98,27 +98,27 @@ std::ostream& operator<<(std::ostream& out, const FormatValue& obj)
 }
 
 
-uint32_t FormatValue::read(::jsonio17::TJSONSerializer* iprot) {
+uint32_t FormatValue::read(::jsonio::TJSONSerializer* iprot) {
 
-  //::jsonio17::impex::TInputRecursionTracker tracker(*iprot);
+  //::jsonio::impex::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
   std::string fname;
-  ::jsonio17::impex::TType ftype;
+  ::jsonio::impex::TType ftype;
   int16_t fid;
 
   xfer += iprot->readStructBegin(fname);
 
-  //using ::jsonio17::TJSONSerializerException;
+  //using ::jsonio::TJSONSerializerException;
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::jsonio17::impex::T_STOP) {
+    if (ftype == ::jsonio::impex::T_STOP) {
       break;
     }
     switch (fid)
     {
       case 1:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->format);
           this->__isset.format = true;
         } else {
@@ -126,7 +126,7 @@ uint32_t FormatValue::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 2:
-        if (ftype == ::jsonio17::impex::T_DOUBLE) {
+        if (ftype == ::jsonio::impex::T_DOUBLE) {
           xfer += iprot->readDouble(this->factor);
           this->__isset.factor = true;
         } else {
@@ -134,7 +134,7 @@ uint32_t FormatValue::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 3:
-        if (ftype == ::jsonio17::impex::T_DOUBLE) {
+        if (ftype == ::jsonio::impex::T_DOUBLE) {
           xfer += iprot->readDouble(this->increment);
           this->__isset.increment = true;
         } else {
@@ -153,22 +153,22 @@ uint32_t FormatValue::read(::jsonio17::TJSONSerializer* iprot) {
   return xfer;
 }
 
-uint32_t FormatValue::write(::jsonio17::TJSONSerializer* oprot) const {
+uint32_t FormatValue::write(::jsonio::TJSONSerializer* oprot) const {
   uint32_t xfer = 0;
-  //::jsonio17::impex::TOutputRecursionTracker tracker(*oprot);
+  //::jsonio::impex::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("FormatValue");
 
-  xfer += oprot->writeFieldBegin("format", ::jsonio17::impex::T_STRING, 1);
+  xfer += oprot->writeFieldBegin("format", ::jsonio::impex::T_STRING, 1);
   xfer += oprot->writeString(this->format);
   xfer += oprot->writeFieldEnd();
 
   if (this->__isset.factor) {
-    xfer += oprot->writeFieldBegin("factor", ::jsonio17::impex::T_DOUBLE, 2);
+    xfer += oprot->writeFieldBegin("factor", ::jsonio::impex::T_DOUBLE, 2);
     xfer += oprot->writeDouble(this->factor);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.increment) {
-    xfer += oprot->writeFieldBegin("increment", ::jsonio17::impex::T_DOUBLE, 3);
+    xfer += oprot->writeFieldBegin("increment", ::jsonio::impex::T_DOUBLE, 3);
     xfer += oprot->writeDouble(this->increment);
     xfer += oprot->writeFieldEnd();
   }
@@ -231,29 +231,29 @@ std::ostream& operator<<(std::ostream& out, const FormatKeyword& obj)
 }
 
 
-uint32_t FormatKeyword::read(::jsonio17::TJSONSerializer* iprot) {
+uint32_t FormatKeyword::read(::jsonio::TJSONSerializer* iprot) {
 
-  //::jsonio17::impex::TInputRecursionTracker tracker(*iprot);
+  //::jsonio::impex::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
   std::string fname;
-  ::jsonio17::impex::TType ftype;
+  ::jsonio::impex::TType ftype;
   int16_t fid;
 
   xfer += iprot->readStructBegin(fname);
 
-  //using ::jsonio17::TJSONSerializerException;
+  //using ::jsonio::TJSONSerializerException;
 
 
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::jsonio17::impex::T_STOP) {
+    if (ftype == ::jsonio::impex::T_STOP) {
       break;
     }
     switch (fid)
     {
       case 1:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->format);
           this->__isset.format = true;
         } else {
@@ -261,7 +261,7 @@ uint32_t FormatKeyword::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 2:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->delim_begin);
           this->__isset.delim_begin = true;
         } else {
@@ -269,7 +269,7 @@ uint32_t FormatKeyword::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 3:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->delim_end);
           this->__isset.delim_end = true;
         } else {
@@ -288,22 +288,22 @@ uint32_t FormatKeyword::read(::jsonio17::TJSONSerializer* iprot) {
   return xfer;
 }
 
-uint32_t FormatKeyword::write(::jsonio17::TJSONSerializer* oprot) const {
+uint32_t FormatKeyword::write(::jsonio::TJSONSerializer* oprot) const {
   uint32_t xfer = 0;
-  //::jsonio17::impex::TOutputRecursionTracker tracker(*oprot);
+  //::jsonio::impex::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("FormatKeyword");
 
-  xfer += oprot->writeFieldBegin("format", ::jsonio17::impex::T_STRING, 1);
+  xfer += oprot->writeFieldBegin("format", ::jsonio::impex::T_STRING, 1);
   xfer += oprot->writeString(this->format);
   xfer += oprot->writeFieldEnd();
 
   if (this->__isset.delim_begin) {
-    xfer += oprot->writeFieldBegin("delim_begin", ::jsonio17::impex::T_STRING, 2);
+    xfer += oprot->writeFieldBegin("delim_begin", ::jsonio::impex::T_STRING, 2);
     xfer += oprot->writeString(this->delim_begin);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.delim_end) {
-    xfer += oprot->writeFieldBegin("delim_end", ::jsonio17::impex::T_STRING, 3);
+    xfer += oprot->writeFieldBegin("delim_end", ::jsonio::impex::T_STRING, 3);
     xfer += oprot->writeString(this->delim_end);
     xfer += oprot->writeFieldEnd();
   }
@@ -361,29 +361,29 @@ std::ostream& operator<<(std::ostream& out, const DataType& obj)
 }
 
 
-uint32_t DataType::read(::jsonio17::TJSONSerializer* iprot) {
+uint32_t DataType::read(::jsonio::TJSONSerializer* iprot) {
 
-  //::jsonio17::impex::TInputRecursionTracker tracker(*iprot);
+  //::jsonio::impex::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
   std::string fname;
-  ::jsonio17::impex::TType ftype;
+  ::jsonio::impex::TType ftype;
   int16_t fid;
 
   xfer += iprot->readStructBegin(fname);
 
-  //using ::jsonio17::TJSONSerializerException;
+  //using ::jsonio::TJSONSerializerException;
 
 
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::jsonio17::impex::T_STOP) {
+    if (ftype == ::jsonio::impex::T_STOP) {
       break;
     }
     switch (fid)
     {
       case 1:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->datatype);
           this->__isset.datatype = true;
         } else {
@@ -391,7 +391,7 @@ uint32_t DataType::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 2:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->organization);
           this->__isset.organization = true;
         } else {
@@ -410,16 +410,16 @@ uint32_t DataType::read(::jsonio17::TJSONSerializer* iprot) {
   return xfer;
 }
 
-uint32_t DataType::write(::jsonio17::TJSONSerializer* oprot) const {
+uint32_t DataType::write(::jsonio::TJSONSerializer* oprot) const {
   uint32_t xfer = 0;
-  //::jsonio17::impex::TOutputRecursionTracker tracker(*oprot);
+  //::jsonio::impex::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("DataType");
 
-  xfer += oprot->writeFieldBegin("datatype", ::jsonio17::impex::T_STRING, 1);
+  xfer += oprot->writeFieldBegin("datatype", ::jsonio::impex::T_STRING, 1);
   xfer += oprot->writeString(this->datatype);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("organization", ::jsonio17::impex::T_STRING, 2);
+  xfer += oprot->writeFieldBegin("organization", ::jsonio::impex::T_STRING, 2);
   xfer += oprot->writeString(this->organization);
   xfer += oprot->writeFieldEnd();
 
@@ -484,29 +484,29 @@ std::ostream& operator<<(std::ostream& out, const DataObject& obj)
 }
 
 
-uint32_t DataObject::read(::jsonio17::TJSONSerializer* iprot) {
+uint32_t DataObject::read(::jsonio::TJSONSerializer* iprot) {
 
-  //::jsonio17::impex::TInputRecursionTracker tracker(*iprot);
+  //::jsonio::impex::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
   std::string fname;
-  ::jsonio17::impex::TType ftype;
+  ::jsonio::impex::TType ftype;
   int16_t fid;
 
   xfer += iprot->readStructBegin(fname);
 
-  //using ::jsonio17::TJSONSerializerException;
+  //using ::jsonio::TJSONSerializerException;
 
 
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::jsonio17::impex::T_STOP) {
+    if (ftype == ::jsonio::impex::T_STOP) {
       break;
     }
     switch (fid)
     {
       case 1:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->field);
           this->__isset.field = true;
         } else {
@@ -514,7 +514,7 @@ uint32_t DataObject::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 2:
-        if (ftype == ::jsonio17::impex::T_BOOL) {
+        if (ftype == ::jsonio::impex::T_BOOL) {
           xfer += iprot->readBool(this->ignore);
           this->__isset.ignore = true;
         } else {
@@ -522,7 +522,7 @@ uint32_t DataObject::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 3:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->script);
           this->__isset.script = true;
         } else {
@@ -530,12 +530,12 @@ uint32_t DataObject::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 4:
-        if (ftype == ::jsonio17::impex::T_MAP) {
+        if (ftype == ::jsonio::impex::T_MAP) {
           {
             this->convert.clear();
             uint32_t _size6;
-            ::jsonio17::impex::TType _ktype7;
-            ::jsonio17::impex::TType _vtype8;
+            ::jsonio::impex::TType _ktype7;
+            ::jsonio::impex::TType _vtype8;
             xfer += iprot->readMapBegin(_ktype7, _vtype8, _size6);
             uint32_t _i10;
             for (_i10 = 0; _i10 < _size6; ++_i10)
@@ -564,29 +564,29 @@ uint32_t DataObject::read(::jsonio17::TJSONSerializer* iprot) {
   return xfer;
 }
 
-uint32_t DataObject::write(::jsonio17::TJSONSerializer* oprot) const {
+uint32_t DataObject::write(::jsonio::TJSONSerializer* oprot) const {
   uint32_t xfer = 0;
-  //::jsonio17::impex::TOutputRecursionTracker tracker(*oprot);
+  //::jsonio::impex::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("DataObject");
 
-  xfer += oprot->writeFieldBegin("field", ::jsonio17::impex::T_STRING, 1);
+  xfer += oprot->writeFieldBegin("field", ::jsonio::impex::T_STRING, 1);
   xfer += oprot->writeString(this->field);
   xfer += oprot->writeFieldEnd();
 
   if (this->__isset.ignore) {
-    xfer += oprot->writeFieldBegin("ignore", ::jsonio17::impex::T_BOOL, 2);
+    xfer += oprot->writeFieldBegin("ignore", ::jsonio::impex::T_BOOL, 2);
     xfer += oprot->writeBool(this->ignore);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.script) {
-    xfer += oprot->writeFieldBegin("script", ::jsonio17::impex::T_STRING, 3);
+    xfer += oprot->writeFieldBegin("script", ::jsonio::impex::T_STRING, 3);
     xfer += oprot->writeString(this->script);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.convert) {
-    xfer += oprot->writeFieldBegin("convert", ::jsonio17::impex::T_MAP, 4);
+    xfer += oprot->writeFieldBegin("convert", ::jsonio::impex::T_MAP, 4);
     {
-      xfer += oprot->writeMapBegin(::jsonio17::impex::T_STRING, ::jsonio17::impex::T_STRING, static_cast<uint32_t>(this->convert.size()));
+      xfer += oprot->writeMapBegin(::jsonio::impex::T_STRING, ::jsonio::impex::T_STRING, static_cast<uint32_t>(this->convert.size()));
       std::map<std::string, std::string> ::const_iterator _iter13;
       for (_iter13 = this->convert.begin(); _iter13 != this->convert.end(); ++_iter13)
       {
@@ -690,29 +690,29 @@ std::ostream& operator<<(std::ostream& out, const Separators& obj)
 }
 
 
-uint32_t Separators::read(::jsonio17::TJSONSerializer* iprot) {
+uint32_t Separators::read(::jsonio::TJSONSerializer* iprot) {
 
-  //::jsonio17::impex::TInputRecursionTracker tracker(*iprot);
+  //::jsonio::impex::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
   std::string fname;
-  ::jsonio17::impex::TType ftype;
+  ::jsonio::impex::TType ftype;
   int16_t fid;
 
   xfer += iprot->readStructBegin(fname);
 
-  //using ::jsonio17::TJSONSerializerException;
+  //using ::jsonio::TJSONSerializerException;
 
 
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::jsonio17::impex::T_STOP) {
+    if (ftype == ::jsonio::impex::T_STOP) {
       break;
     }
     switch (fid)
     {
       case 1:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->v_sep);
           this->__isset.v_sep = true;
         } else {
@@ -720,7 +720,7 @@ uint32_t Separators::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 2:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->l_sep);
           this->__isset.l_sep = true;
         } else {
@@ -728,7 +728,7 @@ uint32_t Separators::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 3:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->r_sep);
           this->__isset.r_sep = true;
         } else {
@@ -736,7 +736,7 @@ uint32_t Separators::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 4:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->c_head);
           this->__isset.c_head = true;
         } else {
@@ -744,7 +744,7 @@ uint32_t Separators::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 5:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->c_end);
           this->__isset.c_end = true;
         } else {
@@ -752,7 +752,7 @@ uint32_t Separators::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 6:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->eod);
           this->__isset.eod = true;
         } else {
@@ -760,7 +760,7 @@ uint32_t Separators::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 7:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->encoding);
           this->__isset.encoding = true;
         } else {
@@ -768,7 +768,7 @@ uint32_t Separators::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 8:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->str_delim);
           this->__isset.str_delim = true;
         } else {
@@ -776,7 +776,7 @@ uint32_t Separators::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 9:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->bod);
           this->__isset.bod = true;
         } else {
@@ -795,51 +795,51 @@ uint32_t Separators::read(::jsonio17::TJSONSerializer* iprot) {
   return xfer;
 }
 
-uint32_t Separators::write(::jsonio17::TJSONSerializer* oprot) const {
+uint32_t Separators::write(::jsonio::TJSONSerializer* oprot) const {
   uint32_t xfer = 0;
-  //::jsonio17::impex::TOutputRecursionTracker tracker(*oprot);
+  //::jsonio::impex::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("Separators");
 
-  xfer += oprot->writeFieldBegin("v_sep", ::jsonio17::impex::T_STRING, 1);
+  xfer += oprot->writeFieldBegin("v_sep", ::jsonio::impex::T_STRING, 1);
   xfer += oprot->writeString(this->v_sep);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("l_sep", ::jsonio17::impex::T_STRING, 2);
+  xfer += oprot->writeFieldBegin("l_sep", ::jsonio::impex::T_STRING, 2);
   xfer += oprot->writeString(this->l_sep);
   xfer += oprot->writeFieldEnd();
 
   if (this->__isset.r_sep) {
-    xfer += oprot->writeFieldBegin("r_sep", ::jsonio17::impex::T_STRING, 3);
+    xfer += oprot->writeFieldBegin("r_sep", ::jsonio::impex::T_STRING, 3);
     xfer += oprot->writeString(this->r_sep);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.c_head) {
-    xfer += oprot->writeFieldBegin("c_head", ::jsonio17::impex::T_STRING, 4);
+    xfer += oprot->writeFieldBegin("c_head", ::jsonio::impex::T_STRING, 4);
     xfer += oprot->writeString(this->c_head);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.c_end) {
-    xfer += oprot->writeFieldBegin("c_end", ::jsonio17::impex::T_STRING, 5);
+    xfer += oprot->writeFieldBegin("c_end", ::jsonio::impex::T_STRING, 5);
     xfer += oprot->writeString(this->c_end);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.eod) {
-    xfer += oprot->writeFieldBegin("eod", ::jsonio17::impex::T_STRING, 6);
+    xfer += oprot->writeFieldBegin("eod", ::jsonio::impex::T_STRING, 6);
     xfer += oprot->writeString(this->eod);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.encoding) {
-    xfer += oprot->writeFieldBegin("encoding", ::jsonio17::impex::T_STRING, 7);
+    xfer += oprot->writeFieldBegin("encoding", ::jsonio::impex::T_STRING, 7);
     xfer += oprot->writeString(this->encoding);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.str_delim) {
-    xfer += oprot->writeFieldBegin("str_delim", ::jsonio17::impex::T_STRING, 8);
+    xfer += oprot->writeFieldBegin("str_delim", ::jsonio::impex::T_STRING, 8);
     xfer += oprot->writeString(this->str_delim);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.bod) {
-    xfer += oprot->writeFieldBegin("bod", ::jsonio17::impex::T_STRING, 9);
+    xfer += oprot->writeFieldBegin("bod", ::jsonio::impex::T_STRING, 9);
     xfer += oprot->writeString(this->bod);
     xfer += oprot->writeFieldEnd();
   }
@@ -930,35 +930,35 @@ std::ostream& operator<<(std::ostream& out, const FormatBlock& obj)
 }
 
 
-uint32_t FormatBlock::read(::jsonio17::TJSONSerializer* iprot) {
+uint32_t FormatBlock::read(::jsonio::TJSONSerializer* iprot) {
 
-  //::jsonio17::impex::TInputRecursionTracker tracker(*iprot);
+  //::jsonio::impex::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
   std::string fname;
-  ::jsonio17::impex::TType ftype;
+  ::jsonio::impex::TType ftype;
   int16_t fid;
 
   xfer += iprot->readStructBegin(fname);
 
-  //using ::jsonio17::TJSONSerializerException;
+  //using ::jsonio::TJSONSerializerException;
 
   bool isset_matches = false;
 
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::jsonio17::impex::T_STOP) {
+    if (ftype == ::jsonio::impex::T_STOP) {
       break;
     }
     switch (fid)
     {
       case 1:
-        if (ftype == ::jsonio17::impex::T_MAP) {
+        if (ftype == ::jsonio::impex::T_MAP) {
           {
             this->defaults.clear();
             uint32_t _size18;
-            ::jsonio17::impex::TType _ktype19;
-            ::jsonio17::impex::TType _vtype20;
+            ::jsonio::impex::TType _ktype19;
+            ::jsonio::impex::TType _vtype20;
             xfer += iprot->readMapBegin(_ktype19, _vtype20, _size18);
             uint32_t _i22;
             for (_i22 = 0; _i22 < _size18; ++_i22)
@@ -976,12 +976,12 @@ uint32_t FormatBlock::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 2:
-        if (ftype == ::jsonio17::impex::T_MAP) {
+        if (ftype == ::jsonio::impex::T_MAP) {
           {
             this->pairs.clear();
             uint32_t _size25;
-            ::jsonio17::impex::TType _ktype26;
-            ::jsonio17::impex::TType _vtype27;
+            ::jsonio::impex::TType _ktype26;
+            ::jsonio::impex::TType _vtype27;
             xfer += iprot->readMapBegin(_ktype26, _vtype27, _size25);
             uint32_t _i29;
             for (_i29 = 0; _i29 < _size25; ++_i29)
@@ -999,12 +999,12 @@ uint32_t FormatBlock::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 3:
-        if (ftype == ::jsonio17::impex::T_MAP) {
+        if (ftype == ::jsonio::impex::T_MAP) {
           {
             this->matches.clear();
             uint32_t _size32;
-            ::jsonio17::impex::TType _ktype33;
-            ::jsonio17::impex::TType _vtype34;
+            ::jsonio::impex::TType _ktype33;
+            ::jsonio::impex::TType _vtype34;
             xfer += iprot->readMapBegin(_ktype33, _vtype34, _size32);
             uint32_t _i36;
             for (_i36 = 0; _i36 < _size32; ++_i36)
@@ -1022,7 +1022,7 @@ uint32_t FormatBlock::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 4:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->script);
           this->__isset.script = true;
         } else {
@@ -1039,19 +1039,19 @@ uint32_t FormatBlock::read(::jsonio17::TJSONSerializer* iprot) {
   xfer += iprot->readStructEnd();
 
   if (!isset_matches)
-       jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected matches");
+       jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected matches");
       //  throw TProtocolException(TProtocolException::INVALID_DATA);
   return xfer;
 }
 
-uint32_t FormatBlock::write(::jsonio17::TJSONSerializer* oprot) const {
+uint32_t FormatBlock::write(::jsonio::TJSONSerializer* oprot) const {
   uint32_t xfer = 0;
-  //::jsonio17::impex::TOutputRecursionTracker tracker(*oprot);
+  //::jsonio::impex::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("FormatBlock");
 
-  xfer += oprot->writeFieldBegin("defaults", ::jsonio17::impex::T_MAP, 1);
+  xfer += oprot->writeFieldBegin("defaults", ::jsonio::impex::T_MAP, 1);
   {
-    xfer += oprot->writeMapBegin(::jsonio17::impex::T_STRING, ::jsonio17::impex::T_STRING, static_cast<uint32_t>(this->defaults.size()));
+    xfer += oprot->writeMapBegin(::jsonio::impex::T_STRING, ::jsonio::impex::T_STRING, static_cast<uint32_t>(this->defaults.size()));
     std::map<std::string, std::string> ::const_iterator _iter39;
     for (_iter39 = this->defaults.begin(); _iter39 != this->defaults.end(); ++_iter39)
     {
@@ -1062,9 +1062,9 @@ uint32_t FormatBlock::write(::jsonio17::TJSONSerializer* oprot) const {
   }
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("pairs", ::jsonio17::impex::T_MAP, 2);
+  xfer += oprot->writeFieldBegin("pairs", ::jsonio::impex::T_MAP, 2);
   {
-    xfer += oprot->writeMapBegin(::jsonio17::impex::T_STRING, ::jsonio17::impex::T_STRUCT, static_cast<uint32_t>(this->pairs.size()));
+    xfer += oprot->writeMapBegin(::jsonio::impex::T_STRING, ::jsonio::impex::T_STRUCT, static_cast<uint32_t>(this->pairs.size()));
     std::map<std::string, DataType> ::const_iterator _iter40;
     for (_iter40 = this->pairs.begin(); _iter40 != this->pairs.end(); ++_iter40)
     {
@@ -1075,9 +1075,9 @@ uint32_t FormatBlock::write(::jsonio17::TJSONSerializer* oprot) const {
   }
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("matches", ::jsonio17::impex::T_MAP, 3);
+  xfer += oprot->writeFieldBegin("matches", ::jsonio::impex::T_MAP, 3);
   {
-    xfer += oprot->writeMapBegin(::jsonio17::impex::T_STRING, ::jsonio17::impex::T_STRUCT, static_cast<uint32_t>(this->matches.size()));
+    xfer += oprot->writeMapBegin(::jsonio::impex::T_STRING, ::jsonio::impex::T_STRUCT, static_cast<uint32_t>(this->matches.size()));
     std::map<std::string, DataObject> ::const_iterator _iter41;
     for (_iter41 = this->matches.begin(); _iter41 != this->matches.end(); ++_iter41)
     {
@@ -1089,7 +1089,7 @@ uint32_t FormatBlock::write(::jsonio17::TJSONSerializer* oprot) const {
   xfer += oprot->writeFieldEnd();
 
   if (this->__isset.script) {
-    xfer += oprot->writeFieldBegin("script", ::jsonio17::impex::T_STRING, 4);
+    xfer += oprot->writeFieldBegin("script", ::jsonio::impex::T_STRING, 4);
     xfer += oprot->writeString(this->script);
     xfer += oprot->writeFieldEnd();
   }
@@ -1188,17 +1188,17 @@ std::ostream& operator<<(std::ostream& out, const FormatTextFile& obj)
 }
 
 
-uint32_t FormatTextFile::read(::jsonio17::TJSONSerializer* iprot) {
+uint32_t FormatTextFile::read(::jsonio::TJSONSerializer* iprot) {
 
-  //::jsonio17::impex::TInputRecursionTracker tracker(*iprot);
+  //::jsonio::impex::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
   std::string fname;
-  ::jsonio17::impex::TType ftype;
+  ::jsonio::impex::TType ftype;
   int16_t fid;
 
   xfer += iprot->readStructBegin(fname);
 
-  //using ::jsonio17::TJSONSerializerException;
+  //using ::jsonio::TJSONSerializerException;
 
   bool isset_block = false;
   bool isset_lines = false;
@@ -1207,13 +1207,13 @@ uint32_t FormatTextFile::read(::jsonio17::TJSONSerializer* iprot) {
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::jsonio17::impex::T_STOP) {
+    if (ftype == ::jsonio::impex::T_STOP) {
       break;
     }
     switch (fid)
     {
       case 1:
-        if (ftype == ::jsonio17::impex::T_STRUCT) {
+        if (ftype == ::jsonio::impex::T_STRUCT) {
           xfer += this->block.read(iprot);
           isset_block = true;
         } else {
@@ -1221,11 +1221,11 @@ uint32_t FormatTextFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 2:
-        if (ftype == ::jsonio17::impex::T_LIST) {
+        if (ftype == ::jsonio::impex::T_LIST) {
           {
             this->lines.clear();
             uint32_t _size44;
-            ::jsonio17::impex::TType _etype47;
+            ::jsonio::impex::TType _etype47;
             xfer += iprot->readListBegin(_etype47, _size44);
             this->lines.resize(_size44);
             uint32_t _i48;
@@ -1241,7 +1241,7 @@ uint32_t FormatTextFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 3:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->label);
           isset_label = true;
         } else {
@@ -1249,7 +1249,7 @@ uint32_t FormatTextFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 4:
-        if (ftype == ::jsonio17::impex::T_STRUCT) {
+        if (ftype == ::jsonio::impex::T_STRUCT) {
           xfer += this->separs.read(iprot);
           this->__isset.separs = true;
         } else {
@@ -1257,7 +1257,7 @@ uint32_t FormatTextFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 5:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->comment);
           this->__isset.comment = true;
         } else {
@@ -1265,7 +1265,7 @@ uint32_t FormatTextFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 6:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->file_name);
           this->__isset.file_name = true;
         } else {
@@ -1273,7 +1273,7 @@ uint32_t FormatTextFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 7:
-        if (ftype == ::jsonio17::impex::T_I32) {
+        if (ftype == ::jsonio::impex::T_I32) {
           xfer += iprot->readI32(this->Nblocks);
           this->__isset.Nblocks = true;
         } else {
@@ -1281,7 +1281,7 @@ uint32_t FormatTextFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 8:
-        if (ftype == ::jsonio17::impex::T_I32) {
+        if (ftype == ::jsonio::impex::T_I32) {
           xfer += iprot->readI32(this->Nlines);
           this->__isset.Nlines = true;
         } else {
@@ -1289,7 +1289,7 @@ uint32_t FormatTextFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 9:
-        if (ftype == ::jsonio17::impex::T_I32) {
+        if (ftype == ::jsonio::impex::T_I32) {
           xfer += iprot->readI32(this->Nchars);
           this->__isset.Nchars = true;
         } else {
@@ -1297,7 +1297,7 @@ uint32_t FormatTextFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 10:
-        if (ftype == ::jsonio17::impex::T_I32) {
+        if (ftype == ::jsonio::impex::T_I32) {
           int32_t ecast49;
           xfer += iprot->readI32(ecast49);
           this->direction = (DirectionType::type)ecast49;
@@ -1316,29 +1316,29 @@ uint32_t FormatTextFile::read(::jsonio17::TJSONSerializer* iprot) {
   xfer += iprot->readStructEnd();
 
   if (!isset_block)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected block");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected block");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset_lines)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected lines");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected lines");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset_label)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected label");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected label");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   return xfer;
 }
 
-uint32_t FormatTextFile::write(::jsonio17::TJSONSerializer* oprot) const {
+uint32_t FormatTextFile::write(::jsonio::TJSONSerializer* oprot) const {
   uint32_t xfer = 0;
-  //::jsonio17::impex::TOutputRecursionTracker tracker(*oprot);
+  //::jsonio::impex::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("FormatTextFile");
 
-  xfer += oprot->writeFieldBegin("block", ::jsonio17::impex::T_STRUCT, 1);
+  xfer += oprot->writeFieldBegin("block", ::jsonio::impex::T_STRUCT, 1);
   xfer += this->block.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("lines", ::jsonio17::impex::T_LIST, 2);
+  xfer += oprot->writeFieldBegin("lines", ::jsonio::impex::T_LIST, 2);
   {
-    xfer += oprot->writeListBegin(::jsonio17::impex::T_STRING, static_cast<uint32_t>(this->lines.size()));
+    xfer += oprot->writeListBegin(::jsonio::impex::T_STRING, static_cast<uint32_t>(this->lines.size()));
     std::vector<std::string> ::const_iterator _iter50;
     for (_iter50 = this->lines.begin(); _iter50 != this->lines.end(); ++_iter50)
     {
@@ -1348,40 +1348,40 @@ uint32_t FormatTextFile::write(::jsonio17::TJSONSerializer* oprot) const {
   }
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("label", ::jsonio17::impex::T_STRING, 3);
+  xfer += oprot->writeFieldBegin("label", ::jsonio::impex::T_STRING, 3);
   xfer += oprot->writeString(this->label);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("separs", ::jsonio17::impex::T_STRUCT, 4);
+  xfer += oprot->writeFieldBegin("separs", ::jsonio::impex::T_STRUCT, 4);
   xfer += this->separs.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   if (this->__isset.comment) {
-    xfer += oprot->writeFieldBegin("comment", ::jsonio17::impex::T_STRING, 5);
+    xfer += oprot->writeFieldBegin("comment", ::jsonio::impex::T_STRING, 5);
     xfer += oprot->writeString(this->comment);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.file_name) {
-    xfer += oprot->writeFieldBegin("file_name", ::jsonio17::impex::T_STRING, 6);
+    xfer += oprot->writeFieldBegin("file_name", ::jsonio::impex::T_STRING, 6);
     xfer += oprot->writeString(this->file_name);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.Nblocks) {
-    xfer += oprot->writeFieldBegin("Nblocks", ::jsonio17::impex::T_I32, 7);
+    xfer += oprot->writeFieldBegin("Nblocks", ::jsonio::impex::T_I32, 7);
     xfer += oprot->writeI32(this->Nblocks);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.Nlines) {
-    xfer += oprot->writeFieldBegin("Nlines", ::jsonio17::impex::T_I32, 8);
+    xfer += oprot->writeFieldBegin("Nlines", ::jsonio::impex::T_I32, 8);
     xfer += oprot->writeI32(this->Nlines);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.Nchars) {
-    xfer += oprot->writeFieldBegin("Nchars", ::jsonio17::impex::T_I32, 9);
+    xfer += oprot->writeFieldBegin("Nchars", ::jsonio::impex::T_I32, 9);
     xfer += oprot->writeI32(this->Nchars);
     xfer += oprot->writeFieldEnd();
   }
-  xfer += oprot->writeFieldBegin("direction", ::jsonio17::impex::T_I32, 10);
+  xfer += oprot->writeFieldBegin("direction", ::jsonio::impex::T_I32, 10);
   xfer += oprot->writeI32((int32_t)this->direction);
   xfer += oprot->writeFieldEnd();
 
@@ -1503,17 +1503,17 @@ std::ostream& operator<<(std::ostream& out, const FormatKeyValue& obj)
 }
 
 
-uint32_t FormatKeyValue::read(::jsonio17::TJSONSerializer* iprot) {
+uint32_t FormatKeyValue::read(::jsonio::TJSONSerializer* iprot) {
 
-  //::jsonio17::impex::TInputRecursionTracker tracker(*iprot);
+  //::jsonio::impex::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
   std::string fname;
-  ::jsonio17::impex::TType ftype;
+  ::jsonio::impex::TType ftype;
   int16_t fid;
 
   xfer += iprot->readStructBegin(fname);
 
-  //using ::jsonio17::TJSONSerializerException;
+  //using ::jsonio::TJSONSerializerException;
 
   bool isset_head_regexp = false;
   bool isset_end_regexp = false;
@@ -1522,13 +1522,13 @@ uint32_t FormatKeyValue::read(::jsonio17::TJSONSerializer* iprot) {
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::jsonio17::impex::T_STOP) {
+    if (ftype == ::jsonio::impex::T_STOP) {
       break;
     }
     switch (fid)
     {
       case 1:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->head_regexp);
           isset_head_regexp = true;
         } else {
@@ -1536,7 +1536,7 @@ uint32_t FormatKeyValue::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 2:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->end_regexp);
           isset_end_regexp = true;
         } else {
@@ -1544,7 +1544,7 @@ uint32_t FormatKeyValue::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 3:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->key_regexp);
           isset_key_regexp = true;
         } else {
@@ -1552,7 +1552,7 @@ uint32_t FormatKeyValue::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 4:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->value_regexp);
           this->__isset.value_regexp = true;
         } else {
@@ -1560,7 +1560,7 @@ uint32_t FormatKeyValue::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 5:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->value_next);
           this->__isset.value_next = true;
         } else {
@@ -1568,7 +1568,7 @@ uint32_t FormatKeyValue::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 6:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->value_token_regexp);
           this->__isset.value_token_regexp = true;
         } else {
@@ -1576,7 +1576,7 @@ uint32_t FormatKeyValue::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 7:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->comment_regexp);
           this->__isset.comment_regexp = true;
         } else {
@@ -1584,7 +1584,7 @@ uint32_t FormatKeyValue::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 8:
-        if (ftype == ::jsonio17::impex::T_I32) {
+        if (ftype == ::jsonio::impex::T_I32) {
           xfer += iprot->readI32(this->Ndata);
           this->__isset.Ndata = true;
         } else {
@@ -1592,7 +1592,7 @@ uint32_t FormatKeyValue::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 9:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->strvalue_exp);
           this->__isset.strvalue_exp = true;
         } else {
@@ -1600,11 +1600,11 @@ uint32_t FormatKeyValue::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 10:
-        if (ftype == ::jsonio17::impex::T_LIST) {
+        if (ftype == ::jsonio::impex::T_LIST) {
           {
             this->key_order.clear();
             uint32_t _size53;
-            ::jsonio17::impex::TType _etype56;
+            ::jsonio::impex::TType _etype56;
             xfer += iprot->readListBegin(_etype56, _size53);
             this->key_order.resize(_size53);
             uint32_t _i57;
@@ -1629,65 +1629,65 @@ uint32_t FormatKeyValue::read(::jsonio17::TJSONSerializer* iprot) {
   xfer += iprot->readStructEnd();
 
   if (!isset_head_regexp)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected head_regexp");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected head_regexp");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset_end_regexp)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected end_regexp");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected end_regexp");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset_key_regexp)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected key_regexp");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected key_regexp");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   return xfer;
 }
 
-uint32_t FormatKeyValue::write(::jsonio17::TJSONSerializer* oprot) const {
+uint32_t FormatKeyValue::write(::jsonio::TJSONSerializer* oprot) const {
   uint32_t xfer = 0;
-  //::jsonio17::impex::TOutputRecursionTracker tracker(*oprot);
+  //::jsonio::impex::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("FormatKeyValue");
 
-  xfer += oprot->writeFieldBegin("head_regexp", ::jsonio17::impex::T_STRING, 1);
+  xfer += oprot->writeFieldBegin("head_regexp", ::jsonio::impex::T_STRING, 1);
   xfer += oprot->writeString(this->head_regexp);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("end_regexp", ::jsonio17::impex::T_STRING, 2);
+  xfer += oprot->writeFieldBegin("end_regexp", ::jsonio::impex::T_STRING, 2);
   xfer += oprot->writeString(this->end_regexp);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("key_regexp", ::jsonio17::impex::T_STRING, 3);
+  xfer += oprot->writeFieldBegin("key_regexp", ::jsonio::impex::T_STRING, 3);
   xfer += oprot->writeString(this->key_regexp);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("value_regexp", ::jsonio17::impex::T_STRING, 4);
+  xfer += oprot->writeFieldBegin("value_regexp", ::jsonio::impex::T_STRING, 4);
   xfer += oprot->writeString(this->value_regexp);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("value_next", ::jsonio17::impex::T_STRING, 5);
+  xfer += oprot->writeFieldBegin("value_next", ::jsonio::impex::T_STRING, 5);
   xfer += oprot->writeString(this->value_next);
   xfer += oprot->writeFieldEnd();
 
   if (this->__isset.value_token_regexp) {
-    xfer += oprot->writeFieldBegin("value_token_regexp", ::jsonio17::impex::T_STRING, 6);
+    xfer += oprot->writeFieldBegin("value_token_regexp", ::jsonio::impex::T_STRING, 6);
     xfer += oprot->writeString(this->value_token_regexp);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.comment_regexp) {
-    xfer += oprot->writeFieldBegin("comment_regexp", ::jsonio17::impex::T_STRING, 7);
+    xfer += oprot->writeFieldBegin("comment_regexp", ::jsonio::impex::T_STRING, 7);
     xfer += oprot->writeString(this->comment_regexp);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.Ndata) {
-    xfer += oprot->writeFieldBegin("Ndata", ::jsonio17::impex::T_I32, 8);
+    xfer += oprot->writeFieldBegin("Ndata", ::jsonio::impex::T_I32, 8);
     xfer += oprot->writeI32(this->Ndata);
     xfer += oprot->writeFieldEnd();
   }
-  xfer += oprot->writeFieldBegin("strvalue_exp", ::jsonio17::impex::T_STRING, 9);
+  xfer += oprot->writeFieldBegin("strvalue_exp", ::jsonio::impex::T_STRING, 9);
   xfer += oprot->writeString(this->strvalue_exp);
   xfer += oprot->writeFieldEnd();
 
   if (this->__isset.key_order) {
-    xfer += oprot->writeFieldBegin("key_order", ::jsonio17::impex::T_LIST, 10);
+    xfer += oprot->writeFieldBegin("key_order", ::jsonio::impex::T_LIST, 10);
     {
-      xfer += oprot->writeListBegin(::jsonio17::impex::T_STRING, static_cast<uint32_t>(this->key_order.size()));
+      xfer += oprot->writeListBegin(::jsonio::impex::T_STRING, static_cast<uint32_t>(this->key_order.size()));
       std::vector<std::string> ::const_iterator _iter58;
       for (_iter58 = this->key_order.begin(); _iter58 != this->key_order.end(); ++_iter58)
       {
@@ -1815,17 +1815,17 @@ std::ostream& operator<<(std::ostream& out, const FormatKeyValueFile& obj)
 }
 
 
-uint32_t FormatKeyValueFile::read(::jsonio17::TJSONSerializer* iprot) {
+uint32_t FormatKeyValueFile::read(::jsonio::TJSONSerializer* iprot) {
 
-  //::jsonio17::impex::TInputRecursionTracker tracker(*iprot);
+  //::jsonio::impex::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
   std::string fname;
-  ::jsonio17::impex::TType ftype;
+  ::jsonio::impex::TType ftype;
   int16_t fid;
 
   xfer += iprot->readStructBegin(fname);
 
-  //using ::jsonio17::TJSONSerializerException;
+  //using ::jsonio::TJSONSerializerException;
 
   bool isset_block = false;
   bool isset_format = false;
@@ -1835,13 +1835,13 @@ uint32_t FormatKeyValueFile::read(::jsonio17::TJSONSerializer* iprot) {
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::jsonio17::impex::T_STOP) {
+    if (ftype == ::jsonio::impex::T_STOP) {
       break;
     }
     switch (fid)
     {
       case 1:
-        if (ftype == ::jsonio17::impex::T_STRUCT) {
+        if (ftype == ::jsonio::impex::T_STRUCT) {
           xfer += this->block.read(iprot);
           isset_block = true;
         } else {
@@ -1849,7 +1849,7 @@ uint32_t FormatKeyValueFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 2:
-        if (ftype == ::jsonio17::impex::T_STRUCT) {
+        if (ftype == ::jsonio::impex::T_STRUCT) {
           xfer += this->format.read(iprot);
           isset_format = true;
         } else {
@@ -1857,7 +1857,7 @@ uint32_t FormatKeyValueFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 3:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->renderer);
           isset_renderer = true;
         } else {
@@ -1865,7 +1865,7 @@ uint32_t FormatKeyValueFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 4:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->label);
           isset_label = true;
         } else {
@@ -1873,7 +1873,7 @@ uint32_t FormatKeyValueFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 5:
-        if (ftype == ::jsonio17::impex::T_STRUCT) {
+        if (ftype == ::jsonio::impex::T_STRUCT) {
           xfer += this->separators.read(iprot);
           this->__isset.separators = true;
         } else {
@@ -1881,7 +1881,7 @@ uint32_t FormatKeyValueFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 6:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->comment);
           this->__isset.comment = true;
         } else {
@@ -1889,7 +1889,7 @@ uint32_t FormatKeyValueFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 7:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->fname);
           this->__isset.fname = true;
         } else {
@@ -1897,7 +1897,7 @@ uint32_t FormatKeyValueFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 8:
-        if (ftype == ::jsonio17::impex::T_I32) {
+        if (ftype == ::jsonio::impex::T_I32) {
           xfer += iprot->readI32(this->Nblocks);
           this->__isset.Nblocks = true;
         } else {
@@ -1905,7 +1905,7 @@ uint32_t FormatKeyValueFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 9:
-        if (ftype == ::jsonio17::impex::T_I32) {
+        if (ftype == ::jsonio::impex::T_I32) {
           xfer += iprot->readI32(this->Nlines);
           this->__isset.Nlines = true;
         } else {
@@ -1913,7 +1913,7 @@ uint32_t FormatKeyValueFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 10:
-        if (ftype == ::jsonio17::impex::T_I32) {
+        if (ftype == ::jsonio::impex::T_I32) {
           int32_t ecast61;
           xfer += iprot->readI32(ecast61);
           this->direction = (DirectionType::type)ecast61;
@@ -1932,66 +1932,66 @@ uint32_t FormatKeyValueFile::read(::jsonio17::TJSONSerializer* iprot) {
   xfer += iprot->readStructEnd();
 
   if (!isset_block)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected block");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected block");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset_format)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected format");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected format");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset_renderer)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected renderer");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected renderer");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset_label)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected label");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected label");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   return xfer;
 }
 
-uint32_t FormatKeyValueFile::write(::jsonio17::TJSONSerializer* oprot) const {
+uint32_t FormatKeyValueFile::write(::jsonio::TJSONSerializer* oprot) const {
   uint32_t xfer = 0;
-  //::jsonio17::impex::TOutputRecursionTracker tracker(*oprot);
+  //::jsonio::impex::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("FormatKeyValueFile");
 
-  xfer += oprot->writeFieldBegin("block", ::jsonio17::impex::T_STRUCT, 1);
+  xfer += oprot->writeFieldBegin("block", ::jsonio::impex::T_STRUCT, 1);
   xfer += this->block.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("format", ::jsonio17::impex::T_STRUCT, 2);
+  xfer += oprot->writeFieldBegin("format", ::jsonio::impex::T_STRUCT, 2);
   xfer += this->format.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("renderer", ::jsonio17::impex::T_STRING, 3);
+  xfer += oprot->writeFieldBegin("renderer", ::jsonio::impex::T_STRING, 3);
   xfer += oprot->writeString(this->renderer);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("label", ::jsonio17::impex::T_STRING, 4);
+  xfer += oprot->writeFieldBegin("label", ::jsonio::impex::T_STRING, 4);
   xfer += oprot->writeString(this->label);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("separators", ::jsonio17::impex::T_STRUCT, 5);
+  xfer += oprot->writeFieldBegin("separators", ::jsonio::impex::T_STRUCT, 5);
   xfer += this->separators.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   if (this->__isset.comment) {
-    xfer += oprot->writeFieldBegin("comment", ::jsonio17::impex::T_STRING, 6);
+    xfer += oprot->writeFieldBegin("comment", ::jsonio::impex::T_STRING, 6);
     xfer += oprot->writeString(this->comment);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.fname) {
-    xfer += oprot->writeFieldBegin("fname", ::jsonio17::impex::T_STRING, 7);
+    xfer += oprot->writeFieldBegin("fname", ::jsonio::impex::T_STRING, 7);
     xfer += oprot->writeString(this->fname);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.Nblocks) {
-    xfer += oprot->writeFieldBegin("Nblocks", ::jsonio17::impex::T_I32, 8);
+    xfer += oprot->writeFieldBegin("Nblocks", ::jsonio::impex::T_I32, 8);
     xfer += oprot->writeI32(this->Nblocks);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.Nlines) {
-    xfer += oprot->writeFieldBegin("Nlines", ::jsonio17::impex::T_I32, 9);
+    xfer += oprot->writeFieldBegin("Nlines", ::jsonio::impex::T_I32, 9);
     xfer += oprot->writeI32(this->Nlines);
     xfer += oprot->writeFieldEnd();
   }
-  xfer += oprot->writeFieldBegin("direction", ::jsonio17::impex::T_I32, 10);
+  xfer += oprot->writeFieldBegin("direction", ::jsonio::impex::T_I32, 10);
   xfer += oprot->writeI32((int32_t)this->direction);
   xfer += oprot->writeFieldEnd();
 
@@ -2125,29 +2125,29 @@ std::ostream& operator<<(std::ostream& out, const FormatTable& obj)
 }
 
 
-uint32_t FormatTable::read(::jsonio17::TJSONSerializer* iprot) {
+uint32_t FormatTable::read(::jsonio::TJSONSerializer* iprot) {
 
-  //::jsonio17::impex::TInputRecursionTracker tracker(*iprot);
+  //::jsonio::impex::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
   std::string fname;
-  ::jsonio17::impex::TType ftype;
+  ::jsonio::impex::TType ftype;
   int16_t fid;
 
   xfer += iprot->readStructBegin(fname);
 
-  //using ::jsonio17::TJSONSerializerException;
+  //using ::jsonio::TJSONSerializerException;
 
 
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::jsonio17::impex::T_STOP) {
+    if (ftype == ::jsonio::impex::T_STOP) {
       break;
     }
     switch (fid)
     {
       case 1:
-        if (ftype == ::jsonio17::impex::T_I32) {
+        if (ftype == ::jsonio::impex::T_I32) {
           xfer += iprot->readI32(this->Nhcols);
           this->__isset.Nhcols = true;
         } else {
@@ -2155,7 +2155,7 @@ uint32_t FormatTable::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 2:
-        if (ftype == ::jsonio17::impex::T_I32) {
+        if (ftype == ::jsonio::impex::T_I32) {
           xfer += iprot->readI32(this->Nhrows);
           this->__isset.Nhrows = true;
         } else {
@@ -2163,11 +2163,11 @@ uint32_t FormatTable::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 3:
-        if (ftype == ::jsonio17::impex::T_LIST) {
+        if (ftype == ::jsonio::impex::T_LIST) {
           {
             this->headers.clear();
             uint32_t _size64;
-            ::jsonio17::impex::TType _etype67;
+            ::jsonio::impex::TType _etype67;
             xfer += iprot->readListBegin(_etype67, _size64);
             this->headers.resize(_size64);
             uint32_t _i68;
@@ -2183,7 +2183,7 @@ uint32_t FormatTable::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 4:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->rowend);
           this->__isset.rowend = true;
         } else {
@@ -2191,7 +2191,7 @@ uint32_t FormatTable::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 5:
-        if (ftype == ::jsonio17::impex::T_I32) {
+        if (ftype == ::jsonio::impex::T_I32) {
           xfer += iprot->readI32(this->rows_one_block);
           this->__isset.rows_one_block = true;
         } else {
@@ -2199,7 +2199,7 @@ uint32_t FormatTable::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 6:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->row_header_regexp);
           this->__isset.row_header_regexp = true;
         } else {
@@ -2207,7 +2207,7 @@ uint32_t FormatTable::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 7:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->colends);
           this->__isset.colends = true;
         } else {
@@ -2215,7 +2215,7 @@ uint32_t FormatTable::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 8:
-        if (ftype == ::jsonio17::impex::T_BOOL) {
+        if (ftype == ::jsonio::impex::T_BOOL) {
           xfer += iprot->readBool(this->usequotes);
           this->__isset.usequotes = true;
         } else {
@@ -2223,7 +2223,7 @@ uint32_t FormatTable::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 9:
-        if (ftype == ::jsonio17::impex::T_BOOL) {
+        if (ftype == ::jsonio::impex::T_BOOL) {
           xfer += iprot->readBool(this->usemore);
           this->__isset.usemore = true;
         } else {
@@ -2231,7 +2231,7 @@ uint32_t FormatTable::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 10:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->comment_regexp);
           this->__isset.comment_regexp = true;
         } else {
@@ -2239,7 +2239,7 @@ uint32_t FormatTable::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 11:
-        if (ftype == ::jsonio17::impex::T_I32) {
+        if (ftype == ::jsonio::impex::T_I32) {
           xfer += iprot->readI32(this->row_size);
           this->__isset.row_size = true;
         } else {
@@ -2247,11 +2247,11 @@ uint32_t FormatTable::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 12:
-        if (ftype == ::jsonio17::impex::T_LIST) {
+        if (ftype == ::jsonio::impex::T_LIST) {
           {
             this->colsizes.clear();
             uint32_t _size69;
-            ::jsonio17::impex::TType _etype72;
+            ::jsonio::impex::TType _etype72;
             xfer += iprot->readListBegin(_etype72, _size69);
             this->colsizes.resize(_size69);
             uint32_t _i73;
@@ -2267,11 +2267,11 @@ uint32_t FormatTable::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 13:
-        if (ftype == ::jsonio17::impex::T_LIST) {
+        if (ftype == ::jsonio::impex::T_LIST) {
           {
             this->value_regexp.clear();
             uint32_t _size74;
-            ::jsonio17::impex::TType _etype77;
+            ::jsonio::impex::TType _etype77;
             xfer += iprot->readListBegin(_etype77, _size74);
             this->value_regexp.resize(_size74);
             uint32_t _i78;
@@ -2298,22 +2298,22 @@ uint32_t FormatTable::read(::jsonio17::TJSONSerializer* iprot) {
   return xfer;
 }
 
-uint32_t FormatTable::write(::jsonio17::TJSONSerializer* oprot) const {
+uint32_t FormatTable::write(::jsonio::TJSONSerializer* oprot) const {
   uint32_t xfer = 0;
-  //::jsonio17::impex::TOutputRecursionTracker tracker(*oprot);
+  //::jsonio::impex::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("FormatTable");
 
-  xfer += oprot->writeFieldBegin("Nhcols", ::jsonio17::impex::T_I32, 1);
+  xfer += oprot->writeFieldBegin("Nhcols", ::jsonio::impex::T_I32, 1);
   xfer += oprot->writeI32(this->Nhcols);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("Nhrows", ::jsonio17::impex::T_I32, 2);
+  xfer += oprot->writeFieldBegin("Nhrows", ::jsonio::impex::T_I32, 2);
   xfer += oprot->writeI32(this->Nhrows);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("headers", ::jsonio17::impex::T_LIST, 3);
+  xfer += oprot->writeFieldBegin("headers", ::jsonio::impex::T_LIST, 3);
   {
-    xfer += oprot->writeListBegin(::jsonio17::impex::T_STRING, static_cast<uint32_t>(this->headers.size()));
+    xfer += oprot->writeListBegin(::jsonio::impex::T_STRING, static_cast<uint32_t>(this->headers.size()));
     std::vector<std::string> ::const_iterator _iter79;
     for (_iter79 = this->headers.begin(); _iter79 != this->headers.end(); ++_iter79)
     {
@@ -2323,44 +2323,44 @@ uint32_t FormatTable::write(::jsonio17::TJSONSerializer* oprot) const {
   }
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("rowend", ::jsonio17::impex::T_STRING, 4);
+  xfer += oprot->writeFieldBegin("rowend", ::jsonio::impex::T_STRING, 4);
   xfer += oprot->writeString(this->rowend);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("rows_one_block", ::jsonio17::impex::T_I32, 5);
+  xfer += oprot->writeFieldBegin("rows_one_block", ::jsonio::impex::T_I32, 5);
   xfer += oprot->writeI32(this->rows_one_block);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("row_header_regexp", ::jsonio17::impex::T_STRING, 6);
+  xfer += oprot->writeFieldBegin("row_header_regexp", ::jsonio::impex::T_STRING, 6);
   xfer += oprot->writeString(this->row_header_regexp);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("colends", ::jsonio17::impex::T_STRING, 7);
+  xfer += oprot->writeFieldBegin("colends", ::jsonio::impex::T_STRING, 7);
   xfer += oprot->writeString(this->colends);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("usequotes", ::jsonio17::impex::T_BOOL, 8);
+  xfer += oprot->writeFieldBegin("usequotes", ::jsonio::impex::T_BOOL, 8);
   xfer += oprot->writeBool(this->usequotes);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("usemore", ::jsonio17::impex::T_BOOL, 9);
+  xfer += oprot->writeFieldBegin("usemore", ::jsonio::impex::T_BOOL, 9);
   xfer += oprot->writeBool(this->usemore);
   xfer += oprot->writeFieldEnd();
 
   if (this->__isset.comment_regexp) {
-    xfer += oprot->writeFieldBegin("comment_regexp", ::jsonio17::impex::T_STRING, 10);
+    xfer += oprot->writeFieldBegin("comment_regexp", ::jsonio::impex::T_STRING, 10);
     xfer += oprot->writeString(this->comment_regexp);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.row_size) {
-    xfer += oprot->writeFieldBegin("row_size", ::jsonio17::impex::T_I32, 11);
+    xfer += oprot->writeFieldBegin("row_size", ::jsonio::impex::T_I32, 11);
     xfer += oprot->writeI32(this->row_size);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.colsizes) {
-    xfer += oprot->writeFieldBegin("colsizes", ::jsonio17::impex::T_LIST, 12);
+    xfer += oprot->writeFieldBegin("colsizes", ::jsonio::impex::T_LIST, 12);
     {
-      xfer += oprot->writeListBegin(::jsonio17::impex::T_I32, static_cast<uint32_t>(this->colsizes.size()));
+      xfer += oprot->writeListBegin(::jsonio::impex::T_I32, static_cast<uint32_t>(this->colsizes.size()));
       std::vector<int32_t> ::const_iterator _iter80;
       for (_iter80 = this->colsizes.begin(); _iter80 != this->colsizes.end(); ++_iter80)
       {
@@ -2371,9 +2371,9 @@ uint32_t FormatTable::write(::jsonio17::TJSONSerializer* oprot) const {
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.value_regexp) {
-    xfer += oprot->writeFieldBegin("value_regexp", ::jsonio17::impex::T_LIST, 13);
+    xfer += oprot->writeFieldBegin("value_regexp", ::jsonio::impex::T_LIST, 13);
     {
-      xfer += oprot->writeListBegin(::jsonio17::impex::T_STRING, static_cast<uint32_t>(this->value_regexp.size()));
+      xfer += oprot->writeListBegin(::jsonio::impex::T_STRING, static_cast<uint32_t>(this->value_regexp.size()));
       std::vector<std::string> ::const_iterator _iter81;
       for (_iter81 = this->value_regexp.begin(); _iter81 != this->value_regexp.end(); ++_iter81)
       {
@@ -2513,17 +2513,17 @@ std::ostream& operator<<(std::ostream& out, const FormatTableFile& obj)
 }
 
 
-uint32_t FormatTableFile::read(::jsonio17::TJSONSerializer* iprot) {
+uint32_t FormatTableFile::read(::jsonio::TJSONSerializer* iprot) {
 
-  //::jsonio17::impex::TInputRecursionTracker tracker(*iprot);
+  //::jsonio::impex::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
   std::string fname;
-  ::jsonio17::impex::TType ftype;
+  ::jsonio::impex::TType ftype;
   int16_t fid;
 
   xfer += iprot->readStructBegin(fname);
 
-  //using ::jsonio17::TJSONSerializerException;
+  //using ::jsonio::TJSONSerializerException;
 
   bool isset_block = false;
   bool isset_format = false;
@@ -2533,13 +2533,13 @@ uint32_t FormatTableFile::read(::jsonio17::TJSONSerializer* iprot) {
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::jsonio17::impex::T_STOP) {
+    if (ftype == ::jsonio::impex::T_STOP) {
       break;
     }
     switch (fid)
     {
       case 1:
-        if (ftype == ::jsonio17::impex::T_STRUCT) {
+        if (ftype == ::jsonio::impex::T_STRUCT) {
           xfer += this->block.read(iprot);
           isset_block = true;
         } else {
@@ -2547,7 +2547,7 @@ uint32_t FormatTableFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 2:
-        if (ftype == ::jsonio17::impex::T_STRUCT) {
+        if (ftype == ::jsonio::impex::T_STRUCT) {
           xfer += this->format.read(iprot);
           isset_format = true;
         } else {
@@ -2555,7 +2555,7 @@ uint32_t FormatTableFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 3:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->renderer);
           isset_renderer = true;
         } else {
@@ -2563,7 +2563,7 @@ uint32_t FormatTableFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 4:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->label);
           isset_label = true;
         } else {
@@ -2571,7 +2571,7 @@ uint32_t FormatTableFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 5:
-        if (ftype == ::jsonio17::impex::T_STRUCT) {
+        if (ftype == ::jsonio::impex::T_STRUCT) {
           xfer += this->separators.read(iprot);
           this->__isset.separators = true;
         } else {
@@ -2579,7 +2579,7 @@ uint32_t FormatTableFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 6:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->comment);
           this->__isset.comment = true;
         } else {
@@ -2587,7 +2587,7 @@ uint32_t FormatTableFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 7:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->fname);
           this->__isset.fname = true;
         } else {
@@ -2595,7 +2595,7 @@ uint32_t FormatTableFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 8:
-        if (ftype == ::jsonio17::impex::T_I32) {
+        if (ftype == ::jsonio::impex::T_I32) {
           xfer += iprot->readI32(this->Nblocks);
           this->__isset.Nblocks = true;
         } else {
@@ -2603,7 +2603,7 @@ uint32_t FormatTableFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 9:
-        if (ftype == ::jsonio17::impex::T_I32) {
+        if (ftype == ::jsonio::impex::T_I32) {
           xfer += iprot->readI32(this->Nlines);
           this->__isset.Nlines = true;
         } else {
@@ -2611,7 +2611,7 @@ uint32_t FormatTableFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 10:
-        if (ftype == ::jsonio17::impex::T_I32) {
+        if (ftype == ::jsonio::impex::T_I32) {
           int32_t ecast84;
           xfer += iprot->readI32(ecast84);
           this->direction = (DirectionType::type)ecast84;
@@ -2630,66 +2630,66 @@ uint32_t FormatTableFile::read(::jsonio17::TJSONSerializer* iprot) {
   xfer += iprot->readStructEnd();
 
   if (!isset_block)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected block");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected block");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset_format)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected format");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected format");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset_renderer)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected renderer");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected renderer");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset_label)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected label");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected label");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   return xfer;
 }
 
-uint32_t FormatTableFile::write(::jsonio17::TJSONSerializer* oprot) const {
+uint32_t FormatTableFile::write(::jsonio::TJSONSerializer* oprot) const {
   uint32_t xfer = 0;
-  //::jsonio17::impex::TOutputRecursionTracker tracker(*oprot);
+  //::jsonio::impex::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("FormatTableFile");
 
-  xfer += oprot->writeFieldBegin("block", ::jsonio17::impex::T_STRUCT, 1);
+  xfer += oprot->writeFieldBegin("block", ::jsonio::impex::T_STRUCT, 1);
   xfer += this->block.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("format", ::jsonio17::impex::T_STRUCT, 2);
+  xfer += oprot->writeFieldBegin("format", ::jsonio::impex::T_STRUCT, 2);
   xfer += this->format.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("renderer", ::jsonio17::impex::T_STRING, 3);
+  xfer += oprot->writeFieldBegin("renderer", ::jsonio::impex::T_STRING, 3);
   xfer += oprot->writeString(this->renderer);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("label", ::jsonio17::impex::T_STRING, 4);
+  xfer += oprot->writeFieldBegin("label", ::jsonio::impex::T_STRING, 4);
   xfer += oprot->writeString(this->label);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("separators", ::jsonio17::impex::T_STRUCT, 5);
+  xfer += oprot->writeFieldBegin("separators", ::jsonio::impex::T_STRUCT, 5);
   xfer += this->separators.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   if (this->__isset.comment) {
-    xfer += oprot->writeFieldBegin("comment", ::jsonio17::impex::T_STRING, 6);
+    xfer += oprot->writeFieldBegin("comment", ::jsonio::impex::T_STRING, 6);
     xfer += oprot->writeString(this->comment);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.fname) {
-    xfer += oprot->writeFieldBegin("fname", ::jsonio17::impex::T_STRING, 7);
+    xfer += oprot->writeFieldBegin("fname", ::jsonio::impex::T_STRING, 7);
     xfer += oprot->writeString(this->fname);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.Nblocks) {
-    xfer += oprot->writeFieldBegin("Nblocks", ::jsonio17::impex::T_I32, 8);
+    xfer += oprot->writeFieldBegin("Nblocks", ::jsonio::impex::T_I32, 8);
     xfer += oprot->writeI32(this->Nblocks);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.Nlines) {
-    xfer += oprot->writeFieldBegin("Nlines", ::jsonio17::impex::T_I32, 9);
+    xfer += oprot->writeFieldBegin("Nlines", ::jsonio::impex::T_I32, 9);
     xfer += oprot->writeI32(this->Nlines);
     xfer += oprot->writeFieldEnd();
   }
-  xfer += oprot->writeFieldBegin("direction", ::jsonio17::impex::T_I32, 10);
+  xfer += oprot->writeFieldBegin("direction", ::jsonio::impex::T_I32, 10);
   xfer += oprot->writeI32((int32_t)this->direction);
   xfer += oprot->writeFieldEnd();
 
@@ -2803,17 +2803,17 @@ std::ostream& operator<<(std::ostream& out, const FormatStructDataFile& obj)
 }
 
 
-uint32_t FormatStructDataFile::read(::jsonio17::TJSONSerializer* iprot) {
+uint32_t FormatStructDataFile::read(::jsonio::TJSONSerializer* iprot) {
 
-  //::jsonio17::impex::TInputRecursionTracker tracker(*iprot);
+  //::jsonio::impex::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
   std::string fname;
-  ::jsonio17::impex::TType ftype;
+  ::jsonio::impex::TType ftype;
   int16_t fid;
 
   xfer += iprot->readStructBegin(fname);
 
-  //using ::jsonio17::TJSONSerializerException;
+  //using ::jsonio::TJSONSerializerException;
 
   bool isset_block = false;
   bool isset_renderer = false;
@@ -2822,13 +2822,13 @@ uint32_t FormatStructDataFile::read(::jsonio17::TJSONSerializer* iprot) {
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::jsonio17::impex::T_STOP) {
+    if (ftype == ::jsonio::impex::T_STOP) {
       break;
     }
     switch (fid)
     {
       case 1:
-        if (ftype == ::jsonio17::impex::T_STRUCT) {
+        if (ftype == ::jsonio::impex::T_STRUCT) {
           xfer += this->block.read(iprot);
           isset_block = true;
         } else {
@@ -2836,7 +2836,7 @@ uint32_t FormatStructDataFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 2:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->renderer);
           isset_renderer = true;
         } else {
@@ -2844,7 +2844,7 @@ uint32_t FormatStructDataFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 3:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->label);
           isset_label = true;
         } else {
@@ -2852,7 +2852,7 @@ uint32_t FormatStructDataFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 4:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->comment);
           this->__isset.comment = true;
         } else {
@@ -2860,7 +2860,7 @@ uint32_t FormatStructDataFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 5:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->fname);
           this->__isset.fname = true;
         } else {
@@ -2868,7 +2868,7 @@ uint32_t FormatStructDataFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 6:
-        if (ftype == ::jsonio17::impex::T_I32) {
+        if (ftype == ::jsonio::impex::T_I32) {
           xfer += iprot->readI32(this->Nblocks);
           this->__isset.Nblocks = true;
         } else {
@@ -2876,7 +2876,7 @@ uint32_t FormatStructDataFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 7:
-        if (ftype == ::jsonio17::impex::T_I32) {
+        if (ftype == ::jsonio::impex::T_I32) {
           xfer += iprot->readI32(this->Nlines);
           this->__isset.Nlines = true;
         } else {
@@ -2884,7 +2884,7 @@ uint32_t FormatStructDataFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 10:
-        if (ftype == ::jsonio17::impex::T_I32) {
+        if (ftype == ::jsonio::impex::T_I32) {
           int32_t ecast87;
           xfer += iprot->readI32(ecast87);
           this->direction = (DirectionType::type)ecast87;
@@ -2903,56 +2903,56 @@ uint32_t FormatStructDataFile::read(::jsonio17::TJSONSerializer* iprot) {
   xfer += iprot->readStructEnd();
 
   if (!isset_block)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected block");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected block");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset_renderer)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected renderer");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected renderer");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset_label)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected label");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected label");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
 
   return xfer;
 }
 
-uint32_t FormatStructDataFile::write(::jsonio17::TJSONSerializer* oprot) const {
+uint32_t FormatStructDataFile::write(::jsonio::TJSONSerializer* oprot) const {
   uint32_t xfer = 0;
-  //::jsonio17::impex::TOutputRecursionTracker tracker(*oprot);
+  //::jsonio::impex::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("FormatStructDataFile");
 
-  xfer += oprot->writeFieldBegin("block", ::jsonio17::impex::T_STRUCT, 1);
+  xfer += oprot->writeFieldBegin("block", ::jsonio::impex::T_STRUCT, 1);
   xfer += this->block.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("renderer", ::jsonio17::impex::T_STRING, 2);
+  xfer += oprot->writeFieldBegin("renderer", ::jsonio::impex::T_STRING, 2);
   xfer += oprot->writeString(this->renderer);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("label", ::jsonio17::impex::T_STRING, 3);
+  xfer += oprot->writeFieldBegin("label", ::jsonio::impex::T_STRING, 3);
   xfer += oprot->writeString(this->label);
   xfer += oprot->writeFieldEnd();
 
   if (this->__isset.comment) {
-    xfer += oprot->writeFieldBegin("comment", ::jsonio17::impex::T_STRING, 4);
+    xfer += oprot->writeFieldBegin("comment", ::jsonio::impex::T_STRING, 4);
     xfer += oprot->writeString(this->comment);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.fname) {
-    xfer += oprot->writeFieldBegin("fname", ::jsonio17::impex::T_STRING, 5);
+    xfer += oprot->writeFieldBegin("fname", ::jsonio::impex::T_STRING, 5);
     xfer += oprot->writeString(this->fname);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.Nblocks) {
-    xfer += oprot->writeFieldBegin("Nblocks", ::jsonio17::impex::T_I32, 6);
+    xfer += oprot->writeFieldBegin("Nblocks", ::jsonio::impex::T_I32, 6);
     xfer += oprot->writeI32(this->Nblocks);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.Nlines) {
-    xfer += oprot->writeFieldBegin("Nlines", ::jsonio17::impex::T_I32, 7);
+    xfer += oprot->writeFieldBegin("Nlines", ::jsonio::impex::T_I32, 7);
     xfer += oprot->writeI32(this->Nlines);
     xfer += oprot->writeFieldEnd();
   }
-  xfer += oprot->writeFieldBegin("direction", ::jsonio17::impex::T_I32, 10);
+  xfer += oprot->writeFieldBegin("direction", ::jsonio::impex::T_I32, 10);
   xfer += oprot->writeI32((int32_t)this->direction);
   xfer += oprot->writeFieldEnd();
 
@@ -3042,29 +3042,29 @@ std::ostream& operator<<(std::ostream& out, const FormatImportExportFile& obj)
 }
 
 
-uint32_t FormatImportExportFile::read(::jsonio17::TJSONSerializer* iprot) {
+uint32_t FormatImportExportFile::read(::jsonio::TJSONSerializer* iprot) {
 
-  //::jsonio17::impex::TInputRecursionTracker tracker(*iprot);
+  //::jsonio::impex::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
   std::string fname;
-  ::jsonio17::impex::TType ftype;
+  ::jsonio::impex::TType ftype;
   int16_t fid;
 
   xfer += iprot->readStructBegin(fname);
 
-  //using ::jsonio17::TJSONSerializerException;
+  //using ::jsonio::TJSONSerializerException;
 
 
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::jsonio17::impex::T_STOP) {
+    if (ftype == ::jsonio::impex::T_STOP) {
       break;
     }
     switch (fid)
     {
       case 1:
-        if (ftype == ::jsonio17::impex::T_STRUCT) {
+        if (ftype == ::jsonio::impex::T_STRUCT) {
           xfer += this->ff_text.read(iprot);
           this->__isset.ff_text = true;
         } else {
@@ -3072,7 +3072,7 @@ uint32_t FormatImportExportFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 2:
-        if (ftype == ::jsonio17::impex::T_STRUCT) {
+        if (ftype == ::jsonio::impex::T_STRUCT) {
           xfer += this->ff_table.read(iprot);
           this->__isset.ff_table = true;
         } else {
@@ -3080,7 +3080,7 @@ uint32_t FormatImportExportFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 3:
-        if (ftype == ::jsonio17::impex::T_STRUCT) {
+        if (ftype == ::jsonio::impex::T_STRUCT) {
           xfer += this->ff_keyvalue.read(iprot);
           this->__isset.ff_keyvalue = true;
         } else {
@@ -3088,7 +3088,7 @@ uint32_t FormatImportExportFile::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 4:
-        if (ftype == ::jsonio17::impex::T_STRUCT) {
+        if (ftype == ::jsonio::impex::T_STRUCT) {
           xfer += this->ff_stdata.read(iprot);
           this->__isset.ff_stdata = true;
         } else {
@@ -3107,28 +3107,28 @@ uint32_t FormatImportExportFile::read(::jsonio17::TJSONSerializer* iprot) {
   return xfer;
 }
 
-uint32_t FormatImportExportFile::write(::jsonio17::TJSONSerializer* oprot) const {
+uint32_t FormatImportExportFile::write(::jsonio::TJSONSerializer* oprot) const {
   uint32_t xfer = 0;
-  //::jsonio17::impex::TOutputRecursionTracker tracker(*oprot);
+  //::jsonio::impex::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("FormatImportExportFile");
 
   if (this->__isset.ff_text) {
-    xfer += oprot->writeFieldBegin("ff_text", ::jsonio17::impex::T_STRUCT, 1);
+    xfer += oprot->writeFieldBegin("ff_text", ::jsonio::impex::T_STRUCT, 1);
     xfer += this->ff_text.write(oprot);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.ff_table) {
-    xfer += oprot->writeFieldBegin("ff_table", ::jsonio17::impex::T_STRUCT, 2);
+    xfer += oprot->writeFieldBegin("ff_table", ::jsonio::impex::T_STRUCT, 2);
     xfer += this->ff_table.write(oprot);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.ff_keyvalue) {
-    xfer += oprot->writeFieldBegin("ff_keyvalue", ::jsonio17::impex::T_STRUCT, 3);
+    xfer += oprot->writeFieldBegin("ff_keyvalue", ::jsonio::impex::T_STRUCT, 3);
     xfer += this->ff_keyvalue.write(oprot);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.ff_stdata) {
-    xfer += oprot->writeFieldBegin("ff_stdata", ::jsonio17::impex::T_STRUCT, 4);
+    xfer += oprot->writeFieldBegin("ff_stdata", ::jsonio::impex::T_STRUCT, 4);
     xfer += this->ff_stdata.write(oprot);
     xfer += oprot->writeFieldEnd();
   }
@@ -3228,17 +3228,17 @@ std::ostream& operator<<(std::ostream& out, const ImpexFormat& obj)
 }
 
 
-uint32_t ImpexFormat::read(::jsonio17::TJSONSerializer* iprot) {
+uint32_t ImpexFormat::read(::jsonio::TJSONSerializer* iprot) {
 
-  //::jsonio17::impex::TInputRecursionTracker tracker(*iprot);
+  //::jsonio::impex::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
   std::string fname;
-  ::jsonio17::impex::TType ftype;
+  ::jsonio::impex::TType ftype;
   int16_t fid;
 
   xfer += iprot->readStructBegin(fname);
 
-  //using ::jsonio17::TJSONSerializerException;
+  //using ::jsonio::TJSONSerializerException;
 
   bool isset__id = false;
   bool isset__key = false;
@@ -3250,13 +3250,13 @@ uint32_t ImpexFormat::read(::jsonio17::TJSONSerializer* iprot) {
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::jsonio17::impex::T_STOP) {
+    if (ftype == ::jsonio::impex::T_STOP) {
       break;
     }
     switch (fid)
     {
       case 1:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->_id);
           isset__id = true;
         } else {
@@ -3264,7 +3264,7 @@ uint32_t ImpexFormat::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 2:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->_key);
           isset__key = true;
         } else {
@@ -3272,7 +3272,7 @@ uint32_t ImpexFormat::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 3:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->_rev);
           isset__rev = true;
         } else {
@@ -3280,7 +3280,7 @@ uint32_t ImpexFormat::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 4:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->name);
           isset_name = true;
         } else {
@@ -3288,7 +3288,7 @@ uint32_t ImpexFormat::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 5:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->impexschema);
           isset_impexschema = true;
         } else {
@@ -3296,7 +3296,7 @@ uint32_t ImpexFormat::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 6:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->schema);
           this->__isset.schema = true;
         } else {
@@ -3304,7 +3304,7 @@ uint32_t ImpexFormat::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 7:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->comment);
           this->__isset.comment = true;
         } else {
@@ -3312,7 +3312,7 @@ uint32_t ImpexFormat::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 8:
-        if (ftype == ::jsonio17::impex::T_I32) {
+        if (ftype == ::jsonio::impex::T_I32) {
           int32_t ecast92;
           xfer += iprot->readI32(ecast92);
           this->direction = (DirectionType::type)ecast92;
@@ -3322,7 +3322,7 @@ uint32_t ImpexFormat::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 9:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->impex);
           isset_impex = true;
         } else {
@@ -3330,7 +3330,7 @@ uint32_t ImpexFormat::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 10:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->format);
           this->__isset.format = true;
         } else {
@@ -3338,7 +3338,7 @@ uint32_t ImpexFormat::read(::jsonio17::TJSONSerializer* iprot) {
         }
         break;
       case 11:
-        if (ftype == ::jsonio17::impex::T_STRING) {
+        if (ftype == ::jsonio::impex::T_STRING) {
           xfer += iprot->readString(this->extension);
           this->__isset.extension = true;
         } else {
@@ -3355,74 +3355,74 @@ uint32_t ImpexFormat::read(::jsonio17::TJSONSerializer* iprot) {
   xfer += iprot->readStructEnd();
 
   if (!isset__id)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected _id");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected _id");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset__key)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected _key");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected _key");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset__rev)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected _rev");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected _rev");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset_name)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected name");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected name");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset_impexschema)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected impexschema");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected impexschema");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset_impex)
-      jsonio17::JSONIO_THROW( "TJSONSerializer", 101, " expected impex");
+      jsonio::JSONIO_THROW( "TJSONSerializer", 101, " expected impex");
 //    throw TProtocolException(TProtocolException::INVALID_DATA);
   return xfer;
 }
 
-uint32_t ImpexFormat::write(::jsonio17::TJSONSerializer* oprot) const {
+uint32_t ImpexFormat::write(::jsonio::TJSONSerializer* oprot) const {
   uint32_t xfer = 0;
-  //::jsonio17::impex::TOutputRecursionTracker tracker(*oprot);
+  //::jsonio::impex::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("ImpexFormat");
 
-  xfer += oprot->writeFieldBegin("_id", ::jsonio17::impex::T_STRING, 1);
+  xfer += oprot->writeFieldBegin("_id", ::jsonio::impex::T_STRING, 1);
   xfer += oprot->writeString(this->_id);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("_key", ::jsonio17::impex::T_STRING, 2);
+  xfer += oprot->writeFieldBegin("_key", ::jsonio::impex::T_STRING, 2);
   xfer += oprot->writeString(this->_key);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("_rev", ::jsonio17::impex::T_STRING, 3);
+  xfer += oprot->writeFieldBegin("_rev", ::jsonio::impex::T_STRING, 3);
   xfer += oprot->writeString(this->_rev);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("name", ::jsonio17::impex::T_STRING, 4);
+  xfer += oprot->writeFieldBegin("name", ::jsonio::impex::T_STRING, 4);
   xfer += oprot->writeString(this->name);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("impexschema", ::jsonio17::impex::T_STRING, 5);
+  xfer += oprot->writeFieldBegin("impexschema", ::jsonio::impex::T_STRING, 5);
   xfer += oprot->writeString(this->impexschema);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("schema", ::jsonio17::impex::T_STRING, 6);
+  xfer += oprot->writeFieldBegin("schema", ::jsonio::impex::T_STRING, 6);
   xfer += oprot->writeString(this->schema);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("comment", ::jsonio17::impex::T_STRING, 7);
+  xfer += oprot->writeFieldBegin("comment", ::jsonio::impex::T_STRING, 7);
   xfer += oprot->writeString(this->comment);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("direction", ::jsonio17::impex::T_I32, 8);
+  xfer += oprot->writeFieldBegin("direction", ::jsonio::impex::T_I32, 8);
   xfer += oprot->writeI32((int32_t)this->direction);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("impex", ::jsonio17::impex::T_STRING, 9);
+  xfer += oprot->writeFieldBegin("impex", ::jsonio::impex::T_STRING, 9);
   xfer += oprot->writeString(this->impex);
   xfer += oprot->writeFieldEnd();
 
   if (this->__isset.format) {
-    xfer += oprot->writeFieldBegin("format", ::jsonio17::impex::T_STRING, 10);
+    xfer += oprot->writeFieldBegin("format", ::jsonio::impex::T_STRING, 10);
     xfer += oprot->writeString(this->format);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.extension) {
-    xfer += oprot->writeFieldBegin("extension", ::jsonio17::impex::T_STRING, 11);
+    xfer += oprot->writeFieldBegin("extension", ::jsonio::impex::T_STRING, 11);
     xfer += oprot->writeString(this->extension);
     xfer += oprot->writeFieldEnd();
   }

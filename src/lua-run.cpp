@@ -1,13 +1,13 @@
 #include "lua-run.h"
-#include "jsonio17/service.h"
-#include "jsonio17/jsonfree.h"
-#include "jsonio17/jsondump.h"
+#include "jsonio/service.h"
+#include "jsonio/jsonfree.h"
+#include "jsonio/jsondump.h"
 #include <spdlog/sinks/stdout_color_sinks.h>
 
-namespace jsonio17 {
+namespace jsonio {
 
 // Thread-safe logger to stdout with colors
-std::shared_ptr<spdlog::logger> impex_logger = spdlog::stdout_color_mt("jsonimpex17");
+std::shared_ptr<spdlog::logger> impex_logger = spdlog::stdout_color_mt("jsonimpex");
 
 // Initialization
 LuaRun::LuaRun( const std::string& lib_path ): lua_lib_path( lib_path )
@@ -191,4 +191,4 @@ bool LuaRun::runFunc( const std::string& lua_script, std::string& value )
     return true;
 }
 
-} // namespace jsonio17
+} // namespace jsonio

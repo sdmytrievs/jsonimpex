@@ -54,7 +54,7 @@ jobs:
       conda update -q conda
       conda info -a
       conda devenv
-      call activate jsonimpex17
+      call activate jsonimpex
     displayName: Create Anaconda environment
 
   - task: BatchScript@1
